@@ -1,0 +1,89 @@
+/*-----------------------------------------------------------------------------
+| Copyright (c) Jupyter Development Team.
+| Distributed under the terms of the Modified BSD License.
+|----------------------------------------------------------------------------*/
+/*
+ * The following CSS variables define the main, public API for styling JupyterLab.
+ * These variables should be used by all plugins wherever possible. In other
+ * words, plugins should not define custom colors, sizes, etc unless absolutely
+ * necessary. This enables users to change the visual theme of JupyterLab
+ * by changing these variables.
+ *
+ * Many variables appear in an ordered sequence (0,1,2,3). These sequences
+ * are designed to work well together, so for example, `--jp-border-color1` should
+ * be used with `--jp-layout-color1`. The numbers have the following meanings:
+ *
+ * 0: super-primary, reserved for special emphasis
+ * 1: primary, most important under normal situations
+ * 2: secondary, next most important under normal situations
+ * 3: tertiary, next most important under normal situations
+ *
+ * Throughout JupyterLab, we are mostly following principles from Google's
+ * Material Design when selecting colors. We are not, however, following
+ * all of MD as it is not optimized for dense, information rich UIs.
+ */
+:root {
+  /* f44336 */
+  /* ff9800 */
+  /* ffeb3b */
+  /* light to dark for light theme
+   * dark to light for dark theme */
+  /* dark to light for light theme
+   * light to dark for dark theme */
+  --base16-red0: #e82732;
+  --base16-red1: #ec4c55;
+  --base16-red2: #f07178;
+  --base16-red-extra: #f4969b;
+  --base16-orange0: #f34f1f;
+  --base16-orange1: #f56e45;
+  --base16-orange2: #f78c6c;
+  --base16-orange-extra: #f9aa93;
+  --base16-yellow0: #ffae19;
+  --base16-yellow1: #ffbd42;
+  --base16-yellow2: #ffcb6b;
+  --base16-yellow-extra: #ffd994;
+  --base16-green0: #9fda49;
+  --base16-green1: #b1e16b;
+  --base16-green2: #c3e88d;
+  --base16-green-extra: #d5efaf;
+  --base16-teal0: #25ffbc;
+  --base16-teal1: #4effc8;
+  --base16-teal2: #77ffd5;
+  --base16-teal-extra: #a0ffe2;
+  --base16-cyan0: #37c5ff;
+  --base16-cyan1: #60d1ff;
+  --base16-cyan2: #89ddff;
+  --base16-cyan-extra: #b2e9ff;
+  --base16-blue0: #3073ff;
+  --base16-blue1: #598eff;
+  --base16-blue2: #82aaff;
+  --base16-blue-extra: #abc6ff;
+  --base16-magenta0: #ff012c;
+  --base16-magenta1: #ff2a4e;
+  --base16-magenta2: #ff5370;
+  --base16-magenta-extra: #ff7c92;
+  --base16-purple0: #a44edd;
+  --base16-purple1: #b570e3;
+  --base16-purple2: #c792ea;
+  --base16-purple-extra: #d9b4f1;
+  --base16-foreground-light: #FFFFFF;
+  --base16-gray: #9b9b9b;
+  --base16-gray-dark: #737373;
+  --jp-layout-color0: #212121;
+  --jp-layout-color1: #27292c;
+  --jp-layout-color2: #323639;
+  --jp-layout-color3: #44464d;
+  --jp-layout-color4: #676c71;
+  --jp-layout-color5: #80868b;
+  --jp-layout-color6: #9e9e9e;
+  --jp-inverse-layout-color0: #FFFFFF;
+  --jp-inverse-layout-color1: #9e9e9e;
+  --jp-inverse-layout-color2: #80868b;
+  --jp-inverse-layout-color3: #676c71;
+  --jp-inverse-layout-color4: #44464d;
+  --jp-inverse-layout-color5: #323639;
+  --jp-editor-selected-focused-background: var(--jp-layout-color0);
+  --jp-editor-cursor-color: var(--jp-inverse-layout-color0);
+}
+
+/*# sourceMappingURL=variables.css.map */

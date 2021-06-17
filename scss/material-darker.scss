@@ -1,0 +1,164 @@
+/*-----------------------------------------------------------------------------
+| Copyright (c) Jupyter Development Team.
+| Distributed under the terms of the Modified BSD License.
+|----------------------------------------------------------------------------*/
+
+/*
+ * The following CSS variables define the main, public API for styling JupyterLab.
+ * These variables should be used by all plugins wherever possible. In other
+ * words, plugins should not define custom colors, sizes, etc unless absolutely
+ * necessary. This enables users to change the visual theme of JupyterLab
+ * by changing these variables.
+ *
+ * Many variables appear in an ordered sequence (0,1,2,3). These sequences
+ * are designed to work well together, so for example, `--jp-border-color1` should
+ * be used with `--jp-layout-color1`. The numbers have the following meanings:
+ *
+ * 0: super-primary, reserved for special emphasis
+ * 1: primary, most important under normal situations
+ * 2: secondary, next most important under normal situations
+ * 3: tertiary, next most important under normal situations
+ *
+ * Throughout JupyterLab, we are mostly following principles from Google's
+ * Material Design when selecting colors. We are not, however, following
+ * all of MD as it is not optimized for dense, information rich UIs.
+ */
+
+ :root {
+    $black:   #212121;
+    $white:   #FFFFFF;
+    $red:     #F07178; /* f44336 */
+    $orange:  #F78C6C; /* ff9800 */
+    $yellow:  #FFCB6B; /* ffeb3b */
+    $green:   #C3E88D;
+    $teal:    #77FFD5;
+    $cyan:    #89DDFF;
+    $blue:    #82AAFF;
+    $purple:  #C792EA;
+    $magenta: #FF5370;
+
+    $base16-red0:              darken($red, 16%);
+    $base16-red1:              darken($red,  8%);
+    $base16-red2:              darken($red,  0%);
+    $base16-red-extra:        lighten($red,  8%);
+    $base16-orange0:           darken($orange, 16%);
+    $base16-orange1:           darken($orange,  8%);
+    $base16-orange2:           darken($orange,  0%);
+    $base16-orange-extra:     lighten($orange,  8%);
+    $base16-yellow0:           darken($yellow, 16%);
+    $base16-yellow1:           darken($yellow,  8%);
+    $base16-yellow2:           darken($yellow,  0%);
+    $base16-yellow-extra:     lighten($yellow,  8%);
+    $base16-orange0:           darken($orange, 16%);
+    $base16-orange1:           darken($orange,  8%);
+    $base16-orange2:           darken($orange,  0%);
+    $base16-orange-extra:     lighten($orange,  8%);
+    $base16-green0:            darken($green, 16%);
+    $base16-green1:            darken($green,  8%);
+    $base16-green2:            darken($green,  0%);
+    $base16-green-extra:      lighten($green,  8%);
+    $base16-teal0:             darken($teal, 16%);
+    $base16-teal1:             darken($teal,  8%);
+    $base16-teal2:             darken($teal,  0%);
+    $base16-teal-extra:       lighten($teal,  8%);
+    $base16-cyan0:             darken($cyan, 16%);
+    $base16-cyan1:             darken($cyan,  8%);
+    $base16-cyan2:             darken($cyan,  0%);
+    $base16-cyan-extra:       lighten($cyan,  8%);
+    $base16-blue0:             darken($blue, 16%);
+    $base16-blue1:             darken($blue,  8%);
+    $base16-blue2:             darken($blue,  0%);
+    $base16-blue-extra:       lighten($blue,  8%);
+    $base16-magenta0:           darken($magenta, 16%);
+    $base16-magenta1:           darken($magenta,  8%);
+    $base16-magenta2:           darken($magenta,  0%);
+    $base16-magenta-extra:     lighten($magenta, 8%);
+    $base16-purple0:           darken($purple, 16%);
+    $base16-purple1:           darken($purple,  8%);
+    $base16-purple2:           darken($purple,  0%);
+    $base16-purple-extra:     lighten($purple, 8%);
+    $base16-foreground-light: $white;
+    $base16-gray:             lighten($black, 48%);
+    $base16-gray-dark:        darken($base16-gray, 16%);
+
+    /* light to dark for light theme
+     * dark to light for dark theme */
+    $layout-color0: #212121;
+    $layout-color1: #27292c;
+    $layout-color2: #323639;
+    $layout-color3: #44464d;
+    $layout-color4: #676c71;
+    $layout-color5: #80868b;
+    $layout-color6: #9e9e9e;
+
+    /* dark to light for light theme
+     * light to dark for dark theme */
+    $inverse-color0: #FFFFFF;
+    $inverse-color1: #9e9e9e;
+    $inverse-color2: #80868b;
+    $inverse-color3: #676c71;
+    $inverse-color4: #44464d;
+    $inverse-color5: #323639;
+    $inverse-color6: #27292c;
+
+    --base16-red0:              #{$base16-red0};
+    --base16-red1:              #{$base16-red1};
+    --base16-red2:              #{$base16-red2};
+    --base16-red-extra:         #{$base16-red-extra};
+    --base16-orange0:           #{$base16-orange0};
+    --base16-orange1:           #{$base16-orange1};
+    --base16-orange2:           #{$base16-orange2};
+    --base16-orange-extra:      #{$base16-orange-extra};
+    --base16-yellow0:           #{$base16-yellow0};
+    --base16-yellow1:           #{$base16-yellow1};
+    --base16-yellow2:           #{$base16-yellow2};
+    --base16-yellow-extra:      #{$base16-yellow-extra};
+    --base16-green0:            #{$base16-green0};
+    --base16-green1:            #{$base16-green1};
+    --base16-green2:            #{$base16-green2};
+    --base16-green-extra:       #{$base16-green-extra};
+    --base16-teal0:             #{$base16-teal0};
+    --base16-teal1:             #{$base16-teal1};
+    --base16-teal2:             #{$base16-teal2};
+    --base16-teal-extra:        #{$base16-teal-extra};
+    --base16-cyan0:             #{$base16-cyan0};
+    --base16-cyan1:             #{$base16-cyan1};
+    --base16-cyan2:             #{$base16-cyan2};
+    --base16-cyan-extra:        #{$base16-cyan-extra};
+    --base16-blue0:             #{$base16-blue0};
+    --base16-blue1:             #{$base16-blue1};
+    --base16-blue2:             #{$base16-blue2};
+    --base16-blue-extra:        #{$base16-blue-extra};
+    --base16-magenta0:          #{$base16-magenta0};
+    --base16-magenta1:          #{$base16-magenta1};
+    --base16-magenta2:          #{$base16-magenta2};
+    --base16-magenta-extra:     #{$base16-magenta-extra};
+    --base16-purple0:           #{$base16-purple0};
+    --base16-purple1:           #{$base16-purple1};
+    --base16-purple2:           #{$base16-purple2};
+    --base16-purple-extra:      #{$base16-purple-extra};
+    --base16-foreground-light:  #{$base16-foreground-light};
+    --base16-gray:              #{$base16-gray};
+    --base16-gray-dark:         #{$base16-gray-dark};
+
+
+    --jp-layout-color0: #{$layout-color0};
+    --jp-layout-color1: #{$layout-color1};
+    --jp-layout-color2: #{$layout-color2};
+    --jp-layout-color3: #{$layout-color3};
+    --jp-layout-color4: #{$layout-color4};
+    --jp-layout-color5: #{$layout-color5};
+    --jp-layout-color6: #{$layout-color6};
+
+    --jp-inverse-layout-color0: #{$inverse-color0};
+    --jp-inverse-layout-color1: #{$inverse-color1};
+    --jp-inverse-layout-color2: #{$inverse-color2};
+    --jp-inverse-layout-color3: #{$inverse-color3};
+    --jp-inverse-layout-color4: #{$inverse-color4};
+    --jp-inverse-layout-color5: #{$inverse-color5};
+
+    --jp-editor-selected-focused-background: var(--jp-layout-color0);
+    --jp-editor-cursor-color:                var(--jp-inverse-layout-color0);
+
+
+  }
