@@ -23,10 +23,10 @@ jupyter labextension link .
 
 ## Screenshots
 
-![theme_wallpaper](./screenshots/themer.png "theme wallpaper")
-
 ![material_darker](./screenshots/material_darker.png "material_darker theme screenshot")
-
+<!--
+![theme_wallpaper](./screenshots/themer.png "theme wallpaper")
+-->
 
 ## Requirements
 
