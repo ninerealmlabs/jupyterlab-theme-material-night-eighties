@@ -56,7 +56,10 @@ You can watch the source directory and run JupyterLab at the same time in differ
 ```bash
 # Watch the source directory in one terminal, automatically rebuilding when needed
 jlpm run watch
-# Run JupyterLab in another terminal
+```
+
+_Run JupyterLab in another terminal_
+```bash
 jupyter lab
 ```
 
@@ -74,5 +77,5 @@ jupyter lab build --minimize=False
 pip uninstall jupyterlab_material_darker
 jupyter labextension uninstall @ahgraber/jupyterlab_material_darker
 # may have to delete file manually
-# rm -rf /path/to/envs/ENVNAME/share/jupyter/labextensions/@ahgraber/jupyterlab_material_darker
+rm -rf /path/to/envs/ENVNAME/share/jupyter/labextensions/@ahgraber/jupyterlab_material_darker
 ```

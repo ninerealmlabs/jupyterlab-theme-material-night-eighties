@@ -23,9 +23,7 @@
  * all of MD as it is not optimized for dense, information rich UIs.
  */
 :root {
-  /* f44336 */
-  /* ff9800 */
-  /* ffeb3b */
+  /* 212121; */
   /* light to dark for light theme
    * dark to light for dark theme */
   /* dark to light for light theme
@@ -42,18 +40,18 @@
   --base16-yellow1: #ffbd42;
   --base16-yellow2: #ffcb6b;
   --base16-yellow-extra: #ffd994;
-  --base16-green0: #9fda49;
-  --base16-green1: #b1e16b;
-  --base16-green2: #c3e88d;
-  --base16-green-extra: #d5efaf;
-  --base16-teal0: #25ffbc;
-  --base16-teal1: #4effc8;
-  --base16-teal2: #77ffd5;
-  --base16-teal-extra: #a0ffe2;
-  --base16-cyan0: #37c5ff;
-  --base16-cyan1: #60d1ff;
-  --base16-cyan2: #89ddff;
-  --base16-cyan-extra: #b2e9ff;
+  --base16-green0: #66da49;
+  --base16-green1: #82e16b;
+  --base16-green2: #9fe88d;
+  --base16-green-extra: #bcefaf;
+  --base16-teal0: #12ffc7;
+  --base16-teal1: #3bffd0;
+  --base16-teal2: #64ffda;
+  --base16-teal-extra: #8dffe4;
+  --base16-cyan0: #18f7ff;
+  --base16-cyan1: #41f9ff;
+  --base16-cyan2: #6afaff;
+  --base16-cyan-extra: #93fbff;
   --base16-blue0: #3073ff;
   --base16-blue1: #598eff;
   --base16-blue2: #82aaff;
@@ -67,21 +65,21 @@
   --base16-purple2: #c792ea;
   --base16-purple-extra: #d9b4f1;
   --base16-foreground-light: #FFFFFF;
-  --base16-gray: #9b9b9b;
-  --base16-gray-dark: #737373;
-  --jp-layout-color0: #212121;
-  --jp-layout-color1: #27292c;
-  --jp-layout-color2: #323639;
-  --jp-layout-color3: #44464d;
-  --jp-layout-color4: #676c71;
-  --jp-layout-color5: #80868b;
-  --jp-layout-color6: #9e9e9e;
+  --base16-gray: #969696;
+  --base16-gray-dark: #6e6e6e;
+  --jp-layout-color0: #1c1c1c;
+  --jp-layout-color1: #303030;
+  --jp-layout-color2: #454545;
+  --jp-layout-color3: #595959;
+  --jp-layout-color4: #6e6e6e;
+  --jp-layout-color5: #828282;
+  --jp-layout-color6: #ababab;
   --jp-inverse-layout-color0: #FFFFFF;
-  --jp-inverse-layout-color1: #9e9e9e;
-  --jp-inverse-layout-color2: #80868b;
-  --jp-inverse-layout-color3: #676c71;
-  --jp-inverse-layout-color4: #44464d;
-  --jp-inverse-layout-color5: #323639;
+  --jp-inverse-layout-color1: #d6d6d6;
+  --jp-inverse-layout-color2: #c2c2c2;
+  --jp-inverse-layout-color3: #adadad;
+  --jp-inverse-layout-color4: #999999;
+  --jp-inverse-layout-color5: #707070;
   --jp-editor-selected-focused-background: var(--jp-layout-color0);
   --jp-editor-cursor-color: var(--jp-inverse-layout-color0);
 }
