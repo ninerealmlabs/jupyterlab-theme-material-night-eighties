@@ -22,6 +22,7 @@ jupyter labextension link .
 ``` -->
 
 ## Screenshots
+![theme_wallpaper](blob:https://themer.dev/92856974-9775-f34a-85b2-52174a49bd57 "theme wallpaper")
 ![material_darker](./screenshots/material_darker.png "material_darker theme screenshot")
 
 
