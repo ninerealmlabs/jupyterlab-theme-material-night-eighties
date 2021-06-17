@@ -1,6 +1,5 @@
 # JupyterLab Material Darker theme
-
-![Github Actions Status](https://github.com/ahgraber/jupyterlab_material_darker/workflows/Build/badge.svg)
+[![Build](https://github.com/ahgraber/jupyterlab-theme-material-darker/actions/workflows/build.yml/badge.svg)](https://github.com/ahgraber/jupyterlab-theme-material-darker/actions/workflows/build.yml)
 
 Theme for jupyterlab based on [jupyterlab/theme-cookiecutter](https://github.com/jupyterlab/theme-cookiecutter), inspired by
 [arbennett/jupyterlab-themes](https://github.com/arbennett/jupyterlab-themes) and [base16](https://github.com/chriskempson/base16)
