@@ -9,7 +9,7 @@ import { IThemeManager } from '@jupyterlab/apputils';
  * Initialization data for the @ahgraber/jupyterlab_material_darker extension.
  */
 const extension: JupyterFrontEndPlugin<void> = {
-  id: '@ahgraber/jupyterlab_material_darker',
+  id: '@ninerealmlabs/jupyterlab_material_darker',
   requires: [IThemeManager],
   autoStart: true,
   activate: (app: JupyterFrontEnd, manager: IThemeManager) => {
@@ -17,7 +17,7 @@ const extension: JupyterFrontEndPlugin<void> = {
     const style = '@ahgraber/jupyterlab_material_darker/index.css';
 
     manager.register({
-      name: '@ahgraber/jupyterlab_material_darker',
+      name: '@ninerealmlabs/jupyterlab_material_darker',
       isLight: true,
       load: () => manager.loadCSS(style),
       unload: () => Promise.resolve(undefined)
