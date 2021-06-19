@@ -1,5 +1,5 @@
 {
-  "name": "@ahgraber/jupyterlab_material_darker",
+  "name": "@ninerealmlabs/jupyterlab_material_darker",
   "version": "0.1.2",
   "description": "A jupyterlab theme inspired by material darker",
   "keywords": [
@@ -7,9 +7,9 @@
     "jupyterlab",
     "jupyterlab-extension"
   ],
-  "homepage": "https://github.com/ahgraber/jupyterlab_material_darker",
+  "homepage": "https://github.com/ninerealmlabs/jupyterlab_material_darker",
   "bugs": {
-    "url": "https://github.com/ahgraber/jupyterlab_material_darker/issues"
+    "url": "https://github.com/ninerealmlabs/jupyterlab_material_darker/issues"
   },
   "license": "BSD-3-Clause",
   "author": "Alex Graber",
@@ -22,7 +22,7 @@
   "style": "style/index.css",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ahgraber/jupyterlab_material_darker.git"
+    "url": "git+https://github.com/ninerealmlabs/jupyterlab_material_darker.git"
   },
   "scripts": {
     "build": "jlpm run build:lib && jlpm run build:labextension:dev",
