@@ -28,5 +28,5 @@ jobs:
         jlpm
         jlpm run eslint:check --fix
         python -m pip install .
-        jupyter labextension list 2>&1 | grep -ie "@ahgraber/jupyterlab_material_darker.*OK"
+        jupyter labextension list 2>&1 | grep -ie "@ninerealmlabs/jupyterlab_material_darker.*OK"
         python -m jupyterlab.browser_check
