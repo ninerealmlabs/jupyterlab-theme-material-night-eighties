@@ -32,7 +32,7 @@ package_data_spec = {
     ]
 }
 
-labext_name = "@ahgraber/jupyterlab_material_darker"
+labext_name = "@ninerealmlabs/jupyterlab_material_darker"
 
 data_files_spec = [
     ("share/jupyter/labextensions/%s" % labext_name, lab_path, "**"),
@@ -63,8 +63,8 @@ with open("README.md", "r") as fh:
 setup_args = dict(
     name=name,
     version=version,
-    url="https://github.com/ahgraber/jupyterlab_material_darker",
-    author="Alex Graber",
+    url="https://github.com/ninerealmlabs/jupyterlab_material_darker",
+    author="ninerealmlabs",
     description="A jupyterlab theme inspired by material darker",
     long_description=long_description,
     long_description_content_type="text/markdown",
