@@ -3,8 +3,16 @@ name: Build
 on:
   push:
     branches: main
+    paths-ignore:
+      - ".github/**"
+      - "*.md"
+      - "LICENSE"
   pull_request:
-    branches: '*'
+    branches: main
+    paths-ignore:
+      - ".github/**"
+      - "*.md"
+      - "LICENSE"
 
 jobs:
   build:
