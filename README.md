@@ -12,7 +12,7 @@ pip install jupyterlab_material_darker
 <!--
 Themes can be installed directly from `npm` using the standard JupyterLab installation method:
 ```
-jupyter labextension install @ahgraber/{THEMENAME}
+jupyter labextension install @ninerealmlabs/{THEMENAME}
 ```
 
 Themes can also be installed from source.  From a theme's subdirectory:
