@@ -1,6 +1,6 @@
 {
   "name": "@ninerealmlabs/jupyterlab_material_darker",
-  "version": "v0.2.1",
+  "version": "v0.2.1-beta",
   "description": "A jupyterlab theme inspired by material darker",
   "keywords": [
     "jupyter",
