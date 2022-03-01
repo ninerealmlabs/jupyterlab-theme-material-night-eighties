@@ -1,6 +1,8 @@
 *.bundle.*
 lib/
 node_modules/
+.eslintcache
+.stylelintcache
 *.egg-info/
 .ipynb_checkpoints
 *.tsbuildinfo
@@ -108,4 +110,5 @@ dmypy.json
 
 # End of https://www.gitignore.io/api/python
 
+# OSX files
 .DS_Store
