@@ -20,7 +20,7 @@ prune lib
 prune scss
 
 prune binder
-prun screenshots
+prune screenshots
 
 # Patterns to exclude from any directory
 global-exclude *~
