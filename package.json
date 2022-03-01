@@ -11,7 +11,7 @@
   "bugs": {
     "url": "https://github.com/ninerealmlabs/jupyterlab_material_darker/issues"
   },
-  "author": "ninerealmlabs",
+  "author": {"name": "ninerealmlabs"},
   "license": "BSD-3-Clause",
   "files": [
     "lib/**/*.{d.ts,eot,gif,html,jpg,js,js.map,json,png,svg,woff2,ttf}",
