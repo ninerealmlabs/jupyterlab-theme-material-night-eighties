@@ -6,20 +6,18 @@ import {
 import { IThemeManager } from '@jupyterlab/apputils';
 
 /**
- * Initialization data for the @ninerealmlabs/jupyterlab_material_darker extension.
+ * Initialization data for the jupyterlab-material-darker extension.
  */
-const extension: JupyterFrontEndPlugin<void> = {
-  id: '@ninerealmlabs/jupyterlab_material_darker',
-  requires: [IThemeManager],
+const plugin: JupyterFrontEndPlugin<void> = {
+  id: 'jupyterlab-material-darker:plugin',
   autoStart: true,
+  requires: [IThemeManager],
   activate: (app: JupyterFrontEnd, manager: IThemeManager) => {
-    console.log(
-      'JupyterLab extension @ninerealmlabs/jupyterlab_material_darker is activated!'
-    );
-    const style = '@ninerealmlabs/jupyterlab_material_darker/index.css';
+    console.log('JupyterLab extension jupyterlab-material-darker is activated!');
+    const style = 'jupyterlab-material-darker/index.css';
 
     manager.register({
-      name: '@ninerealmlabs/jupyterlab_material_darker',
+      name: 'jupyterlab-material-darker',
       isLight: true,
       load: () => manager.loadCSS(style),
       unload: () => Promise.resolve(undefined)
@@ -27,4 +25,4 @@ const extension: JupyterFrontEndPlugin<void> = {
   }
 };
 
-export default extension;
+export default plugin;
