@@ -1,7 +1,8 @@
-/*-----------------------------------------------------------------------------
+/* -----------------------------------------------------------------------------
 | Copyright (c) Jupyter Development Team.
 | Distributed under the terms of the Modified BSD License.
-|----------------------------------------------------------------------------*/
+|---------------------------------------------------------------------------- */
+
 /*
  * The following CSS variables define the main, public API for styling JupyterLab.
  * These variables should be used by all plugins wherever possible. In other
@@ -24,8 +25,10 @@
  */
 :root {
   /* 212121; */
+
   /* light to dark for light theme
    * dark to light for dark theme */
+
   /* dark to light for light theme
    * light to dark for dark theme */
   --base16-red0: #e82732;
@@ -64,7 +67,7 @@
   --base16-purple1: #b570e3;
   --base16-purple2: #c792ea;
   --base16-purple-extra: #d9b4f1;
-  --base16-foreground-light: #FFFFFF;
+  --base16-foreground-light: #fff;
   --base16-gray: #969696;
   --base16-gray-dark: #6e6e6e;
   --jp-layout-color0: #1c1c1c;
@@ -74,14 +77,12 @@
   --jp-layout-color4: #6e6e6e;
   --jp-layout-color5: #828282;
   --jp-layout-color6: #ababab;
-  --jp-inverse-layout-color0: #FFFFFF;
+  --jp-inverse-layout-color0: #fff;
   --jp-inverse-layout-color1: #d6d6d6;
   --jp-inverse-layout-color2: #c2c2c2;
   --jp-inverse-layout-color3: #adadad;
-  --jp-inverse-layout-color4: #999999;
+  --jp-inverse-layout-color4: #999;
   --jp-inverse-layout-color5: #707070;
   --jp-editor-selected-focused-background: var(--jp-layout-color0);
   --jp-editor-cursor-color: var(--jp-inverse-layout-color0);
 }
-
-/*# sourceMappingURL=variables.css.map */
