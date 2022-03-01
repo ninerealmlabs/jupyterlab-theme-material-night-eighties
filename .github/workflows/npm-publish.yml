@@ -17,17 +17,22 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Install node
-        uses: actions/setup-node@v2
-        with:
-          node-version: 12
-      - name: Install Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.7'
-          architecture: 'x64'
+
+      # - name: Install Python
+      #   uses: actions/setup-python@v2
+      #   with:
+      #     python-version: 3.9
+      #     architecture: 'x64'
+      # - name: Install node
+      #   uses: actions/setup-node@v2
+      #   with:
+      #     node-version: '14.x'
+      - name: Base Setup
+        uses: jupyterlab/maintainer-tools/.github/actions/base-setup@v1
+
       - name: Install dependencies
-        run: python -m pip install jupyterlab==3 jupyter_packaging
+        run: python -m pip install jupyterlab~=3.1 jupyter-packaging~=0.10
+
       - name: Build the extension
         run: |
           jlpm
@@ -36,26 +41,42 @@ jobs:
           jupyter labextension list 2>&1 | grep -ie "@ninerealmlabs/jupyterlab_material_darker.*OK"
           python -m jupyterlab.browser_check
 
+      # - name: Check Release
+      #   uses: jupyter-server/jupyter_releaser/.github/actions/check-release@v1
+      #   with:
+      #     token: ${{ secrets.GITHUB_TOKEN }}
+
+      # - name: Upload Distributions
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: jupyterlab_material_darker-releaser-dist-${{ github.run_number }}
+      #     path: .jupyter_releaser_checkout/dist
+
   publish-npm:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 12
-          registry-url: https://registry.npmjs.org/
-      - name: Install Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.7'
-          architecture: 'x64'
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Base Setup
+        uses: jupyterlab/maintainer-tools/.github/actions/base-setup@v1
+
       - name: Install dependencies
-        run: python -m pip install jupyterlab==3 jupyter_packaging
+        run: python -m pip install -U jupyterlab~=3.1 check-manifest
+
+      - name: Install dependencies
+        run: python -m pip install jupyterlab~=3.1 jupyter-packaging~=0.10
+
+      - name: Install dependencies
+        run: python -m pip install jupyterlab==3 jupyter-packaging~=0.10
+
       - run: npm ci
+
       - run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+
 #   publish-gpr:
 #     needs: build
 #     runs-on: ubuntu-latest
