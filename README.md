@@ -1,6 +1,6 @@
 # JupyterLab Material Darker theme
 
-[![Build](https://github.com/ninerealmlabs/jupyterlab-theme-material-darker/actions/workflows/build.yml/badge.svg)](https://github.com/ninerealmlabs/jupyterlab-theme-material-darker/actions/workflows/build.yml)    [![Node.js Package](https://github.com/ninerealmlabs/jupyterlab-theme-material-darker/actions/workflows/npm-publish.yml/badge.svg)](https://github.com/ninerealmlabs/jupyterlab-theme-material-darker/actions/workflows/npm-publish.yml)
+[![Build](https://github.com/ninerealmlabs/jupyterlab-theme-material-darker/actions/workflows/build.yml/badge.svg)](https://github.com/ninerealmlabs/jupyterlab-theme-material-darker/actions/workflows/build.yml) [![Node.js Package](https://github.com/ninerealmlabs/jupyterlab-theme-material-darker/actions/workflows/npm-publish.yml/badge.svg)](https://github.com/ninerealmlabs/jupyterlab-theme-material-darker/actions/workflows/npm-publish.yml)
 
 Theme for jupyterlab based on [jupyterlab/theme-cookiecutter](https://github.com/jupyterlab/theme-cookiecutter), inspired by [oriolmirosa/jupyterlab_materialdarker](https://github.com/oriolmirosa/jupyterlab_materialdarker),
 [arbennett/jupyterlab-themes](https://github.com/arbennett/jupyterlab-themes), and [base16](https://github.com/chriskempson/base16)
@@ -27,14 +27,15 @@ jupyter labextension link .
 
 ## Screenshots
 
-![material_darker](./screenshots/material_darker.png "material_darker theme screenshot")
+![material_darker](./screenshots/material_darker.png 'material_darker theme screenshot')
+
 <!--
 ![theme_wallpaper](./screenshots/themer.png "theme wallpaper")
 -->
 
 ## Requirements
 
-* JupyterLab >= 3.1
+- JupyterLab >= 3.1
 
 ## Development install
 

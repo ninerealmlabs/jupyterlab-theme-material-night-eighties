@@ -1,10 +1,11 @@
 # Theme Color Generator
 
-based on [base-16](https://github.com/chriskempson/base16) and [arbennett/jupyterlab-themes](https://github.com/arbennett/jupyterlab-themes)
+based on [base-16](https://github.com/chriskempson/base16) and
+[arbennett/jupyterlab-themes](https://github.com/arbennett/jupyterlab-themes)
 
 ## Prerequisites
 
-* `sass`
+- `sass`
 
 ## Use
 
