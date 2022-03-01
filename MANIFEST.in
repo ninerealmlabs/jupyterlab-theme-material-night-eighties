@@ -1,25 +1,20 @@
 include LICENSE
-include README.md
+include *.md
 include pyproject.toml
-include jupyter-config/jupyterlab_material_darker.json
 
 include package.json
 include install.json
 include ts*.json
-include *.js
-include *.lock
-include *.md
 
-graft jupyterlab_material_darker/labextension
+graft jupyterlab_material_darker/labextension/
 
 # Javascript files
 graft src
 graft style
 prune **/node_modules
 prune lib
-prune scss
-
 prune binder
+prune scss
 prune screenshots
 
 # Patterns to exclude from any directory
@@ -30,6 +25,8 @@ global-exclude .git
 global-exclude .ipynb_checkpoints
 
 exclude .eslintignore
+exclude .eslintrc
 exclude .prettierignore
 exclude .prettierrc
 exclude .stylelintrc
+exclude yarn.lock
