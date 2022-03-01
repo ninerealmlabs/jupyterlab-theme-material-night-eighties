@@ -77,5 +77,5 @@ jupyter lab build --minimize=False
 pip uninstall jupyterlab_material_darker
 jupyter labextension uninstall @ahgraber/jupyterlab_material_darker
 # may have to delete file manually
-rm -rf /path/to/envs/ENVNAME/share/jupyter/labextensions/@ahgraber/jupyterlab_material_darker
+rm -rf /path/to/envs/ENVNAME/share/jupyter/labextensions/@ninerealmlabs/jupyterlab_material_darker
 ```
