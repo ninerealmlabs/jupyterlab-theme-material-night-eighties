@@ -5,8 +5,9 @@ include pyproject.toml
 include package.json
 include install.json
 include ts*.json
+include yarn.lock
 
-graft jupyterlab_material_darker/labextension/
+graft jupyterlab_material_darker/labextension
 
 # Javascript files
 graft src
@@ -25,8 +26,7 @@ global-exclude .git
 global-exclude .ipynb_checkpoints
 
 exclude .eslintignore
-exclude .eslintrc
+exclude .eslintrc.js
 exclude .prettierignore
 exclude .prettierrc
 exclude .stylelintrc
-exclude yarn.lock
