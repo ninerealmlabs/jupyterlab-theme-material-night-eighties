@@ -7,23 +7,23 @@ Theme for jupyterlab based on [jupyterlab/theme-cookiecutter](https://github.com
 
 ## Installation
 
-```bash
+```sh
+# currently not published to pip
 pip install jupyterlab_material_darker
 ```
 
-<!--
 Themes can be installed directly from `npm` using the standard JupyterLab installation method:
 
-```
+```sh
 jupyter labextension install @ninerealmlabs/{THEMENAME}
 ```
 
 Themes can also be installed from source.  From a theme's subdirectory:
 
-```
+```sh
 npm install
 jupyter labextension link .
-``` -->
+```
 
 ## Screenshots
 
