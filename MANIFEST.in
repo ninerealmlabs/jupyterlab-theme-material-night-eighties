@@ -6,6 +6,9 @@ include jupyter-config/jupyterlab_material_darker.json
 include package.json
 include install.json
 include ts*.json
+include *.js
+include *.lock
+include *.md
 
 graft jupyterlab_material_darker/labextension
 
@@ -14,6 +17,7 @@ graft src
 graft style
 prune **/node_modules
 prune lib
+prune scss
 
 # Patterns to exclude from any directory
 global-exclude *~
