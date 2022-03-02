@@ -1,4 +1,4 @@
-# Making a new release of jupyterlab_material_darker
+# Making a new release of jupyterlab_material_night_eighties
 
 The extension can be published to `PyPI` and `npm` manually or using the [Jupyter Releaser](https://github.com/jupyter-server/jupyter_releaser).
 
