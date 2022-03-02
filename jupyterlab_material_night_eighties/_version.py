@@ -1,10 +1,10 @@
 import json
-from pathlib import Path
+import os
 
 __all__ = ["__version__"]
 
 def _fetchVersion():
-    HERE = Path(__file__).parent.resolve()
+    HERE = os.path.abspath(os.path.dirname(__file__))
 
     for settings in HERE.rglob("package.json"):
         try:

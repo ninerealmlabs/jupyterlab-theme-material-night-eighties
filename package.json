@@ -1,17 +1,17 @@
 {
   "name": "@ninerealmlabs/jupyterlab_material_night_eighties",
-  "version": "v0.2.5",
+  "version": "v0.2.6",
   "description": "A jupyterlab theme inspired by material darker",
   "keywords": [
     "jupyter",
     "jupyterlab",
     "jupyterlab-extension"
   ],
-  "homepage": "https://github.com/ninerealmlabs/jupyterlab_material_night_eighties",
+  "homepage": "https://github.com/ninerealmlabs/jupyterlab-theme-material-night-eighties",
   "bugs": {
-    "url": "https://github.com/ninerealmlabs/jupyterlab_material_night_eighties/issues"
+    "url": "https://github.com/ninerealmlabs/jupyterlab-theme-material-night-eighties/issues"
   },
-  "author": {"name": "ninerealmlabs"},
+  "author":"ninerealmlabs",
   "license": "BSD-3-Clause",
   "files": [
     "lib/**/*.{d.ts,eot,gif,html,jpg,js,js.map,json,png,svg,woff2,ttf}",
@@ -22,7 +22,7 @@
   "style": "style/index.css",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ninerealmlabs/jupyterlab_material_night_eighties.git"
+    "url": "git+https://github.com/ninerealmlabs/jupyterlab-theme-material-night-eighties.git"
   },
   "scripts": {
     "build": "jlpm build:lib && jlpm build:labextension:dev",
