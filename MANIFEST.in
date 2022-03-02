@@ -7,7 +7,7 @@ include install.json
 include ts*.json
 include yarn.lock
 
-graft jupyterlab_material_darker/labextension
+graft jupyterlab_material_night_eighties/labextension
 
 # Javascript files
 graft src

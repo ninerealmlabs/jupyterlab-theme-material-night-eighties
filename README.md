@@ -1,6 +1,6 @@
-# JupyterLab Material Darker theme
+# JupyterLab Material Night Eighties theme
 
-[![Build](https://github.com/ninerealmlabs/jupyterlab-theme-material-darker/actions/workflows/build.yml/badge.svg)](https://github.com/ninerealmlabs/jupyterlab-theme-material-darker/actions/workflows/build.yml) [![Node.js Package](https://github.com/ninerealmlabs/jupyterlab-theme-material-darker/actions/workflows/npm-publish.yml/badge.svg)](https://github.com/ninerealmlabs/jupyterlab-theme-material-darker/actions/workflows/npm-publish.yml)
+[![Build](https://github.com/ninerealmlabs/jupyterlab-theme-material-night-eighties/actions/workflows/build.yml/badge.svg)](https://github.com/ninerealmlabs/jupyterlab-theme-material-night-eighties/actions/workflows/build.yml) [![Node.js Package](https://github.com/ninerealmlabs/jupyterlab-theme-material-night-eighties/actions/workflows/npm-publish.yml/badge.svg)](https://github.com/ninerealmlabs/jupyterlab-theme-material-night-eighties/actions/workflows/npm-publish.yml)
 
 Theme for jupyterlab based on [jupyterlab/theme-cookiecutter](https://github.com/jupyterlab/theme-cookiecutter), inspired by [oriolmirosa/jupyterlab_materialdarker](https://github.com/oriolmirosa/jupyterlab_materialdarker),
 [arbennett/jupyterlab-themes](https://github.com/arbennett/jupyterlab-themes), and [base16](https://github.com/chriskempson/base16)
@@ -9,13 +9,13 @@ Theme for jupyterlab based on [jupyterlab/theme-cookiecutter](https://github.com
 
 ```sh
 # currently not published to pip
-pip install jupyterlab_material_darker
+pip install jupyterlab_material_night_eighties
 ```
 
 Themes can be installed directly from `npm` using the standard JupyterLab installation method:
 
 ```sh
-jupyter labextension install @ninerealmlabs/{THEMENAME}
+jupyter labextension install @ninerealmlabs/jupyterlab_material_night_eighties
 ```
 
 Themes can also be installed from source.  From a theme's subdirectory:
@@ -27,7 +27,7 @@ jupyter labextension link .
 
 ## Screenshots
 
-![material_darker](./screenshots/material_darker.png 'material_darker theme screenshot')
+![material_darker](./screenshots/material_night_eighties.png 'material_night_eighties theme screenshot')
 
 <!--
 ![theme_wallpaper](./screenshots/themer.png "theme wallpaper")
@@ -47,7 +47,7 @@ The `jlpm` command is JupyterLab's pinned version of
 
 ```bash
 # Clone the repo to your local environment
-# Change directory to the jupyterlab_material_darker directory
+# Change directory to the jupyterlab_material_night_eighties directory
 # Install package in development mode
 pip install -e .
 # Link your development version of the extension with JupyterLab
@@ -80,8 +80,8 @@ jupyter lab build --minimize=False
 ### Uninstall
 
 ```bash
-pip uninstall jupyterlab_material_darker
-jupyter labextension uninstall @ahgraber/jupyterlab_material_darker
+pip uninstall jupyterlab_material_night_eighties
+jupyter labextension uninstall @ninerealmlabs/jupyterlab_material_night_eighties
 # may have to delete file manually
-rm -rf /path/to/envs/ENVNAME/share/jupyter/labextensions/@ninerealmlabs/jupyterlab_material_darker
+rm -rf /path/to/envs/ENVNAME/share/jupyter/labextensions/@ninerealmlabs/jupyterlab_material_night_eighties
 ```
