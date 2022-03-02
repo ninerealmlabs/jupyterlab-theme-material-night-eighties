@@ -18,7 +18,7 @@ Themes can be installed directly from `npm` using the standard JupyterLab instal
 jupyter labextension install @ninerealmlabs/jupyterlab_material_night_eighties
 ```
 
-Themes can also be installed from source.  From a theme's subdirectory:
+Themes can also be installed from source. From a theme's subdirectory:
 
 ```sh
 npm install
