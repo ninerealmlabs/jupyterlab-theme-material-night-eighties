@@ -1,5 +1,5 @@
 """
-jupyterlab_material_night_eighties setup
+jupyterlab_material_night_eighties
 """
 import json
 import os
