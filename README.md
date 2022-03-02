@@ -85,3 +85,19 @@ jupyter labextension uninstall @ninerealmlabs/jupyterlab_material_night_eighties
 # may have to delete file manually
 rm -rf /path/to/envs/ENVNAME/share/jupyter/labextensions/@ninerealmlabs/jupyterlab_material_night_eighties
 ```
+
+## Bumping versions
+
+Via [arbennett/jupyterlab-themes](https://github.com/arbennett/jupyterlab-themes)
+
+> Because I have cobbled together a strange workflow for updating all of the themes at once it's a bit unwieldy
+> to update the versioning consistently. This is the command I use (mostly for my own sake):
+
+```sh
+CURRENT_VERSION="v0.2.5"
+NEW_VERSION="v0.2.6"
+# add blank '' for mac sed
+sed -i '' "s/\"version\": \"${CURRENT_VERSION}\"/\"version\": \"${NEW_VERSION}\"/g" ./**/package.json
+sed -i '' "s/\"version\": \"${CURRENT_VERSION}\"/\"version\": \"${NEW_VERSION}\"/g" ./**/package-lock.json
+npm install
+```
