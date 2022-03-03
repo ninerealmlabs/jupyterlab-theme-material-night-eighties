@@ -95,23 +95,17 @@
   /* The dark theme shadows need a bit of work, but this will probably also require work on the core layout
    * colors used in the theme as well. */
   --jp-shadow-base-lightness: 32;
-  --jp-shadow-umbra-color: rgba(
-    var(--jp-shadow-base-lightness),
-    var(--jp-shadow-base-lightness),
-    var(--jp-shadow-base-lightness),
-    20%
+  --jp-shadow-umbra-color: rgb(
+    var(--jp-shadow-base-lightness) var(--jp-shadow-base-lightness)
+      var(--jp-shadow-base-lightness) / 20%
   );
-  --jp-shadow-penumbra-color: rgba(
-    var(--jp-shadow-base-lightness),
-    var(--jp-shadow-base-lightness),
-    var(--jp-shadow-base-lightness),
-    14%
+  --jp-shadow-penumbra-color: rgb(
+    var(--jp-shadow-base-lightness) var(--jp-shadow-base-lightness)
+      var(--jp-shadow-base-lightness) / 14%
   );
-  --jp-shadow-ambient-color: rgba(
-    var(--jp-shadow-base-lightness),
-    var(--jp-shadow-base-lightness),
-    var(--jp-shadow-base-lightness),
-    12%
+  --jp-shadow-ambient-color: rgb(
+    var(--jp-shadow-base-lightness) var(--jp-shadow-base-lightness)
+      var(--jp-shadow-base-lightness) / 12%
   );
   --jp-elevation-z0: none;
   --jp-elevation-z1: 0 2px 1px -1px var(--jp-shadow-umbra-color),
