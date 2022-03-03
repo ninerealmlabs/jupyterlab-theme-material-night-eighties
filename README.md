@@ -35,7 +35,11 @@ jupyter labextension link .
 
 ## Requirements
 
-- JupyterLab >= 3.1
+- node/npm
+- python
+  - jupyterlab >= 3.1
+  - jupyter-packaging
+- typescript
 
 ## Development install
 
