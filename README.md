@@ -2,14 +2,16 @@
 
 [![Build](https://github.com/ninerealmlabs/jupyterlab-theme-material-night-eighties/actions/workflows/build.yml/badge.svg)](https://github.com/ninerealmlabs/jupyterlab-theme-material-night-eighties/actions/workflows/build.yml) [![Node.js Package](https://github.com/ninerealmlabs/jupyterlab-theme-material-night-eighties/actions/workflows/npm-publish.yml/badge.svg)](https://github.com/ninerealmlabs/jupyterlab-theme-material-night-eighties/actions/workflows/npm-publish.yml)
 
-Theme for jupyterlab based on [jupyterlab/theme-cookiecutter](https://github.com/jupyterlab/theme-cookiecutter), inspired by [oriolmirosa/jupyterlab_materialdarker](https://github.com/oriolmirosa/jupyterlab_materialdarker),
-[arbennett/jupyterlab-themes](https://github.com/arbennett/jupyterlab-themes), and [base16](https://github.com/chriskempson/base16)
+Theme for jupyterlab based on [jupyterlab/theme-extension-cookiecutter-ts](https://github.com/jupyterlab/extension-cookiecutter-ts),
+inspired by [oriolmirosa/jupyterlab_materialdarker](https://github.com/oriolmirosa/jupyterlab_materialdarker),
+[arbennett/jupyterlab-themes](https://github.com/arbennett/jupyterlab-themes), [VSCode Material Theme Kit](https://marketplace.visualstudio.com/items?itemName=ms-vscode.Theme-MaterialKit),
+and [base16](https://github.com/chriskempson/base16)
 
 ## Installation
 
 ```sh
 # currently not published to pip
-pip install jupyterlab_material_night_eighties
+pip install jupyterlab-material-night-eighties
 ```
 
 Themes can be installed directly from `npm` using the standard JupyterLab installation method:
@@ -27,7 +29,7 @@ jupyter labextension link .
 
 ## Screenshots
 
-![material_darker](./screenshots/material_night_eighties.png 'material_night_eighties theme screenshot')
+![material_night_eighties](./screenshots/material_night_eighties.png 'material_night_eighties theme screenshot')
 
 <!--
 ![theme_wallpaper](./screenshots/themer.png "theme wallpaper")
@@ -98,8 +100,8 @@ Via [arbennett/jupyterlab-themes](https://github.com/arbennett/jupyterlab-themes
 > to update the versioning consistently. This is the command I use (mostly for my own sake):
 
 ```sh
-CURRENT_VERSION="v0.2.5"
-NEW_VERSION="v0.2.6"
+CURRENT_VERSION="v0.0.0"
+NEW_VERSION="v0.0.0"
 # add blank '' for mac sed
 sed -i '' "s/\"version\": \"${CURRENT_VERSION}\"/\"version\": \"${NEW_VERSION}\"/g" ./**/package.json
 sed -i '' "s/\"version\": \"${CURRENT_VERSION}\"/\"version\": \"${NEW_VERSION}\"/g" ./**/package-lock.json
