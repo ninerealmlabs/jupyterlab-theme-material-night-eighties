@@ -10,7 +10,6 @@ and [base16](https://github.com/chriskempson/base16)
 ## Installation
 
 ```sh
-# currently not published to pip
 pip install jupyterlab-material-night-eighties
 ```
 
