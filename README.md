@@ -99,8 +99,8 @@ Via [arbennett/jupyterlab-themes](https://github.com/arbennett/jupyterlab-themes
 > to update the versioning consistently. This is the command I use (mostly for my own sake):
 
 ```sh
-CURRENT_VERSION="v0.0.0"
-NEW_VERSION="v0.0.0"
+CURRENT_VERSION="v0.2.8"
+NEW_VERSION="v0.2.9"
 # add blank '' for mac sed
 sed -i '' "s/\"version\": \"${CURRENT_VERSION}\"/\"version\": \"${NEW_VERSION}\"/g" ./**/package.json
 sed -i '' "s/\"version\": \"${CURRENT_VERSION}\"/\"version\": \"${NEW_VERSION}\"/g" ./**/package-lock.json
