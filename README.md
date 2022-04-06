@@ -50,7 +50,7 @@ The `jlpm` command is JupyterLab's pinned version of
 [yarn](https://yarnpkg.com/) that is installed with JupyterLab. You may use
 `yarn` or `npm` in lieu of `jlpm` below.
 
-```bash
+```sh
 # Clone the repo to your local environment
 # Change directory to the jupyterlab_material_night_eighties directory
 # Install package in development mode
@@ -70,7 +70,7 @@ jlpm run watch
 
 _Run JupyterLab in another terminal_
 
-```bash
+```sh
 jupyter lab
 ```
 
@@ -78,13 +78,13 @@ With the watch command running, every saved change will immediately be built loc
 
 By default, the `jlpm run build` command generates the source maps for this extension to make it easier to debug using the browser dev tools. To also generate source maps for the JupyterLab core extensions, you can run the following command:
 
-```bash
+```sh
 jupyter lab build --minimize=False
 ```
 
 ### Uninstall
 
-```bash
+```sh
 pip uninstall jupyterlab_material_night_eighties
 jupyter labextension uninstall @ninerealmlabs/jupyterlab_material_night_eighties
 # may have to delete file manually
@@ -99,10 +99,24 @@ Via [arbennett/jupyterlab-themes](https://github.com/arbennett/jupyterlab-themes
 > to update the versioning consistently. This is the command I use (mostly for my own sake):
 
 ```sh
-CURRENT_VERSION="v0.2.8"
-NEW_VERSION="v0.2.9"
+CURRENT_VERSION="v0.2.9"
+NEW_VERSION="v0.2.10"
 # add blank '' for mac sed
 sed -i '' "s/\"version\": \"${CURRENT_VERSION}\"/\"version\": \"${NEW_VERSION}\"/g" ./**/package.json
 sed -i '' "s/\"version\": \"${CURRENT_VERSION}\"/\"version\": \"${NEW_VERSION}\"/g" ./**/package-lock.json
+
 npm install
+```
+
+## Updating dependencies
+
+Copy `devDependencies` in [`package.json`](./package.json) from [jupyterlab-extension-cookiecutter-ts](https://github.com/jupyterlab/extension-cookiecutter-ts/blob/3.0/%7B%7Bcookiecutter.python_name%7D%7D/package.json)
+
+Then run
+
+```sh
+rm package-lock.json yarn.lock
+npm update
+npm install
+yarn install
 ```
