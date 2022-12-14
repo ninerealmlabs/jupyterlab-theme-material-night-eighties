@@ -7,7 +7,13 @@ inspired by [oriolmirosa/jupyterlab_materialdarker](https://github.com/oriolmiro
 [arbennett/jupyterlab-themes](https://github.com/arbennett/jupyterlab-themes), [VSCode Material Theme Kit](https://marketplace.visualstudio.com/items?itemName=ms-vscode.Theme-MaterialKit),
 and [base16](https://github.com/chriskempson/base16)
 
+## Requirements
+
+- JupyterLab >= 3.0
+
 ## Installation
+
+To install the extension, execute:
 
 ```sh
 pip install jupyterlab-material-night-eighties
@@ -19,12 +25,12 @@ Themes can be installed directly from `npm` using the standard JupyterLab instal
 jupyter labextension install @ninerealmlabs/jupyterlab_material_night_eighties
 ```
 
-Themes can also be installed from source. From a theme's subdirectory:
+<!-- Themes can also be installed from source. From a theme's subdirectory:
 
 ```sh
 npm install
 jupyter labextension link .
-```
+``` -->
 
 ## Screenshots
 
@@ -34,15 +40,9 @@ jupyter labextension link .
 ![theme_wallpaper](./screenshots/themer.png "theme wallpaper")
 -->
 
-## Requirements
+## Contributing
 
-- node/npm
-- python
-  - jupyterlab >= 3.1
-  - jupyter-packaging
-- typescript
-
-## Development install
+### Development install
 
 Note: You will need NodeJS to build the extension package.
 
@@ -50,7 +50,7 @@ The `jlpm` command is JupyterLab's pinned version of
 [yarn](https://yarnpkg.com/) that is installed with JupyterLab. You may use
 `yarn` or `npm` in lieu of `jlpm` below.
 
-```sh
+```bash
 # Clone the repo to your local environment
 # Change directory to the jupyterlab_material_night_eighties directory
 # Install package in development mode
@@ -58,7 +58,7 @@ pip install -e .
 # Link your development version of the extension with JupyterLab
 jupyter labextension develop . --overwrite
 # Rebuild extension Typescript source after making changes
-jlpm run build
+jlpm build
 ```
 
 You can watch the source directory and run JupyterLab at the same time in different terminals to watch for changes in the extension's source and automatically rebuild the extension.
@@ -76,39 +76,13 @@ jupyter lab
 
 With the watch command running, every saved change will immediately be built locally and available in your running JupyterLab. Refresh JupyterLab to load the change in your browser (you may need to wait several seconds for the extension to be rebuilt).
 
-By default, the `jlpm run build` command generates the source maps for this extension to make it easier to debug using the browser dev tools. To also generate source maps for the JupyterLab core extensions, you can run the following command:
+By default, the `jlpm build` command generates the source maps for this extension to make it easier to debug using the browser dev tools. To also generate source maps for the JupyterLab core extensions, you can run the following command:
 
-```sh
+```bash
 jupyter lab build --minimize=False
 ```
 
-### Uninstall
-
-```sh
-pip uninstall jupyterlab_material_night_eighties
-jupyter labextension uninstall @ninerealmlabs/jupyterlab_material_night_eighties
-# may have to delete file manually
-rm -rf /path/to/envs/ENVNAME/share/jupyter/labextensions/@ninerealmlabs/jupyterlab_material_night_eighties
-```
-
-## Bumping versions
-
-Via [arbennett/jupyterlab-themes](https://github.com/arbennett/jupyterlab-themes)
-
-> Because I have cobbled together a strange workflow for updating all of the themes at once it's a bit unwieldy
-> to update the versioning consistently. This is the command I use (mostly for my own sake):
-
-```sh
-CURRENT_VERSION="v0.2.9"
-NEW_VERSION="v0.2.10"
-# add blank '' for mac sed
-sed -i '' "s/\"version\": \"${CURRENT_VERSION}\"/\"version\": \"${NEW_VERSION}\"/g" ./**/package.json
-sed -i '' "s/\"version\": \"${CURRENT_VERSION}\"/\"version\": \"${NEW_VERSION}\"/g" ./**/package-lock.json
-
-npm install
-```
-
-## Updating dependencies
+### Updating dependencies
 
 Copy `devDependencies` in [`package.json`](./package.json) from [jupyterlab-extension-cookiecutter-ts](https://github.com/jupyterlab/extension-cookiecutter-ts/blob/3.0/%7B%7Bcookiecutter.python_name%7D%7D/package.json)
 
@@ -120,3 +94,17 @@ npm update
 npm install
 yarn install
 ```
+
+### Development uninstall
+
+```bash
+pip uninstall jupyterlab-material-night-eighties
+```
+
+In development mode, you will also need to remove the symlink created by `jupyter labextension develop`
+command. To find its location, you can run `jupyter labextension list` to figure out where the `labextensions`
+folder is located. Then you can remove the symlink named `jupyterlab_material_night_eighties` within that folder.
+
+### Packaging the extension
+
+See [RELEASE](RELEASE.md)
