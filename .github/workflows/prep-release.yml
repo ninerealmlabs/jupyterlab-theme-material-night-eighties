@@ -1,3 +1,5 @@
+---
+# bumps version, generates changelog, drafts GH release
 name: "Step 1: Prep Release"
 on:
   workflow_dispatch:

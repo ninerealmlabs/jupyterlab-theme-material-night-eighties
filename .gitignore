@@ -119,3 +119,4 @@ dmypy.json
 
 # OSX files
 .DS_Store
+default.profraw

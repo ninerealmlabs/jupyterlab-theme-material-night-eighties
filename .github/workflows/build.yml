@@ -1,10 +1,15 @@
+---
+# runs build steps
+# deprecated; using jupyter_releaser workflows
 name: Build
 
 on:
-  push:
-    branches: main
-  pull_request:
-    branches: '*'
+  # use workflow_dispatch as manual trigger;
+  workflow_dispatch:
+#   push:
+#     branches: main
+#   pull_request:
+#     branches: '*'
 
 jobs:
   build:

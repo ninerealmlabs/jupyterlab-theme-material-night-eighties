@@ -1,3 +1,7 @@
+---
+# from draft GH release from 'Prep Release' job
+# populate release: bumps version, builds python/npm packages, maps tag, sha, hash, etc
+# finalize release: checks dists/shas, publishes packages to pypi/npm, publishes release
 name: "Step 2: Publish Release"
 on:
   workflow_dispatch:
