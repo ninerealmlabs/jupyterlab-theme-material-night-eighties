@@ -1,7 +1,6 @@
 ---
-# verifies compatibility and release-ability
-# uses dry-run mode; does not make PRs or push changes
-name: Check Release
+# runs every push / PR
+name: Check
 on:
   workflow_dispatch:
   push:
@@ -10,6 +9,16 @@ on:
     branches: ["*"]
 
 jobs:
+  # runs pre-commit
+  pre_commit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: jupyterlab/maintainer-tools/.github/actions/base-setup@v1
+      - uses: jupyterlab/maintainer-tools/.github/actions/pre-commit@v1
+
+  # verifies compatibility and release-ability
+  # uses dry-run mode; does not make PRs or push changes
   check_release:
     runs-on: ubuntu-latest
     steps:
