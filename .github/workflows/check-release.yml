@@ -3,6 +3,7 @@
 # uses dry-run mode; does not make PRs or push changes
 name: Check Release
 on:
+  workflow_dispatch:
   push:
     branches: ["main"]
   pull_request:
