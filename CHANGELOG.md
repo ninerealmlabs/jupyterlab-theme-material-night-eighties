@@ -31,4 +31,4 @@
 
 ## v0.2.1
 
-- update jupyterlab>=3.1.*
+- update jupyterlab>=3.1.\*

@@ -34,7 +34,7 @@ jupyter labextension link .
 
 ## Screenshots
 
-![material_night_eighties](./screenshots/material_night_eighties.png 'material_night_eighties theme screenshot')
+![material_night_eighties](./screenshots/material_night_eighties.png "material_night_eighties theme screenshot")
 
 <!--
 ![theme_wallpaper](./screenshots/themer.png "theme wallpaper")
