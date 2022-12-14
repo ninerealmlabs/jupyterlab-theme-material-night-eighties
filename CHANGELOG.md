@@ -2,12 +2,6 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
-## 0.3.0
-
-- update to jupyterlab/extension-cookiecutter-ts 3.0
-- migrate to new jupyter-releaser
-- bump dependencies
-
 <!-- <END NEW CHANGELOG ENTRY> -->
 
 ## v0.2.10
