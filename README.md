@@ -1,6 +1,6 @@
 # JupyterLab Material Night Eighties theme
 
-[![Build](https://github.com/ninerealmlabs/jupyterlab-theme-material-night-eighties/actions/workflows/build.yml/badge.svg)](https://github.com/ninerealmlabs/jupyterlab-theme-material-night-eighties/actions/workflows/build.yml) [![Node.js Package](https://github.com/ninerealmlabs/jupyterlab-theme-material-night-eighties/actions/workflows/npm-publish.yml/badge.svg)](https://github.com/ninerealmlabs/jupyterlab-theme-material-night-eighties/actions/workflows/npm-publish.yml)
+[![Check](https://github.com/ninerealmlabs/jupyterlab-theme-material-night-eighties/actions/workflows/check-release.yml/badge.svg)](https://github.com/ninerealmlabs/jupyterlab-theme-material-night-eighties/actions/workflows/check-release.yml)[![Publish](https://github.com/ninerealmlabs/jupyterlab-theme-material-night-eighties/actions/workflows/publish-release.yml/badge.svg)](https://github.com/ninerealmlabs/jupyterlab-theme-material-night-eighties/actions/workflows/publish-release.yml)
 
 Theme for jupyterlab based on [jupyterlab/theme-extension-cookiecutter-ts](https://github.com/jupyterlab/extension-cookiecutter-ts),
 inspired by [oriolmirosa/jupyterlab_materialdarker](https://github.com/oriolmirosa/jupyterlab_materialdarker),
