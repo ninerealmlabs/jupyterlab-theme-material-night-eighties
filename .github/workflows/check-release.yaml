@@ -1,12 +1,13 @@
 ---
-# runs every push / PR
+# "Step 0" - runs every push / PR
+# ref: https://jupyter-releaser.readthedocs.io/en/latest/how_to_guides/convert_repo_from_repo.html
 name: Check
-on:
+on: # yamllint disable-line rule:truthy
   workflow_dispatch:
   push:
-    branches: ["main"]
+    branches: ['main']
   pull_request:
-    branches: ["*"]
+    branches: ['*']
 
 jobs:
   # runs pre-commit

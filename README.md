@@ -7,6 +7,16 @@ inspired by [oriolmirosa/jupyterlab_materialdarker](https://github.com/oriolmiro
 [arbennett/jupyterlab-themes](https://github.com/arbennett/jupyterlab-themes), [VSCode Material Theme Kit](https://marketplace.visualstudio.com/items?itemName=ms-vscode.Theme-MaterialKit),
 and [base16](https://github.com/chriskempson/base16)
 
+- [JupyterLab Material Night Eighties theme](#jupyterlab-material-night-eighties-theme)
+  - [Requirements](#requirements)
+  - [Installation](#installation)
+  - [Screenshots](#screenshots)
+  - [Contributing](#contributing)
+    - [Development install](#development-install)
+    - [Updating dependencies](#updating-dependencies)
+    - [Development uninstall](#development-uninstall)
+    - [Packaging the extension](#packaging-the-extension)
+
 ## Requirements
 
 - JupyterLab >= 3.0
@@ -34,7 +44,7 @@ jupyter labextension link .
 
 ## Screenshots
 
-![material_night_eighties](./screenshots/material_night_eighties.png "material_night_eighties theme screenshot")
+![material_night_eighties](./screenshots/material_night_eighties.png 'material_night_eighties theme screenshot')
 
 <!--
 ![theme_wallpaper](./screenshots/themer.png "theme wallpaper")
@@ -61,22 +71,30 @@ jupyter labextension develop . --overwrite
 jlpm build
 ```
 
-You can watch the source directory and run JupyterLab at the same time in different terminals to watch for changes in the extension's source and automatically rebuild the extension.
+You can watch the source directory and run JupyterLab at the same time in different terminals
+to watch for changes in the extension's source and automatically rebuild the extension.
 
-```bash
-# Watch the source directory in one terminal, automatically rebuilding when needed
-jlpm run watch
-```
+- Terminal A:
 
-_Run JupyterLab in another terminal_
+  ```bash
+  # Watch the source directory in one terminal, automatically rebuilding when needed
+  jlpm run watch
+  ```
 
-```sh
-jupyter lab
-```
+- Terminal B:
 
-With the watch command running, every saved change will immediately be built locally and available in your running JupyterLab. Refresh JupyterLab to load the change in your browser (you may need to wait several seconds for the extension to be rebuilt).
+  ```sh
+  jupyter lab
+  ```
 
-By default, the `jlpm build` command generates the source maps for this extension to make it easier to debug using the browser dev tools. To also generate source maps for the JupyterLab core extensions, you can run the following command:
+With the watch command running, every saved change will immediately be built
+locally and available in your running JupyterLab.
+Refresh JupyterLab to load the change in your browser
+(you may need to wait several seconds for the extension to be rebuilt).
+
+By default, the `jlpm build` command generates the source maps for this extension
+to make it easier to debug using the browser dev tools.
+To also generate source maps for the JupyterLab core extensions, you can run the following command:
 
 ```bash
 jupyter lab build --minimize=False

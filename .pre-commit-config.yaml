@@ -3,6 +3,13 @@ ci:
   autoupdate_schedule: monthly
 
 repos:
+  - repo: local
+    hooks:
+      - id: forbid-yml
+        name: Forbid .yaml file extensions (use .yaml)
+        entry: YAML file extension must be .yaml
+        language: fail
+        files: \.yml$
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.4.0
     hooks:
@@ -18,24 +25,80 @@ repos:
       - id: forbid-new-submodules
       - id: check-builtin-literals
       - id: trailing-whitespace
+  - repo: https://github.com/Lucas-C/pre-commit-hooks
+    rev: v1.3.1
+    hooks:
+      - id: remove-crlf
+      - id: remove-tabs
+  - repo: https://github.com/sirosen/texthooks
+    rev: 0.4.0
+    hooks:
+      - id: fix-smartquotes
+      - id: fix-ligatures
+  # Autoformat: YAML, JSON, Markdown, etc.
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v3.0.0-alpha.4 # Use the sha or tag you want to point at
+    hooks:
+      - id: prettier
+        args:
+          - --ignore-unknown
+          # - "--ignore-path '**/*.md'"
+          # - "--ignore-path '**/*.y*ml'"
+
+  # Lint: Markdown
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.32.2 # v0.30.0
+    hooks:
+      - id: markdownlint
+        args:
+          - --config=.markdownlint.yaml
+          - --fix
+        exclude: |
+          (?x)^(
+            CHANGELOG.md
+          )$
+
+  # - repo: https://github.com/executablebooks/mdformat
+  #   rev: 0.7.16
+  #   hooks:
+  #     - id: mdformat
+  # Lint: YAML
+  - repo: https://github.com/adrienverge/yamllint.git
+    rev: v1.28.0
+    hooks:
+      - id: yamllint
+        args:
+          - --config-file=.yamllint.yaml
+          - --format=parsable
+          - --strict
+  # Lint & Format: Python
+  - repo: https://github.com/pycqa/isort
+    rev: 5.11.4
+    hooks:
+      - id: isort
+        name: isort (python)
+  - repo: https://github.com/psf/black
+    rev: 22.12.0
+    hooks:
+      - id: black
+  - repo: https://github.com/pycqa/flake8
+    rev: 6.0.0
+    hooks:
+      - id: flake8
+        additional_dependencies:
+          - flake8-bugbear
+          - flake8-builtins
+          - flake8-colors
+          - flake8-comprehensions
+          - flake8-isort
+          - pep8-naming
+  # - repo: https://github.com/charliermarsh/ruff-pre-commit
+  #   rev: v0.0.178
+  #   hooks:
+  #     - id: ruff
+  #       args: ['--fix']
 
   - repo: https://github.com/python-jsonschema/check-jsonschema
     rev: 0.19.2
     hooks:
       - id: check-github-workflows
-
-  - repo: https://github.com/executablebooks/mdformat
-    rev: 0.7.16
-    hooks:
-      - id: mdformat
-
-  - repo: https://github.com/psf/black
-    rev: 22.12.0
-    hooks:
-      - id: black
-
-  - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: v0.0.178
-    hooks:
-      - id: ruff
-        args: ["--fix"]

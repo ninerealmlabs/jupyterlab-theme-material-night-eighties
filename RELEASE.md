@@ -2,6 +2,34 @@
 
 The extension can be published to `PyPI` and `npm` manually or using the [Jupyter Releaser](https://github.com/jupyter-server/jupyter_releaser).
 
+- [Making a new release of jupyterlab_material_night_eighties](#making-a-new-release-of-jupyterlab_material_night_eighties)
+  - [Automated releases with the Jupyter Releaser](#automated-releases-with-the-jupyter-releaser)
+  - [Manual release](#manual-release)
+    - [Python package](#python-package)
+    - [NPM package](#npm-package)
+
+## Automated releases with the Jupyter Releaser
+
+The extension repository should already be compatible with the Jupyter Releaser.
+
+Check out the [workflow documentation](https://github.com/jupyter-server/jupyter_releaser#typical-workflow) for more information.
+
+Here is a summary of the steps to cut a new release:
+
+- Convert the repo to use [`jupyter-releaser`](https://jupyter-releaser.readthedocs.io/en/latest/how_to_guides/convert_repo_from_repo.html)
+- Add `ADMIN_GITHUB_TOKEN`, `PYPI_TOKEN` and `NPM_TOKEN` to the Github Secrets in the fork
+- Go to the Actions panel
+- Run the "Draft Changelog" workflow
+- Merge the Changelog PR
+- Run the "Draft Release" workflow
+- Run the "Publish Release" workflow
+
+<!-- ## Publishing to `conda-forge`
+
+If the package is not on conda forge yet, check the documentation to learn how to add it: <https://conda-forge.org/docs/maintainer/adding_pkgs.html>
+
+Otherwise a bot should pick up the new version publish to PyPI, and open a new PR on the feedstock repository automatically. -->
+
 ## Manual release
 
 ### Python package
@@ -44,25 +72,3 @@ To publish the frontend part of the extension as a NPM package, do:
 npm login
 npm publish --access public
 ```
-
-## Automated releases with the Jupyter Releaser
-
-The extension repository should already be compatible with the Jupyter Releaser.
-
-Check out the [workflow documentation](https://github.com/jupyter-server/jupyter_releaser#typical-workflow) for more information.
-
-Here is a summary of the steps to cut a new release:
-
-- Convert the repo to use [`jupyter-releaser`](https://jupyter-releaser.readthedocs.io/en/latest/how_to_guides/convert_repo_from_repo.html)
-- Add `ADMIN_GITHUB_TOKEN`, `PYPI_TOKEN` and `NPM_TOKEN` to the Github Secrets in the fork
-- Go to the Actions panel
-- Run the "Draft Changelog" workflow
-- Merge the Changelog PR
-- Run the "Draft Release" workflow
-- Run the "Publish Release" workflow
-
-## Publishing to `conda-forge`
-
-If the package is not on conda forge yet, check the documentation to learn how to add it: https://conda-forge.org/docs/maintainer/adding_pkgs.html
-
-Otherwise a bot should pick up the new version publish to PyPI, and open a new PR on the feedstock repository automatically.
