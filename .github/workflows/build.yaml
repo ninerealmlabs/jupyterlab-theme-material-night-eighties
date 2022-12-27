@@ -49,7 +49,7 @@ jobs:
           pip uninstall -y "jupyterlab_material_night_eighties" jupyterlab
 
       - name: Upload extension packages
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: extension-artifacts
           path: dist/jupyterlab_material_night_eighties*
