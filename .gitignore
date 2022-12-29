@@ -13,6 +13,7 @@ jupyterlab_material_night_eighties/_version.py
 # Integration tests
 ui-tests/test-results/
 ui-tests/playwright-report/
+ui-tests/*lock*
 
 # Created by https://www.gitignore.io/api/python
 # Edit at https://www.gitignore.io/?templates=python
@@ -58,6 +59,7 @@ pip-log.txt
 pip-delete-this-directory.txt
 
 # Unit test / coverage reports
+coverage/
 htmlcov/
 .tox/
 .nox/

@@ -105,3 +105,6 @@ repos:
     rev: 0.19.2
     hooks:
       - id: check-github-workflows
+        # files: ^\.github/workflows/[^/]+$
+        # types: [yaml]
+        # args: ['--schemafile', 'https://json.schemastore.org/github-workflow']
