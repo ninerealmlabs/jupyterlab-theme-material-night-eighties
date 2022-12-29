@@ -41,8 +41,8 @@ artifacts = ["jupyterlab_material_night_eighties/labextension"]
 exclude = [".github", "binder"]
 
 [tool.hatch.build.targets.wheel.shared-data]
-"jupyterlab_material_night_eighties/labextension" = "share/jupyter/labextensions/jupyterlab_material_night_eighties"
-"install.json" = "share/jupyter/labextensions/jupyterlab_material_night_eighties/install.json"
+"jupyterlab_material_night_eighties/labextension" = "share/jupyter/labextensions/@ninerealmlabs/jupyterlab_material_night_eighties"
+"install.json" = "share/jupyter/labextensions/@ninerealmlabs/jupyterlab_material_night_eighties/install.json"
 
 [tool.hatch.build.hooks.version]
 path = "jupyterlab_material_night_eighties/_version.py"
