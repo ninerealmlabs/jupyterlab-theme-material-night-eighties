@@ -17,6 +17,7 @@ const extension: JupyterFrontEndPlugin<void> = {
       'JupyterLab extension jupyterlab_material_night_eighties is activated!'
     );
     const style = '@ninerealmlabs/jupyterlab_material_night_eighties/index.css';
+
     manager.register({
       name: '@ninerealmlabs/jupyterlab_material_night_eighties',
       isLight: false,
