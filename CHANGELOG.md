@@ -2,6 +2,26 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 0.3.2
+
+([Full Changelog](https://github.com/ninerealmlabs/jupyterlab-theme-material-night-eighties/compare/v0.3.1...6abafde8bdad82a2a8655f785a2e25d38458a47b))
+
+### Enhancements made
+
+- Add Features/tests [#26](https://github.com/ninerealmlabs/jupyterlab-theme-material-night-eighties/pull/26) ([@ahgraber](https://github.com/ahgraber))
+
+### Bugs fixed
+
+- Add Features/tests [#26](https://github.com/ninerealmlabs/jupyterlab-theme-material-night-eighties/pull/26) ([@ahgraber](https://github.com/ahgraber))
+
+### Contributors to this release
+
+([GitHub contributors page for this release](https://github.com/ninerealmlabs/jupyterlab-theme-material-night-eighties/graphs/contributors?from=2022-12-28&to=2022-12-30&type=c))
+
+[@ahgraber](https://github.com/search?q=repo%3Aninerealmlabs%2Fjupyterlab-theme-material-night-eighties+involves%3Aahgraber+updated%3A2022-12-28..2022-12-30&type=Issues)
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 0.3.1
 
 ([Full Changelog](https://github.com/ninerealmlabs/jupyterlab-theme-material-night-eighties/compare/v0.3.0...aea710ed3c58f06405ed21627d7658efd62766d0))
@@ -21,8 +41,6 @@
 ([GitHub contributors page for this release](https://github.com/ninerealmlabs/jupyterlab-theme-material-night-eighties/graphs/contributors?from=2022-12-15&to=2022-12-28&type=c))
 
 [@ahgraber](https://github.com/search?q=repo%3Aninerealmlabs%2Fjupyterlab-theme-material-night-eighties+involves%3Aahgraber+updated%3A2022-12-15..2022-12-28&type=Issues) | [@dependabot](https://github.com/search?q=repo%3Aninerealmlabs%2Fjupyterlab-theme-material-night-eighties+involves%3Adependabot+updated%3A2022-12-15..2022-12-28&type=Issues)
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 0.3.0
 
