@@ -1,3 +1,19 @@
+# prettier should ignore
+# .azureml
+# .eggs
+# .ipynb_checkpoints
+# .obsidian
+# .pytest_cache
+.vscode/
+.**/
+dist/
+
+*.md
+
+# ignore local .env from versioning
+.env
+.envrc
+
 node_modules
 **/node_modules
 **/lib

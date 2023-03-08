@@ -76,3 +76,167 @@ version_cmd = "hatch version"
 [tool.jupyter-releaser.hooks]
 before-build-npm = ["python -m pip install jupyterlab~=3.1", "jlpm", "jlpm build:prod"]
 before-build-python = ["jlpm clean:all"]
+
+# --- black ------------------------------------------------------------------
+# ref: https://black.readthedocs.io/en/stable/usage_and_configuration/the_basics.html#configuration-via-a-file
+[tool.black]
+line-length = 100
+# target-version = ['py39']
+include = '\.pyi?$|\.ipynb$'
+extend-exclude = '''
+# # A regex preceded with ^/ will apply only to files and directories
+# # in the root of the project.
+# ^/foo.py  # exclude a file named foo.py in the root of the project (in addition to the defaults)
+\.ipynb_checkpoints$|^/\.env|^/\.git|^/\.nox|^/\.pytest_cache|^/\.tox
+'''
+
+# --- ruff -------------------------------------------------------------------
+[tool.ruff]
+select = [
+  'A', # flake8 builtins
+  'B', # flake8 bugbear
+  'C4', # flake8 comprehensions
+  'C90', # mccabe
+  'E', # pycodestyle
+  'F', # pyflakes
+  'I', # isort
+  'N', # pep8-naming
+  'W', # pycodestyle
+  # 'T20', # flake8 print
+]
+
+# Avoid trying to fix extension types:
+unfixable = ["B"]
+
+ignore = [
+  # "E203", # not in ruff
+  # "E265", # not in ruff
+  # "E266", # not in ruff
+  "E501", # line too long
+  "F401", # unused import
+  "F403", # import *
+  "F405", # defined from import *
+  "F541", # f-string missing placeholders
+  # "W503", # not in ruff
+]
+
+# [per-file-ignores]
+# # Ignore `E402` (import violations) in all `__init__.py` files,
+# # and in `path/to/file.py`.
+# "__init__.py" = ["E402"]
+# "path/to/file.py" = ["E402"]
+
+exclude = [
+  "*.egg-info",
+  ".direnv",
+  ".eggs",
+  ".env",
+  ".envrc",
+  ".git",
+  ".ipynb_checkpoints",
+  ".nox",
+  ".pytest_cache",
+  ".ruff_cache",
+  ".tox",
+  ".venv",
+  "__pypackages__",
+  "_build",
+  "ci/templates",
+  "build",
+  "dist",
+  "docs/conf.py",
+  "venv",
+]
+
+# Default autofix behavior
+fix = true
+
+# Max line length
+line-length = 119
+
+# Directories with source code
+src = ["src", "tests"]
+
+# Assumed Python version
+target-version = "py39"
+
+# --- ruff plugins --------------------
+[tool.ruff.isort]
+combine-as-imports = true
+force-sort-within-sections = true
+force-wrap-aliases = true
+# extra-standard-library = ["path"]
+known-first-party = ["src",]
+
+[tool.ruff.mccabe]
+max-complexity = 18
+
+[tool.ruff.pep8-naming]
+ignore-names = []
+
+
+# --- pytest -----------------------------------------------------------------
+# ref: https://docs.pytest.org/en/6.2.x/customize.html
+[tool.pytest.ini_options]
+addopts = '''
+    -ra
+    --strict-markers
+    --ignore=docs/conf.py
+    --ignore=setup.py
+    --ignore=ci
+    --ignore=.eggs
+    --tb=short
+'''
+    # --doctest-modules
+    # --doctest-glob=\*.rst
+norecursedirs = [
+    ".env",
+    ".git",
+    ".nox",
+    ".pytest_cache",
+    ".tox",
+    "__pycache__",
+    "dist",
+    "docs",
+    "build",
+    "migrations",
+    "notebooks",
+    "writeup",
+]
+python_files = [
+    "test_*.py",
+    "*_test.py",
+    "tests.py",
+]
+testpaths = [
+    "tests",
+]
+# log_cli = true
+
+
+# --- coverage ---------------------------------------------------------------
+[tool.coverage.paths]
+source = ["src", "*/site-packages"]
+
+[tool.coverage.run]
+branch = true
+source = ["src"]
+
+[tool.coverage.report]
+show_missing = true
+
+# --- check-manifest ---------------------------------------------------------
+# ref: https://github.com/mgedmin/check-manifest
+[tool.check-manifest]
+ignore = [
+    ".ci/",
+    "data/",
+    "docker/",
+    "functions/",
+    "notebooks/",
+    "queries/",
+    "writeup/",
+    "noxfile.py",
+    "*.md",
+    ".*",
+]

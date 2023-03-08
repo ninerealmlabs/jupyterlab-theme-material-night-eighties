@@ -6,38 +6,43 @@ repos:
   - repo: local
     hooks:
       - id: forbid-yml
-        name: Forbid .yaml file extensions (use .yaml)
-        entry: YAML file extension must be .yaml
+        name: Forbid .yml file extensions (use .yaml)
+        entry: YAML file extensions must be .yaml
         language: fail
         files: \.yml$
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0
+    rev: "v4.4.0" # v3.2.0
     hooks:
       - id: end-of-file-fixer
       - id: check-case-conflict
       - id: check-executables-have-shebangs
       - id: requirements-txt-fixer
       - id: check-added-large-files
+        args: [--maxkb=500000]
       - id: check-case-conflict
+      - id: check-merge-conflict
       - id: check-toml
       - id: check-yaml
       - id: debug-statements
       - id: forbid-new-submodules
       - id: check-builtin-literals
+      - id: end-of-file-fixer
+      - id: mixed-line-ending
       - id: trailing-whitespace
+        args: [--markdown-linebreak-ext=md]
   - repo: https://github.com/Lucas-C/pre-commit-hooks
-    rev: v1.3.1
+    rev: "v1.4.2" # v1.1.10
     hooks:
       - id: remove-crlf
       - id: remove-tabs
   - repo: https://github.com/sirosen/texthooks
-    rev: 0.4.0
+    rev: 0.5.0 # 0.2.0
     hooks:
       - id: fix-smartquotes
       - id: fix-ligatures
   # Autoformat: YAML, JSON, Markdown, etc.
   - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v3.0.0-alpha.4 # Use the sha or tag you want to point at
+    rev: "v3.0.0-alpha.6" # Use the sha or tag you want to point at
     hooks:
       - id: prettier
         args:
@@ -50,7 +55,7 @@ repos:
         #   )$
   # Lint: Markdown
   - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.32.2 # v0.30.0
+    rev: v0.33.0 # v0.30.0
     hooks:
       - id: markdownlint
         args:
@@ -67,7 +72,7 @@ repos:
   #     - id: mdformat
   # Lint: YAML
   - repo: https://github.com/adrienverge/yamllint.git
-    rev: v1.28.0
+    rev: v1.29.0
     hooks:
       - id: yamllint
         args:
@@ -75,34 +80,20 @@ repos:
           - --format=parsable
           - --strict
   # Lint & Format: Python
-  - repo: https://github.com/pycqa/isort
-    rev: 5.11.4
+  - repo: https://github.com/charliermarsh/ruff-pre-commit
+    # Ruff version.
+    rev: "v0.0.254"
     hooks:
-      - id: isort
-        name: isort (python)
+      - id: ruff
+        args: [--fix]
+
   - repo: https://github.com/psf/black
-    rev: 22.12.0
+    rev: "23.1.0" # 21.11b1
     hooks:
       - id: black
-  - repo: https://github.com/pycqa/flake8
-    rev: 6.0.0
-    hooks:
-      - id: flake8
-        additional_dependencies:
-          - flake8-bugbear
-          - flake8-builtins
-          - flake8-colors
-          - flake8-comprehensions
-          - flake8-isort
-          - pep8-naming
-  # - repo: https://github.com/charliermarsh/ruff-pre-commit
-  #   rev: v0.0.178
-  #   hooks:
-  #     - id: ruff
-  #       args: ['--fix']
 
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 0.19.2
+    rev: 0.21.0
     hooks:
       - id: check-github-workflows
         # files: ^\.github/workflows/[^/]+$
