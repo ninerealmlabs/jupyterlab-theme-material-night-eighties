@@ -14,8 +14,9 @@ dist/
 .env
 .envrc
 
-node_modules
-**/node_modules
-**/lib
+coverage/
+node_modules/
+**/node_modules/
+**/lib/
 **/package.json
-jupyterlab_material_night_eighties
+jupyterlab_material_night_eighties/

@@ -11,7 +11,7 @@ repos:
         language: fail
         files: \.yml$
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: "v4.4.0" # v3.2.0
+    rev: 'v4.4.0' # v3.2.0
     hooks:
       - id: end-of-file-fixer
       - id: check-case-conflict
@@ -31,7 +31,7 @@ repos:
       - id: trailing-whitespace
         args: [--markdown-linebreak-ext=md]
   - repo: https://github.com/Lucas-C/pre-commit-hooks
-    rev: "v1.4.2" # v1.1.10
+    rev: 'v1.4.2' # v1.1.10
     hooks:
       - id: remove-crlf
       - id: remove-tabs
@@ -42,7 +42,7 @@ repos:
       - id: fix-ligatures
   # Autoformat: YAML, JSON, Markdown, etc.
   - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: "v3.0.0-alpha.6" # Use the sha or tag you want to point at
+    rev: 'v3.0.0-alpha.6' # Use the sha or tag you want to point at
     hooks:
       - id: prettier
         args:
@@ -82,13 +82,13 @@ repos:
   # Lint & Format: Python
   - repo: https://github.com/charliermarsh/ruff-pre-commit
     # Ruff version.
-    rev: "v0.0.254"
+    rev: 'v0.0.254'
     hooks:
       - id: ruff
         args: [--fix]
 
   - repo: https://github.com/psf/black
-    rev: "23.1.0" # 21.11b1
+    rev: '23.1.0' # 21.11b1
     hooks:
       - id: black
 
