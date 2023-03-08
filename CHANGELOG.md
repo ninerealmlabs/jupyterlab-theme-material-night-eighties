@@ -2,6 +2,30 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 0.3.3
+
+([Full Changelog](https://github.com/ninerealmlabs/jupyterlab-theme-material-night-eighties/compare/v0.3.2...17b4c0407502f6837b106cb917ca55d5c957644f))
+
+### Maintenance and upkeep improvements
+
+- Bump marked from 0.3.19 to 4.2.4 [#38](https://github.com/ninerealmlabs/jupyterlab-theme-material-night-eighties/pull/38) ([@dependabot](https://github.com/dependabot))
+- Bump actions/checkout from 2 to 3 [#37](https://github.com/ninerealmlabs/jupyterlab-theme-material-night-eighties/pull/37) ([@dependabot](https://github.com/dependabot))
+- Bump @jupyterlab/application from 3.5.1 to 3.6.1 [#36](https://github.com/ninerealmlabs/jupyterlab-theme-material-night-eighties/pull/36) ([@dependabot](https://github.com/dependabot))
+- Bump typescript from 4.1.6 to 4.9.5 [#35](https://github.com/ninerealmlabs/jupyterlab-theme-material-night-eighties/pull/35) ([@dependabot](https://github.com/dependabot))
+- Bump http-cache-semantics from 4.1.0 to 4.1.1 [#34](https://github.com/ninerealmlabs/jupyterlab-theme-material-night-eighties/pull/34) ([@dependabot](https://github.com/dependabot))
+- Bump json5 from 1.0.1 to 1.0.2 [#32](https://github.com/ninerealmlabs/jupyterlab-theme-material-night-eighties/pull/32) ([@dependabot](https://github.com/dependabot))
+- Bump stylelint-config-recommended from 6.0.0 to 9.0.0 [#31](https://github.com/ninerealmlabs/jupyterlab-theme-material-night-eighties/pull/31) ([@dependabot](https://github.com/dependabot))
+- Bump stylelint from 14.16.0 to 14.16.1 [#30](https://github.com/ninerealmlabs/jupyterlab-theme-material-night-eighties/pull/30) ([@dependabot](https://github.com/dependabot))
+- Bump eslint-plugin-prettier from 3.4.1 to 4.2.1 [#29](https://github.com/ninerealmlabs/jupyterlab-theme-material-night-eighties/pull/29) ([@dependabot](https://github.com/dependabot))
+
+### Contributors to this release
+
+([GitHub contributors page for this release](https://github.com/ninerealmlabs/jupyterlab-theme-material-night-eighties/graphs/contributors?from=2022-12-30&to=2023-03-08&type=c))
+
+[@ahgraber](https://github.com/search?q=repo%3Aninerealmlabs%2Fjupyterlab-theme-material-night-eighties+involves%3Aahgraber+updated%3A2022-12-30..2023-03-08&type=Issues) | [@dependabot](https://github.com/search?q=repo%3Aninerealmlabs%2Fjupyterlab-theme-material-night-eighties+involves%3Adependabot+updated%3A2022-12-30..2023-03-08&type=Issues)
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 0.3.2
 
 ([Full Changelog](https://github.com/ninerealmlabs/jupyterlab-theme-material-night-eighties/compare/v0.3.1...6abafde8bdad82a2a8655f785a2e25d38458a47b))
@@ -19,8 +43,6 @@
 ([GitHub contributors page for this release](https://github.com/ninerealmlabs/jupyterlab-theme-material-night-eighties/graphs/contributors?from=2022-12-28&to=2022-12-30&type=c))
 
 [@ahgraber](https://github.com/search?q=repo%3Aninerealmlabs%2Fjupyterlab-theme-material-night-eighties+involves%3Aahgraber+updated%3A2022-12-28..2022-12-30&type=Issues)
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 0.3.1
 
