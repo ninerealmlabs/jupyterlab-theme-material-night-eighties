@@ -14,7 +14,6 @@ and [base16](https://github.com/chriskempson/base16)
   - [Contributing](#contributing)
     - [Development install](#development-install)
     - [Updating dependencies](#updating-dependencies)
-    - [Development uninstall](#development-uninstall)
     - [Testing the extension](#testing-the-extension)
       - [Frontend tests](#frontend-tests)
       - [Integration tests](#integration-tests)
@@ -110,11 +109,7 @@ Copy `devDependencies` in [`package.json`](./package.json) from [jupyterlab-exte
 Then run
 
 ```sh
-rm package-lock.json yarn.lock
-npm update
-npm install
-yarn install
-```
+JUPYTER_PLATFORM_DIRS=1```
 
 ### Development uninstall
 
@@ -141,7 +136,7 @@ jlpm test
 
 #### Integration tests
 
-This extension uses [Playwright](https://playwright.dev/docs/intro/) for the integration tests (aka user level tests).
+This extension uses [Playwright](https://playwright.dev/) for the integration tests (aka user level tests).
 More precisely, the JupyterLab helper [Galata](https://github.com/jupyterlab/jupyterlab/tree/master/galata) is used
 to handle testing the extension in JupyterLab.
 
