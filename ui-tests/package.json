@@ -5,9 +5,14 @@
   "private": true,
   "scripts": {
     "start": "jupyter lab --config jupyter_server_test_config.py",
-    "test": "jlpm playwright test"
+    "test": "jlpm playwright test",
+    "preview": "jlpm playwright test --config=preview.config.js",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
   },
   "devDependencies": {
-    "@jupyterlab/galata": "^4.3.0"
+    "@jupyterlab/galata": "^5.5.10",
+    "@playwright/test": "^1.57.0",
+    "@types/node": "^22.10.2",
+    "typescript": "~5.9.3"
   }
 }

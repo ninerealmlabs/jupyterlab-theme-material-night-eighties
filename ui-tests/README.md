@@ -12,27 +12,38 @@ in [jupyter_server_test_config.py](./jupyter_server_test_config.py).
 
 The default configuration will produce video for failing tests and an HTML report.
 
+This folder is a **separate Yarn project** from the repo root, with its own `package.json` and its
+own `yarn.lock`. That lockfile must stay committed even while it is empty — it is what tells Yarn 3
+where the project root is. Without it, `jlpm install` here fails with
+`The nearest package directory ... doesn't seem to be part of the project declared in ...`.
+
 ## Run the tests
 
 > All commands are assumed to be executed from the root directory
 
 To run the tests, you need to:
 
-1. Compile the extension:
+1. Build and install the extension:
 
    ```sh
-   jlpm install
-   jlpm build:prod
+   uv sync
+   uv run jlpm install
+   uv run jlpm build:prod
+   uv pip install -e .
    ```
 
-   > Check the extension is installed in JupyterLab:
+   Confirm JupyterLab actually picked it up — the tests will fail confusingly if it did not:
+
+   ```sh
+   uv run jupyter labextension list 2>&1 | grep -i "jupyterlab_material_night_eighties.*OK"
+   ```
 
 2. Install test dependencies (needed only once):
 
    ```sh
    cd ./ui-tests
-   jlpm install
-   jlpm playwright install
+   uv run jlpm install
+   uv run jlpm playwright install chromium
    cd ..
    ```
 
@@ -40,7 +51,7 @@ To run the tests, you need to:
 
    ```sh
    cd ./ui-tests
-   jlpm playwright test
+   uv run jlpm playwright test
    ```
 
    Test results will be shown in the terminal. In case of any test failures, the test report
@@ -52,45 +63,84 @@ To run the tests, you need to:
 
    ```sh
    cd ./ui-tests
-   PWDEBUG=1 jlpm playwright test
+   PWDEBUG=1 uv run jlpm playwright test
    ```
 
-## Update the tests snapshots
+## What the tests cover
 
-> All commands are assumed to be executed from the root directory
+| Spec | Covers |
+| --- | --- |
+| `tests/jupyterlab_material_night_eighties_theme.spec.ts` | the plugin activates |
+| `tests/theme-variables.spec.ts` | every `--jp-*` variable the built-in dark theme defines also resolves under this theme |
 
-If you are comparing snapshots to validate your tests, you may need to update
-the reference snapshots stored in the repository. To do that, you need to:
+`theme-variables.spec.ts` is the one that earns its keep. A theme fails *silently*: omit a
+variable, or reference an undefined one, and JupyterLab quietly falls back to its own
+default — nothing errors and no exception is raised. That test compares against whatever
+the **installed** JupyterLab dark theme declares, so it keeps working as JupyterLab adds
+variables in new releases, and it needs no baselines or fixtures.
 
-1. Compile the extension:
+There is deliberately **no automated screenshot comparison**. Pixel baselines for a theme
+mean committed binaries, a bot to regenerate them, and per-platform copies, all to guard
+something a person can judge in fifteen seconds. Use the preview below instead.
 
-   ```sh
-   jlpm install
-   jlpm build:prod
-   ```
+## Theme preview (`jlpm preview`)
 
-   > Check the extension is installed in JupyterLab.
+A human-in-the-loop "does this still look right?" pass, run on your own machine:
 
-2. Install test dependencies (needed only once):
+```sh
+cd ui-tests && uv run jlpm preview
+```
 
-   ```sh
-   cd ./ui-tests
-   jlpm install
-   jlpm playwright install
-   cd ..
-   ```
+It drives JupyterLab through the surfaces a palette change is most likely to break,
+screenshots each one, and opens the Playwright report for you to look at. Nothing is
+compared automatically and nothing is committed.
 
-3. Execute the [Playwright](https://playwright.dev/docs/intro) command:
+| Surface | Why it is there |
+| --- | --- |
+| shell and launcher | menu bar, sidebar, file browser, status bar |
+| dialog | `--jp-dialog-background`, accept/reject button colors |
+| notebook editors | cell editor and prompt colors, CodeMirror syntax highlighting, rendered markdown, link color |
+| cell outputs and error traceback | `--jp-rendermime-*` and the ANSI palette — needs a kernel |
 
-   ```sh
-   cd ./ui-tests
-   jlpm playwright test -u
-   ```
+### Comparing against your previous run
 
-> Some discrepancy may occurs between the snapshots generated on your computer and
-> the one generated on the CI. To ease updating the snapshots on a PR, you can
-> type `please update playwright snapshots` to trigger the update by a bot on the CI.
-> Once the bot has computed new snapshots, it will commit them to the PR branch.
+Each run rotates the last run's screenshots aside, so every surface appears in the report
+twice — **PREVIOUS run** then **CURRENT** — letting you flip between before and after your
+change. The first run has nothing to compare against; from the second on it does.
+
+So the loop is: preview → edit `style/variables.css` → preview again → compare.
+
+Images are also written to `ui-tests/preview-output/` (gitignored) if you would rather use
+your own diff tool:
+
+```text
+preview-output/previous/notebook-editors.png
+preview-output/current/notebook-editors.png
+```
+
+Each surface is a separate test, so if one fails — a kernel that would not start, say —
+the others are still captured and viewable.
+
+## Troubleshooting
+
+**`Error: Failed to activate galata extension`** on `page.goto()`
+
+Galata needs the `@jupyterlab/galata-extension` helper — which ships inside the `jupyterlab`
+Python package — to be served by the test server. That is wired up by
+`jupyterlab.galata.configure_jupyter_server`, which
+[jupyter_server_test_config.py](./jupyter_server_test_config.py) calls. A hand-rolled server config
+that sets `c.ServerApp.*` directly (the JupyterLab 3 style) omits
+`c.LabServerApp.extra_labextensions_path` and every test fails this way.
+
+To check without running a browser, start the server and request the asset:
+
+```sh
+cd ui-tests && uv run jupyter lab --config jupyter_server_test_config.py &
+curl -o /dev/null -w '%{http_code}\n' \
+  'http://localhost:8888/lab/extensions/@jupyterlab/galata-extension/static/style.js'
+```
+
+`200` means it is wired up correctly; `404` means it is not.
 
 ## Create tests
 
@@ -98,27 +148,11 @@ the reference snapshots stored in the repository. To do that, you need to:
 
 To create tests, the easiest way is to use the code generator tool of playwright:
 
-1. Compile the extension:
+1. Complete steps 1 and 2 of [Run the tests](#run-the-tests) above.
 
-   ```sh
-   jlpm install
-   jlpm build:prod
-   ```
-
-   > Check the extension is installed in JupyterLab.
-
-2. Install test dependencies (needed only once):
+2. Execute the [Playwright code generator](https://playwright.dev/docs/codegen):
 
    ```sh
    cd ./ui-tests
-   jlpm install
-   jlpm playwright install
-   cd ..
-   ```
-
-3. Execute the [Playwright code generator](https://playwright.dev/docs/codegen):
-
-   ```sh
-   cd ./ui-tests
-   jlpm playwright codegen localhost:8888
+   uv run jlpm playwright codegen localhost:8888
    ```
