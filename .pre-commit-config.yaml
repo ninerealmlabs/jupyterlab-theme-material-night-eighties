@@ -10,6 +10,7 @@ repos:
         entry: YAML file extensions must be .yaml
         language: fail
         files: \.yml$
+        exclude: ^\.yarnrc\.yml$
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: 'v6.0.0'
     hooks:
@@ -82,3 +83,4 @@ repos:
     rev: 0.37.4
     hooks:
       - id: check-github-workflows
+      - id: check-github-actions
