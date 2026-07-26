@@ -25,7 +25,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: jupyterlab/maintainer-tools/.github/actions/base-setup@v1
+      - name: Base Setup
+        uses: ./.github/actions/setup
+        with:
+          hatch: 'true'
       - name: Install Dependencies
         shell: bash
         run: |

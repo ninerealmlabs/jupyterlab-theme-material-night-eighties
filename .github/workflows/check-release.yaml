@@ -39,7 +39,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Base Setup
-        uses: jupyterlab/maintainer-tools/.github/actions/base-setup@v1
+        uses: ./.github/actions/setup
+        with:
+          hatch: 'true'
 
       - name: Install Dependencies
         run: |

@@ -1,0 +1,54 @@
+---
+name: Setup
+description: |
+  Python, Node, uv and optionally hatch, using only actions owned by this
+  repository or created by GitHub.
+
+  This replaces jupyterlab/maintainer-tools base-setup. That action is itself
+  allowlisted, but since v0.34 it calls pnpm/action-setup, and the org's
+  allowed-actions policy rejects nested actions it does not list -- the check
+  happens when the composite action is loaded, so the `if` guard on the pnpm
+  step does not prevent it. Same reason astral-sh/setup-uv is not used here.
+
+inputs:
+  python-version:
+    description: Python version to install
+    required: false
+    default: '3.11'
+  node-version:
+    description: Node version to install
+    required: false
+    default: '20'
+  hatch:
+    description: Install hatch (needed by jupyter-releaser's version_cmd)
+    required: false
+    default: 'false'
+
+runs:
+  using: composite
+  steps:
+    - name: Install Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ inputs.python-version }}
+        cache: 'pip'
+
+    - name: Install Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node-version }}
+
+    - name: Install uv
+      shell: bash
+      run: |
+        set -eux
+        python -m pip install --upgrade pip
+        python -m pip install --upgrade uv
+
+    - name: Install hatch
+      if: inputs.hatch == 'true'
+      shell: bash
+      run: |
+        set -eux
+        python -m pip install --upgrade pipx
+        pipx install "hatch>=1.16.5" --python "$(which python)"
