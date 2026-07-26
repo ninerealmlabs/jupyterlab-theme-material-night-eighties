@@ -20,3 +20,7 @@ node_modules/
 **/lib/
 **/package.json
 jupyterlab_material_night_eighties/
+
+.venv
+uv.lock
+eslint.config.mjs

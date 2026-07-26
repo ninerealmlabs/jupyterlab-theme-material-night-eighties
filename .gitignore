@@ -15,7 +15,13 @@ jupyterlab_material_night_eighties/_version.py
 # Integration tests
 ui-tests/test-results/
 ui-tests/playwright-report/
-ui-tests/*lock*
+ui-tests/node_modules/
+# Screenshots from `jlpm preview`; local review artefacts, never committed
+ui-tests/preview-output/
+# NOTE: ui-tests/yarn.lock is intentionally NOT ignored. Its presence is what
+# makes Yarn (jlpm) treat ui-tests as its own project root; without it,
+# `jlpm install` there fails with "doesn't seem to be part of the project
+# declared in <repo root>". CI also keys its browser cache on its hash.
 
 # Created by https://www.gitignore.io/api/python
 # Edit at https://www.gitignore.io/?templates=python
@@ -124,3 +130,16 @@ dmypy.json
 # OSX files
 .DS_Store
 default.profraw
+
+# uv / virtualenv
+.venv/
+
+# yarn (berry)
+.yarn/
+.pnp.*
+
+# jest (jest-junit reporter from @jupyterlab/testing)
+junit.xml
+
+# Jupyter scratch notebooks created while testing the theme
+Untitled*.ipynb
