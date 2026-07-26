@@ -2,7 +2,7 @@
 
 [![Build](https://github.com/ninerealmlabs/jupyterlab-theme-material-night-eighties/actions/workflows/build.yaml/badge.svg)](https://github.com/ninerealmlabs/jupyterlab-theme-material-night-eighties/actions/workflows/build.yaml)[![Check](https://github.com/ninerealmlabs/jupyterlab-theme-material-night-eighties/actions/workflows/check-release.yaml/badge.svg)](https://github.com/ninerealmlabs/jupyterlab-theme-material-night-eighties/actions/workflows/check-release.yaml)[![Publish](https://github.com/ninerealmlabs/jupyterlab-theme-material-night-eighties/actions/workflows/publish-release.yaml/badge.svg)](https://github.com/ninerealmlabs/jupyterlab-theme-material-night-eighties/actions/workflows/publish-release.yaml)
 
-Theme for jupyterlab based on [jupyterlab/theme-extension-cookiecutter-ts](https://github.com/jupyterlab/extension-cookiecutter-ts),
+Theme for jupyterlab based on [jupyterlab/extension-template](https://github.com/jupyterlab/extension-template),
 inspired by [oriolmirosa/jupyterlab_materialdarker](https://github.com/oriolmirosa/jupyterlab_materialdarker),
 [arbennett/jupyterlab-themes](https://github.com/arbennett/jupyterlab-themes), [VSCode Material Theme Kit](https://marketplace.visualstudio.com/items?itemName=ms-vscode.Theme-MaterialKit),
 and [base16](https://github.com/chriskempson/base16)
@@ -14,14 +14,21 @@ and [base16](https://github.com/chriskempson/base16)
   - [Contributing](#contributing)
     - [Development install](#development-install)
     - [Updating dependencies](#updating-dependencies)
+    - [Development uninstall](#development-uninstall)
     - [Testing the extension](#testing-the-extension)
-      - [Frontend tests](#frontend-tests)
-      - [Integration tests](#integration-tests)
     - [Packaging the extension](#packaging-the-extension)
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for the test runbook, pinned-dependency rationale, and
+guidance on editing the color palette.
 
 ## Requirements
 
-- JupyterLab >= 3.0
+- JupyterLab >= 4.0
+
+Because Notebook 7 is built on JupyterLab 4 components, this theme also works in Notebook 7
+with no additional configuration.
+
+> For JupyterLab 3, use version `0.3.3` or earlier.
 
 ## Installation
 
@@ -31,7 +38,14 @@ To install the extension, execute:
 pip install jupyterlab-material-night-eighties
 ```
 
-Themes can be installed directly from `npm` using the standard JupyterLab installation method:
+or, with [uv](https://docs.astral.sh/uv/):
+
+```sh
+uv pip install jupyterlab-material-night-eighties
+```
+
+The theme can also be installed directly from `npm`, though this requires Node.js and triggers a
+full JupyterLab rebuild — the prebuilt Python package above is preferred:
 
 ```sh
 jupyter labextension install @ninerealmlabs/jupyterlab_material_night_eighties
@@ -58,19 +72,27 @@ jupyter labextension link .
 
 Note: You will need NodeJS to build the extension package.
 
+This project uses [uv](https://docs.astral.sh/uv/) to manage the Python environment.
+`hatchling` remains the build backend — `hatch-jupyter-builder` is a hatchling build hook, and it
+is what compiles the TypeScript and stages the prebuilt labextension into `share/jupyter`.
+
 The `jlpm` command is JupyterLab's pinned version of
-[yarn](https://yarnpkg.com/) that is installed with JupyterLab. You may use
-`yarn` or `npm` in lieu of `jlpm` below.
+[yarn](https://yarnpkg.com/) that is installed with JupyterLab.
 
 ```bash
-# Clone the repo to your local environment
-# Change directory to the jupyterlab_material_night_eighties directory
-# Install package in development mode
-pip install -e .
+# Clone the repo and change into the jupyterlab_material_night_eighties directory
+
+# Create the dev environment (JupyterLab, jupyter-builder, hatch)
+uv sync
+
+# Install the extension in editable mode
+uv pip install -e .
+
 # Link your development version of the extension with JupyterLab
-jupyter labextension develop . --overwrite
-# Rebuild extension Typescript source after making changes
-jlpm build
+uv run jupyter-builder develop . --overwrite
+
+# Rebuild extension TypeScript source after making changes
+uv run jlpm build
 ```
 
 You can watch the source directory and run JupyterLab at the same time in different terminals
@@ -80,13 +102,13 @@ to watch for changes in the extension's source and automatically rebuild the ext
 
   ```bash
   # Watch the source directory in one terminal, automatically rebuilding when needed
-  jlpm run watch
+  uv run jlpm run watch
   ```
 
 - Terminal B:
 
   ```sh
-  jupyter lab
+  uv run jupyter lab
   ```
 
 With the watch command running, every saved change will immediately be built
@@ -104,43 +126,38 @@ jupyter lab build --minimize=False
 
 ### Updating dependencies
 
-Copy `devDependencies` in [`package.json`](./package.json) from [jupyterlab-extension-cookiecutter-ts](https://github.com/jupyterlab/extension-cookiecutter-ts/blob/3.0/%7B%7Bcookiecutter.python_name%7D%7D/package.json)
-
-Then run
-
-```sh
-JUPYTER_PLATFORM_DIRS=1```
+Some dependencies are deliberately pinned below their latest release, and this repo intentionally
+diverges from the upstream JupyterLab template in a few places. See
+[CONTRIBUTING.md](./CONTRIBUTING.md#pinned-dependencies) before bumping anything.
 
 ### Development uninstall
 
 ```bash
-pip uninstall jupyterlab-material-night-eighties
+uv pip uninstall jupyterlab-material-night-eighties
 ```
 
-In development mode, you will also need to remove the symlink created by `jupyter labextension develop`
+In development mode, you will also need to remove the symlink created by `jupyter-builder develop`
 command. To find its location, you can run `jupyter labextension list` to figure out where the `labextensions`
 folder is located. Then you can remove the symlink named `jupyterlab_material_night_eighties` within that folder.
 
 ### Testing the extension
 
-#### Frontend tests
+See the [test runbook](./CONTRIBUTING.md#test-runbook) in CONTRIBUTING.md for the full sequence
+(type check → lint → unit tests → build → verify JupyterLab loads it → package → integration tests
+→ visual check). It mirrors what CI runs, so a clean local pass should mean a clean CI pass.
 
-This extension is using [Jest](https://jestjs.io/) for JavaScript code testing.
-
-To execute them, execute:
+In short:
 
 ```sh
-jlpm
-jlpm test
+uv run jlpm lint:check   # stylelint + prettier + eslint
+uv run jlpm test         # Jest unit tests
+uv run jlpm build:prod   # build the prebuilt labextension
+uv run jupyter labextension list   # expect "enabled OK"
 ```
 
-#### Integration tests
-
-This extension uses [Playwright](https://playwright.dev/) for the integration tests (aka user level tests).
-More precisely, the JupyterLab helper [Galata](https://github.com/jupyterlab/jupyterlab/tree/master/galata) is used
-to handle testing the extension in JupyterLab.
-
-More information are provided within the [ui-tests](./ui-tests/README.md) README.
+Integration tests use [Playwright](https://playwright.dev/) with the JupyterLab
+[Galata](https://github.com/jupyterlab/jupyterlab/tree/main/galata) helper; see the
+[ui-tests](./ui-tests/README.md) README.
 
 ### Packaging the extension
 

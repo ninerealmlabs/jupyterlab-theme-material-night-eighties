@@ -39,23 +39,19 @@ and open a new PR on the feedstock repository automatically. -->
 This extension can be distributed as Python
 packages. All of the Python
 packaging instructions in the `pyproject.toml` file to wrap your extension in a
-Python package. Before generating a package, we first need to install `build`.
+Python package.
 
-```bash
-pip install build twine hatch
-```
-
-Bump the version using `hatch`. By default this will create a tag.
+Bump the version using `hatch` (provided by the `dev` dependency group). By default this creates a tag.
 See the docs on [hatch-nodejs-version](https://github.com/agoose77/hatch-nodejs-version#semver) for details.
 
 ```bash
-hatch version <new-version>
+uv run hatch version <new-version>
 ```
 
 To create a Python source package (`.tar.gz`) and the binary package (`.whl`) in the `dist/` directory, do:
 
 ```bash
-python -m build
+uv build
 ```
 
 > `python setup.py sdist bdist_wheel` is deprecated and will not work for this package.
@@ -63,7 +59,7 @@ python -m build
 Then to upload the package to PyPI, do:
 
 ```bash
-twine upload dist/*
+uvx twine upload dist/*
 ```
 
 ### NPM package
