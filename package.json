@@ -103,16 +103,5 @@
         "extension": true,
         "outputDir": "jupyterlab_material_night_eighties/labextension",
         "themePath": "style/index.css"
-    },
-    "jupyter-releaser": {
-        "hooks": {
-            "before-build-npm": [
-                "python -m pip install 'jupyter-builder>=1.0.0,<2'",
-                "jlpm"
-            ],
-            "before-build-python": [
-                "jlpm clean:all"
-            ]
-        }
     }
 }
