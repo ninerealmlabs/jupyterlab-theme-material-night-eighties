@@ -216,7 +216,14 @@
   --jp-content-font-color1: var(--jp-inverse-layout-color1);
   --jp-content-font-color2: var(--jp-inverse-layout-color3);
   --jp-content-font-color3: var(--jp-inverse-layout-color5);
-  --jp-content-link-color: var(--md-blue-300);
+
+  /* NOTE: this previously referenced var(--md-blue-300). JupyterLab's --md-*
+   * palette is defined by the built-in light/dark theme extensions, which are
+   * not loaded while this theme is active, so the reference resolved to the
+   * guaranteed-invalid value and links lost their color entirely. */
+  --jp-content-link-color: var(--base16-blue2);
+  --jp-content-link-hover-color: var(--base16-blue-extra);
+  --jp-content-link-visited-color: var(--base16-purple2);
   --jp-content-font-family:
     -apple-system, blinkmacsystemfont, 'Segoe UI', helvetica, arial, sans-serif,
     'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
@@ -261,6 +268,10 @@
   --jp-brand-color1: var(--base16-blue1);
   --jp-brand-color2: var(--base16-blue2);
   --jp-brand-color3: var(--base16-blue-extra);
+
+  /* lighten($blue, 16%) -- the next step in the base16 blue ramp, which the
+   * generator only emits through `-extra` (= lighten($blue, 8%)). */
+  --jp-brand-color4: #d4e1ff;
 
   /* Accent */
   --jp-accent-color0: var(--base16-green0);
@@ -457,4 +468,102 @@
   --jp-scrollbar-thumb-radius: 9px;
 
   /* set to a large-ish value for rounded endcaps on the thumb */
+
+  /* --------------------------------------------------------------------------
+   * Variables introduced by JupyterLab 4.
+   *
+   * Everything below derives from the base16 ramp already defined above, so the
+   * palette stays internally consistent. Without these, JupyterLab silently
+   * falls back to its built-in dark theme values, which are off-palette.
+   * ------------------------------------------------------------------------ */
+
+  /* Focus ring -- keep this clearly visible; it is the primary keyboard
+   * navigation affordance. */
+  --jp-focus-outline-color: var(--jp-brand-color2);
+  --jp-focus-outline-width: 2px;
+
+  /* Borders */
+  --jp-inverse-border-color: var(--jp-layout-color4);
+  --jp-input-active-box-shadow-color: rgb(130 170 255 / 30%);
+
+  /* Dialog action buttons.
+   *
+   * NOTE: `accept`/`reject`/`warn` here are button roles, not the state colors
+   * above. JupyterLab uses `--jp-warn-color-*` for the *destructive* button in
+   * a dialog, so these map to the red ramp rather than the yellow one -- a
+   * destructive action should read as dangerous, not merely cautionary. */
+  --jp-accept-color-normal: var(--jp-brand-color2);
+  --jp-accept-color-hover: var(--jp-brand-color1);
+  --jp-accept-color-active: var(--jp-brand-color0);
+  --jp-reject-color-normal: var(--jp-layout-color3);
+  --jp-reject-color-hover: var(--jp-layout-color4);
+  --jp-reject-color-active: var(--jp-layout-color5);
+  --jp-warn-color-normal: var(--jp-error-color2);
+  --jp-warn-color-hover: var(--jp-error-color1);
+  --jp-warn-color-active: var(--jp-error-color0);
+
+  /* Keyboard shortcut editor buttons */
+  --jp-shortcuts-button-background: var(--jp-brand-color2);
+  --jp-shortcuts-button-hover-background: var(--jp-brand-color1);
+
+  /* Toggle switches */
+  --jp-switch-color: var(--jp-layout-color5);
+  --jp-switch-true-position-color: var(--base16-orange2);
+
+  /* Search highlighting. The selected match must out-contrast the unselected
+   * ones, hence yellow against the inverse layout color. */
+  --jp-search-selected-match-background-color: var(--base16-yellow2);
+  --jp-search-selected-match-color: var(--jp-layout-color0);
+  --jp-search-unselected-match-background-color: var(--jp-inverse-layout-color0);
+  --jp-search-unselected-match-color: var(--jp-ui-inverse-font-color0);
+
+  /* Icon colors.
+   *
+   * --jp-jupyter-icon-color and --jp-notebook-icon-color are deliberately left
+   * as the Jupyter brand orange rather than themed -- they are logo marks. */
+  --jp-jupyter-icon-color: #f37626;
+  --jp-notebook-icon-color: #f37626;
+  --jp-json-icon-color: var(--base16-orange2);
+  --jp-console-icon-background-color: var(--jp-brand-color2);
+  --jp-console-icon-color: var(--jp-layout-color0);
+  --jp-terminal-icon-background-color: var(--jp-inverse-layout-color1);
+  --jp-terminal-icon-color: var(--jp-layout-color0);
+  --jp-inspector-icon-color: var(--jp-inverse-layout-color1);
+  --jp-text-editor-icon-color: var(--jp-inverse-layout-color1);
+  --jp-icon-contrast-color0: var(--base16-purple2);
+  --jp-icon-contrast-color1: var(--base16-green2);
+  --jp-icon-contrast-color2: var(--base16-magenta2);
+  --jp-icon-contrast-color3: var(--base16-blue2);
+
+  /* Real-time collaboration cursors -- seven mutually distinguishable hues. */
+  --jp-collaborator-color1: var(--base16-red2);
+  --jp-collaborator-color2: var(--base16-orange2);
+  --jp-collaborator-color3: var(--base16-yellow2);
+  --jp-collaborator-color4: var(--base16-green2);
+  --jp-collaborator-color5: var(--base16-cyan2);
+  --jp-collaborator-color6: var(--base16-blue2);
+  --jp-collaborator-color7: var(--base16-purple2);
+
+  /* Completer item-type swatches. Index 0 is intentionally transparent. */
+  --jp-completer-type-background0: transparent;
+  --jp-completer-type-background1: var(--base16-blue2);
+  --jp-completer-type-background2: var(--base16-orange2);
+  --jp-completer-type-background3: var(--base16-green2);
+  --jp-completer-type-background4: var(--base16-red2);
+  --jp-completer-type-background5: var(--base16-purple2);
+  --jp-completer-type-background6: var(--base16-magenta2);
+  --jp-completer-type-background7: var(--base16-teal2);
+  --jp-completer-type-background8: var(--base16-gray);
+  --jp-completer-type-background9: var(--base16-yellow2);
+  --jp-completer-type-background10: var(--base16-cyan2);
+
+  /* Data grid */
+  --jp-datagrid-font-family: var(--jp-content-font-family);
+  --jp-datagrid-font-size: 12px;
+
+  /* Layout metrics */
+  --jp-statusbar-height: 24px;
+  --jp-editor-scroll-padding: calc(
+    100% - var(--jp-code-font-size) * var(--jp-code-line-height) - var(--jp-code-padding) - 1px
+  );
 }
