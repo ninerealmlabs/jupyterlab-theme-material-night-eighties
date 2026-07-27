@@ -94,16 +94,16 @@
    * colors used in the theme as well. */
   --jp-shadow-base-lightness: 32;
   --jp-shadow-umbra-color: rgb(
-    var(--jp-shadow-base-lightness) var(--jp-shadow-base-lightness)
-      var(--jp-shadow-base-lightness) / 20%
+    var(--jp-shadow-base-lightness) var(--jp-shadow-base-lightness) var(--jp-shadow-base-lightness) /
+    20%
   );
   --jp-shadow-penumbra-color: rgb(
-    var(--jp-shadow-base-lightness) var(--jp-shadow-base-lightness)
-      var(--jp-shadow-base-lightness) / 14%
+    var(--jp-shadow-base-lightness) var(--jp-shadow-base-lightness) var(--jp-shadow-base-lightness) /
+    14%
   );
   --jp-shadow-ambient-color: rgb(
-    var(--jp-shadow-base-lightness) var(--jp-shadow-base-lightness)
-      var(--jp-shadow-base-lightness) / 12%
+    var(--jp-shadow-base-lightness) var(--jp-shadow-base-lightness) var(--jp-shadow-base-lightness) /
+    12%
   );
   --jp-elevation-z0: none;
   --jp-elevation-z1:
@@ -328,8 +328,12 @@
    *notebook. This padding is to enable a 'scroll past end' feature in a notebook.
    */
   --jp-notebook-scroll-padding: calc(
-    100% - var(--jp-code-font-size) * var(--jp-code-line-height) - var(--jp-code-padding) -
-      var(--jp-cell-padding) - 1px
+    100% -
+    var(--jp-code-font-size) *
+    var(--jp-code-line-height) -
+    var(--jp-code-padding) -
+    var(--jp-cell-padding) -
+    1px
   );
 
   /* Rendermime styles */
@@ -564,6 +568,10 @@
   /* Layout metrics */
   --jp-statusbar-height: 24px;
   --jp-editor-scroll-padding: calc(
-    100% - var(--jp-code-font-size) * var(--jp-code-line-height) - var(--jp-code-padding) - 1px
+    100% -
+    var(--jp-code-font-size) *
+    var(--jp-code-line-height) -
+    var(--jp-code-padding) -
+    1px
   );
 }

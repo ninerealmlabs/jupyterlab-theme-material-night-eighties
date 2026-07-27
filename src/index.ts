@@ -1,4 +1,4 @@
-import { JupyterFrontEnd, JupyterFrontEndPlugin } from '@jupyterlab/application'
+import type { JupyterFrontEnd, JupyterFrontEndPlugin } from '@jupyterlab/application'
 
 import { IThemeManager } from '@jupyterlab/apputils'
 

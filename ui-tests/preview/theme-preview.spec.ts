@@ -15,10 +15,11 @@
  * Each surface is its own test so that one failing -- a kernel that would not
  * start, say -- still leaves the others captured and viewable.
  */
+
+import * as fs from 'node:fs'
+import * as path from 'node:path'
 import { expect, test } from '@jupyterlab/galata'
 import type { Locator, Page, TestInfo } from '@playwright/test'
-import * as fs from 'fs'
-import * as path from 'path'
 
 const THEME = '@ninerealmlabs/jupyterlab_material_night_eighties'
 
