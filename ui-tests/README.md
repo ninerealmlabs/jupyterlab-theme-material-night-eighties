@@ -12,10 +12,9 @@ in [jupyter_server_test_config.py](./jupyter_server_test_config.py).
 
 The default configuration will produce video for failing tests and an HTML report.
 
-This folder is a **separate Yarn project** from the repo root, with its own `package.json` and its
-own `yarn.lock`. That lockfile must stay committed even while it is empty — it is what tells Yarn 3
-where the project root is. Without it, `jlpm install` here fails with
-`The nearest package directory ... doesn't seem to be part of the project declared in ...`.
+This folder is a **separate Yarn project** from the repo root, with its own `package.json` and its own `yarn.lock`.
+That lockfile must stay committed even while it is empty — it is what tells Yarn 3 where the project root is.
+Without it, `jlpm install` here fails with `The nearest package directory ... doesn't seem to be part of the project declared in ...`.
 
 ## Run the tests
 
@@ -54,10 +53,8 @@ To run the tests, you need to:
    uv run jlpm playwright test
    ```
 
-   Test results will be shown in the terminal. In case of any test failures, the test report
-   will be opened in your browser at the end of the tests execution; see
-   [Playwright documentation](https://playwright.dev/docs/test-reporters#html-reporter)
-   for configuring that behavior.
+   Test results will be shown in the terminal.
+   In case of any test failures, the test report will be opened in your browser at the end of the tests execution; see [Playwright documentation](https://playwright.dev/docs/test-reporters#html-reporter) for configuring that behavior.
 
 4. To debug, execute the Playwright tests in [debug mode](https://playwright.dev/docs/debug):
 
@@ -68,50 +65,46 @@ To run the tests, you need to:
 
 ## What the tests cover
 
-| Spec | Covers |
-| --- | --- |
-| `tests/jupyterlab_material_night_eighties_theme.spec.ts` | the plugin activates |
-| `tests/theme-variables.spec.ts` | every `--jp-*` variable the built-in dark theme defines also resolves under this theme |
+| Spec                                                     | Covers                                                                                 |
+| -------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| `tests/jupyterlab_material_night_eighties_theme.spec.ts` | the plugin activates                                                                   |
+| `tests/theme-variables.spec.ts`                          | every `--jp-*` variable the built-in dark theme defines also resolves under this theme |
 
-`theme-variables.spec.ts` is the one that earns its keep. A theme fails *silently*: omit a
-variable, or reference an undefined one, and JupyterLab quietly falls back to its own
-default — nothing errors and no exception is raised. That test compares against whatever
-the **installed** JupyterLab dark theme declares, so it keeps working as JupyterLab adds
-variables in new releases, and it needs no baselines or fixtures.
+`theme-variables.spec.ts` is the one that earns its keep.
+A theme fails _silently_: omit a variable, or reference an undefined one, and JupyterLab quietly falls back to its own default — nothing errors and no exception is raised.
+That test compares against whatever the **installed** JupyterLab dark theme declares, so it keeps working as JupyterLab adds variables in new releases, and it needs no baselines or fixtures.
 
-There is deliberately **no automated screenshot comparison**. Pixel baselines for a theme
-mean committed binaries, a bot to regenerate them, and per-platform copies, all to guard
-something a person can judge in fifteen seconds. Use the preview below instead.
+There is deliberately **no automated screenshot comparison**.
+Pixel baselines for a theme mean committed binaries, a bot to regenerate them, and per-platform copies, all to guard something a person can judge in fifteen seconds.
+Use the preview below instead.
 
 ## Theme preview (`jlpm preview`)
 
-A human-in-the-loop "does this still look right?" pass, run on your own machine:
+A human-in-the-loop "does this still look right?"
+pass, run on your own machine:
 
 ```sh
 cd ui-tests && uv run jlpm preview
 ```
 
-It drives JupyterLab through the surfaces a palette change is most likely to break,
-screenshots each one, and opens the Playwright report for you to look at. Nothing is
-compared automatically and nothing is committed.
+It drives JupyterLab through the surfaces a palette change is most likely to break, screenshots each one, and opens the Playwright report for you to look at.
+Nothing is compared automatically and nothing is committed.
 
-| Surface | Why it is there |
-| --- | --- |
-| shell and launcher | menu bar, sidebar, file browser, status bar |
-| dialog | `--jp-dialog-background`, accept/reject button colors |
-| notebook editors | cell editor and prompt colors, CodeMirror syntax highlighting, rendered markdown, link color |
-| cell outputs and error traceback | `--jp-rendermime-*` and the ANSI palette — needs a kernel |
+| Surface                          | Why it is there                                                                              |
+| -------------------------------- | -------------------------------------------------------------------------------------------- |
+| shell and launcher               | menu bar, sidebar, file browser, status bar                                                  |
+| dialog                           | `--jp-dialog-background`, accept/reject button colors                                        |
+| notebook editors                 | cell editor and prompt colors, CodeMirror syntax highlighting, rendered markdown, link color |
+| cell outputs and error traceback | `--jp-rendermime-*` and the ANSI palette — needs a kernel                                    |
 
 ### Comparing against your previous run
 
-Each run rotates the last run's screenshots aside, so every surface appears in the report
-twice — **PREVIOUS run** then **CURRENT** — letting you flip between before and after your
-change. The first run has nothing to compare against; from the second on it does.
+Each run rotates the last run's screenshots aside, so every surface appears in the report twice — **PREVIOUS run** then **CURRENT** — letting you flip between before and after your change.
+The first run has nothing to compare against; from the second on it does.
 
 So the loop is: preview → edit `style/variables.css` → preview again → compare.
 
-Images are also written to `ui-tests/preview-output/` (gitignored) if you would rather use
-your own diff tool:
+Images are also written to `ui-tests/preview-output/` (gitignored) if you would rather use your own diff tool:
 
 ```text
 preview-output/previous/notebook-editors.png
@@ -125,12 +118,9 @@ the others are still captured and viewable.
 
 **`Error: Failed to activate galata extension`** on `page.goto()`
 
-Galata needs the `@jupyterlab/galata-extension` helper — which ships inside the `jupyterlab`
-Python package — to be served by the test server. That is wired up by
-`jupyterlab.galata.configure_jupyter_server`, which
-[jupyter_server_test_config.py](./jupyter_server_test_config.py) calls. A hand-rolled server config
-that sets `c.ServerApp.*` directly (the JupyterLab 3 style) omits
-`c.LabServerApp.extra_labextensions_path` and every test fails this way.
+Galata needs the `@jupyterlab/galata-extension` helper — which ships inside the `jupyterlab` Python package — to be served by the test server.
+That is wired up by `jupyterlab.galata.configure_jupyter_server`, which [jupyter_server_test_config.py](./jupyter_server_test_config.py) calls.
+A hand-rolled server config that sets `c.ServerApp.*` directly (the JupyterLab 3 style) omits `c.LabServerApp.extra_labextensions_path` and every test fails this way.
 
 To check without running a browser, start the server and request the asset:
 

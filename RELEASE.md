@@ -2,7 +2,7 @@
 
 The extension can be published to `PyPI` and `npm` manually or using the [Jupyter Releaser](https://github.com/jupyter-server/jupyter_releaser).
 
-- [Making a new release of jupyterlab\_material\_night\_eighties](#making-a-new-release-of-jupyterlab_material_night_eighties)
+- [Making a new release of jupyterlab_material_night_eighties](#making-a-new-release-of-jupyterlab_material_night_eighties)
   - [Automated releases with the Jupyter Releaser](#automated-releases-with-the-jupyter-releaser)
   - [Manual release](#manual-release)
     - [Python package](#python-package)
@@ -36,12 +36,11 @@ and open a new PR on the feedstock repository automatically. -->
 
 ### Python package
 
-This extension can be distributed as Python
-packages. All of the Python
-packaging instructions in the `pyproject.toml` file to wrap your extension in a
-Python package.
+This extension can be distributed as Python packages.
+All of the Python packaging instructions in the `pyproject.toml` file to wrap your extension in a Python package.
 
-Bump the version using `hatch` (provided by the `dev` dependency group). By default this creates a tag.
+Bump the version using `hatch` (provided by the `dev` dependency group).
+By default this creates a tag.
 See the docs on [hatch-nodejs-version](https://github.com/agoose77/hatch-nodejs-version#semver) for details.
 
 ```bash
