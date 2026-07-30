@@ -113,7 +113,10 @@
       // against the upstream template harder to read.
       "includes": ["package.json"],
       "formatter": {
-        "indentWidth": 4
+        "indentWidth": 4,
+        // Yarn rewrites package.json on install and always expands arrays;
+        // match it so `jlpm install` and `biome check` stop fighting.
+        "expand": "always"
       }
     }
   ]

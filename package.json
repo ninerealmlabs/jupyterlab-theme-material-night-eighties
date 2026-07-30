@@ -87,7 +87,9 @@
     "resolutions": {
         "lib0": "0.2.111"
     },
-    "sideEffects": ["style/*.css"],
+    "sideEffects": [
+        "style/*.css"
+    ],
     "publishConfig": {
         "access": "public"
     },

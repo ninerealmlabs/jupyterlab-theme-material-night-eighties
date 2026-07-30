@@ -12,18 +12,19 @@ The GitHub App private key remains an Actions secret because the workflows need 
 Publishing from the GitHub-hosted runners also adds [PEP 740](https://peps.python.org/pep-0740/)
 attestations on PyPI and npm provenance.
 
-- [One-time setup](#one-time-setup)
-  - [Prerequisites](#prerequisites)
-  - [1. Allowlist the actions](#1-allowlist-the-actions)
-  - [2. Create the GitHub App](#2-create-the-github-app)
-  - [3. Create the environments](#3-create-the-environments)
-  - [4. Register the PyPI trusted publisher](#4-register-the-pypi-trusted-publisher)
-  - [5. Register the npm trusted publisher](#5-register-the-npm-trusted-publisher)
-  - [6. Smoke-test trusted publishing](#6-smoke-test-trusted-publishing)
-- [Cutting a release](#cutting-a-release)
-- [Verifying a release](#verifying-a-release)
-- [How the publish workflow is put together](#how-the-publish-workflow-is-put-together)
-- [When publishing automation is unavailable](#when-publishing-automation-is-unavailable)
+- [Making a new release of jupyterlab_material_night_eighties](#making-a-new-release-of-jupyterlab_material_night_eighties)
+  - [One-time setup](#one-time-setup)
+    - [Prerequisites](#prerequisites)
+    - [1. Allowlist the actions](#1-allowlist-the-actions)
+    - [2. Create the GitHub App](#2-create-the-github-app)
+    - [3. Create the environments](#3-create-the-environments)
+    - [4. Register the PyPI trusted publisher](#4-register-the-pypi-trusted-publisher)
+    - [5. Register the npm trusted publisher](#5-register-the-npm-trusted-publisher)
+    - [6. Smoke-test trusted publishing](#6-smoke-test-trusted-publishing)
+  - [Cutting a release](#cutting-a-release)
+  - [Verifying a release](#verifying-a-release)
+  - [How the publish workflow is put together](#how-the-publish-workflow-is-put-together)
+  - [When publishing automation is unavailable](#when-publishing-automation-is-unavailable)
 
 ## One-time setup
 
@@ -136,15 +137,10 @@ On <https://pypi.org/manage/project/jupyterlab-material-night-eighties/settings/
 | Workflow name   | `publish-release.yaml`                     |
 | Environment     | `release`                                  |
 
-> [!IMPORTANT]
-> The workflow name is `publish-release.yaml`, **not** `.yml`. This repo forbids the `.yml`
-> extension (see the `forbid-yml` pre-commit hook).
-> A mismatch surfaces as an authentication failure at upload time rather than a configuration
-> error.
-
 ### 5. Register the npm trusted publisher
 
-On the package page → Settings → Trusted Publisher:
+On <https://www.npmjs.com/package/@ninerealmlabs/jupyterlab_material_night_eighties/access>
+(the package page's **Settings** tab), find the Trusted Publisher section:
 
 | Field                | Value                                      |
 | -------------------- | ------------------------------------------ |
