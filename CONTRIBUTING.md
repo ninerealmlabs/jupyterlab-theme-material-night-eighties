@@ -9,7 +9,8 @@
 
 ## Development setup
 
-You need Node.js and [uv](https://docs.astral.sh/uv/).
+You need Node.js 24 and [uv](https://docs.astral.sh/uv/).
+Node.js 24 matches CI, keeping the local TypeScript and JupyterLab builds on the tested runtime.
 
 `uv` manages the Python environment. `hatchling` remains the PEP 517 build backend:
 `hatch-jupyter-builder` is a hatchling _build hook_, and it is what compiles the TypeScript and
@@ -23,16 +24,13 @@ uv run jupyter-builder develop . --overwrite
 uv run jlpm install                      # install node_modules
 ```
 
-> `jupyter labextension develop|build|watch` still work but print a deprecation warning; the
-> `jupyter-builder` equivalents are the supported spelling. `jupyter labextension list` is **not**
-> deprecated.
->
-> `jlpm` is JupyterLab's pinned Yarn (currently Yarn 3.x). Run it through `uv run` so it resolves
-> from the project's `.venv`. Use `jlpm` rather than `npm`/`yarn` so `yarn.lock` stays consistent.
+> `jlpm` is the Yarn version supplied by JupyterLab.
+> Run it through `uv run` so it resolves from the project's `.venv`.
+> Use `jlpm` rather than `npm` or a separately installed Yarn so `yarn.lock` stays consistent.
 
 ### The `ui-tests` directory is a separate Yarn project
 
-`ui-tests/` has its own `package.json` and its own **`yarn.lock`, which must stay committed even though it is empty**.
+`ui-tests/` has its own `package.json` and its own **committed `yarn.lock`**.
 Yarn 3 locates a project root by walking up to the nearest `yarn.lock`; with no lockfile there it walks up to the repo root and refuses to run:
 
 ```text
@@ -76,7 +74,8 @@ comment and parses it back, so reformatting risks breaking a release.
 ## Test runbook
 
 Run these in order.
-This is the same sequence CI runs in [`.github/workflows/build.yaml`](.github/workflows/build.yaml), so a clean local pass should mean a clean CI pass.
+The runbook covers the core gates in [`.github/workflows/build.yaml`](.github/workflows/build.yaml) and adds release-oriented and visual checks.
+CI runs some jobs in parallel and also checks links, so this is not a literal reproduction of its execution order.
 
 ### 1. Type check
 
@@ -151,7 +150,7 @@ These need a browser and are the slowest step; they are worth running before a r
 
 ### 8. Visual check
 
-`tests/theme-variables.spec.ts` (step 7) fails if any `--jp-*` variable the built-in dark theme defines resolves to nothing under this theme.
+`ui-tests/tests/theme-variables.spec.ts` (step 7) fails if any `--jp-*` variable the built-in dark theme defines resolves to nothing under this theme.
 That catches the silent-degradation failure mode, but it says nothing about whether the result _looks_ right.
 
 For that, run the preview after any change to `style/variables.css`:

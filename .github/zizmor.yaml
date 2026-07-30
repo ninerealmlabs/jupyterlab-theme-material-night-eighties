@@ -1,0 +1,7 @@
+# The project accepts a shorter observation window than zizmor's seven-day
+# default. Keep this aligned with every updater in dependabot.yaml so zizmor
+# still catches missing cooldowns and values below the project minimum.
+rules:
+  dependabot-cooldown:
+    config:
+      days: 3

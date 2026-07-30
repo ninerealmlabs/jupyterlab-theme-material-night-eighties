@@ -44,20 +44,6 @@ or, with [uv](https://docs.astral.sh/uv/):
 uv pip install jupyterlab-material-night-eighties
 ```
 
-The theme can also be installed directly from `npm`, though this requires Node.js and triggers a
-full JupyterLab rebuild — the prebuilt Python package above is preferred:
-
-```sh
-jupyter labextension install @ninerealmlabs/jupyterlab_material_night_eighties
-```
-
-<!-- Themes can also be installed from source. From a theme's subdirectory:
-
-```sh
-npm install
-jupyter labextension link .
-``` -->
-
 ## Screenshots
 
 ![material_night_eighties](./screenshots/material_night_eighties.png "material_night_eighties theme screenshot")
@@ -70,16 +56,18 @@ jupyter labextension link .
 
 ### Development install
 
-Note: You will need NodeJS to build the extension package.
+Development requires Node.js 24 and [uv](https://docs.astral.sh/uv/).
+Node.js 24 matches CI.
 
-This project uses [uv](https://docs.astral.sh/uv/) to manage the Python environment.
+This project uses uv to manage the Python environment.
 `hatchling` remains the build backend — `hatch-jupyter-builder` is a hatchling build hook, and it
 is what compiles the TypeScript and stages the prebuilt labextension into `share/jupyter`.
 
 The `jlpm` command is JupyterLab's pinned version of [yarn](https://yarnpkg.com/) that is installed with JupyterLab.
 
 ```bash
-# Clone the repo and change into the jupyterlab_material_night_eighties directory
+git clone https://github.com/ninerealmlabs/jupyterlab-theme-material-night-eighties.git
+cd jupyterlab-theme-material-night-eighties
 
 # Create the dev environment (JupyterLab, jupyter-builder, hatch)
 uv sync
@@ -132,26 +120,13 @@ uv pip uninstall jupyterlab-material-night-eighties
 ```
 
 In development mode, you will also need to remove the symlink created by `jupyter-builder develop` command.
-To find its location, you can run `jupyter labextension list` to figure out where the `labextensions` folder is located.
-Then you can remove the symlink named `jupyterlab_material_night_eighties` within that folder.
+Run `uv run jupyter labextension list` to find the active `labextensions` directory.
+Within it, remove the symlink at `@ninerealmlabs/jupyterlab_material_night_eighties`.
 
 ### Testing the extension
 
-See the [test runbook](./CONTRIBUTING.md#test-runbook) in CONTRIBUTING.md for the full sequence (type check → lint → unit tests → build → verify JupyterLab loads it → package → integration tests → visual check).
-It mirrors what CI runs, so a clean local pass should mean a clean CI pass.
-
-In short:
-
-```sh
-uv run jlpm lint:check   # stylelint + biome + eslint
-uv run jlpm test         # Jest unit tests
-uv run jlpm build:prod   # build the prebuilt labextension
-uv run jupyter labextension list   # expect "enabled OK"
-```
-
-Integration tests use [Playwright](https://playwright.dev/) with the JupyterLab
-[Galata](https://github.com/jupyterlab/jupyterlab/tree/main/galata) helper; see the
-[ui-tests](./ui-tests/README.md) README.
+Use the [test runbook](./CONTRIBUTING.md#test-runbook) for local validation.
+It covers the core CI gates, integration tests, packaging checks, and the manual visual review used before a release.
 
 ### Packaging the extension
 

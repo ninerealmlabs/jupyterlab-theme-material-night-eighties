@@ -6,15 +6,22 @@
 
 version: 2
 updates:
+  # Actions are pinned to commit SHAs, so Dependabot is the only thing that
+  # moves them. The cooldown gives a compromised release time to be found and
+  # yanked before it lands in a PR here.
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: weekly
+    cooldown:
+      default-days: 3
 
   - package-ecosystem: npm
     directory: /
     schedule:
       interval: weekly
+    cooldown:
+      default-days: 3
     ignore:
       # Held back deliberately -- see CONTRIBUTING.md "Pinned dependencies".
       # @jupyterlab/testing pins jest ^29.2.0 and ts-jest ^29.1.0, and it is
@@ -34,8 +41,12 @@ updates:
     directory: /ui-tests
     schedule:
       interval: weekly
+    cooldown:
+      default-days: 3
 
   - package-ecosystem: uv
     directory: /
     schedule:
       interval: weekly
+    cooldown:
+      default-days: 3

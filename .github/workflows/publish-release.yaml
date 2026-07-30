@@ -1,70 +1,260 @@
 ---
-# from draft GH release from 'Prep Release' job
-# populate release: bumps version, builds python/npm packages, maps tag, sha, hash, etc
-# finalize release: checks dists/shas, publishes packages to pypi/npm, publishes release
-# ref: https://jupyter-releaser.readthedocs.io/en/latest/how_to_guides/convert_repo_from_repo.html
+# Step 2 of the jupyter-releaser flow: populate-release builds and attaches the
+# dists, finalize-release verifies them and publishes the GitHub release.
+#
+# `publish-assets` is the one releaser step overridden here -- it uploads via
+# `twine upload` with no `--attestations`, so it cannot produce PEP 740
+# attestations. The pypi and npm jobs replace it.
+#
+# Setup this workflow depends on -- app, environments, trusted publishers --
+# is documented in RELEASE.md.
 name: 'Step 2: Publish Release'
+
 on: # yamllint disable-line rule:truthy
   workflow_dispatch:
-    inputs:
-      target:
-        description: "The owner/repo GitHub target"
-        required: false
-      branch:
-        description: 'The target branch'
-        required: false
-      release_url:
-        description: 'The URL of the draft GitHub release'
-        required: false
-      steps_to_skip:
-        description: 'Comma separated list of steps to skip'
-        required: false
+
+permissions: {}
+
+# Shared with prep-release: both workflows mutate the same draft release.
+concurrency:
+  group: release
+  cancel-in-progress: false # a half-published version is worse than a slow queue
 
 jobs:
-  publish_release:
+  build:
+    name: Build and verify assets
     runs-on: ubuntu-latest
+    # `release-automation` holds the app credentials and is restricted to
+    # protected branches. Deliberately has no reviewers: the approval gate
+    # belongs on `release`, immediately before the irreversible step.
+    environment: release-automation
+    permissions:
+      contents: read # the releaser writes via the app token, not GITHUB_TOKEN
+    outputs:
+      release_url: ${{ steps.populate-release.outputs.release_url }}
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
       - name: Base Setup
         uses: ./.github/actions/setup
         with:
-          hatch: 'true'
+          release-toolchain: 'true'
+          dependency-cache: 'false'
+
       - name: Install Dependencies
         shell: bash
+        run: uv pip install --no-build-isolation --no-deps --editable .
+
+      # Mint only after the locked toolchain and repository are installed.
+      - name: Mint app token
+        id: app-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        with:
+          app-id: ${{ vars.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+          permission-contents: write
+          # Only for the releaser's admin_check, which reads collaborator
+          # permission level. Drop it together with `admin_check: 'false'`.
+          permission-administration: read
+
+      # Uses the app token: the releases API only lists drafts for tokens with
+      # push access, so the job's read-only GITHUB_TOKEN would never see the
+      # draft that prep-release created.
+      - name: Resolve prepared draft release
+        id: prepared-release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          TARGET_REPOSITORY: ninerealmlabs/jupyterlab-theme-material-night-eighties
         run: |
-          pip install -e .
+          set -euo pipefail
+          gh api \
+            --paginate \
+            --slurp \
+            --header 'Accept: application/vnd.github+json' \
+            --header 'X-GitHub-Api-Version: 2022-11-28' \
+            "repos/${TARGET_REPOSITORY}/releases?per_page=100" \
+            | python3 .github/scripts/validate_release_inputs.py discover-release
+
       - name: Populate Release
         id: populate-release
-        uses: jupyter-server/jupyter_releaser/.github/actions/populate-release@v2
+        uses: jupyter-server/jupyter_releaser/.github/actions/populate-release@70e58c50c736ad496cca11fe4f2446033b68b027 # v2
         with:
-          token: ${{ secrets.ADMIN_GITHUB_TOKEN }}
-          target: ${{ github.event.inputs.target }}
-          branch: ${{ github.event.inputs.branch }}
-          release_url: ${{ github.event.inputs.release_url }}
-          steps_to_skip: ${{ github.event.inputs.steps_to_skip }}
+          token: ${{ steps.app-token.outputs.token }}
+          target: ninerealmlabs/jupyterlab-theme-material-night-eighties
+          branch: main
+          release_url: ${{ steps.prepared-release.outputs.release_url }}
 
+      # Runs only extract-release, which re-downloads the assets and checks them
+      # against the asset_shas.json on the draft release. This is what makes the
+      # artifact the publish jobs consume verifiably the one built here.
+      - name: Extract and verify release assets
+        uses: jupyter-server/jupyter_releaser/.github/actions/finalize-release@70e58c50c736ad496cca11fe4f2446033b68b027 # v2
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          target: ninerealmlabs/jupyterlab-theme-material-night-eighties
+          branch: main
+          release_url: ${{ steps.populate-release.outputs.release_url }}
+          steps_to_skip: publish-assets,forwardport-changelog,publish-release
+
+      - name: Upload verified distributions
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: release-dist
+          path: .jupyter_releaser_checkout/dist
+          if-no-files-found: error
+
+  pypi:
+    name: Publish to PyPI
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: release
+      url: https://pypi.org/project/jupyterlab-material-night-eighties/
+    permissions:
+      id-token: write # PyPI Trusted Publishing + PEP 740 attestations
+    steps:
+      - name: Download verified distributions
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: release-dist
+          path: dist
+
+      # The releaser dist dir also holds the npm tarball and asset_shas.json,
+      # which twine rejects -- hence staging rather than `packages-dir: dist`.
+      - name: Stage Python distributions
+        run: |
+          set -eux
+          shopt -s nullglob
+          mkdir -p pypi-dist
+          for dist in dist/*.whl dist/*.tar.gz; do
+            mv "${dist}" pypi-dist/
+          done
+          ls -l pypi-dist
+          if [ -z "$(ls -A pypi-dist)" ]; then
+            echo "::error::no Python distributions found in the release assets" >&2
+            exit 1
+          fi
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@ba38be9e461d3875417946c167d0b5f3d385a247 # v1.14.1
+        with:
+          packages-dir: pypi-dist
+          attestations: true # already the default; pinned because it is the point
+
+  npm:
+    name: Publish to npm
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: release
+      url: https://www.npmjs.com/package/@ninerealmlabs/jupyterlab_material_night_eighties
+    permissions:
+      id-token: write # npm Trusted Publishing + SLSA provenance
+    steps:
+      # Must stay >= 24: npm Trusted Publishing needs npm >= 11.5.1.
+      - name: Install Node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: '24'
+          registry-url: 'https://registry.npmjs.org'
+          # Per setup-node's trusted-publishing guidance: no cache in the job
+          # that holds the OIDC credential.
+          package-manager-cache: false
+
+      - name: Download verified distributions
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: release-dist
+          path: dist
+
+      - name: Publish to npm
+        run: |
+          set -eux
+          npm --version
+          shopt -s nullglob
+          tarballs=(dist/*.tgz)
+          if [ "${#tarballs[@]}" -eq 0 ]; then
+            echo "::error::no npm tarball found in the release assets" >&2
+            exit 1
+          fi
+          for tarball in "${tarballs[@]}"; do
+            version="$(tar -xzOf "${tarball}" package/package.json \
+              | node -pe 'JSON.parse(require("fs").readFileSync("/dev/stdin", "utf8")).version')"
+            # Reimplements the dist-tag logic lost by skipping publish-assets:
+            # a prerelease must not move `latest`.
+            case "${version}" in
+              *-*) tag=next ;;
+              *) tag=latest ;;
+            esac
+            npm publish "${tarball}" --provenance --access public --tag "${tag}"
+          done
+
+  finalize:
+    name: Finalize GitHub release
+    needs: [build, pypi, npm]
+    runs-on: ubuntu-latest
+    environment: release-automation
+    permissions:
+      contents: read # the releaser writes via the app token, not GITHUB_TOKEN
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Base Setup
+        uses: ./.github/actions/setup
+        with:
+          release-toolchain: 'true'
+          dependency-cache: 'false'
+
+      - name: Install Dependencies
+        shell: bash
+        run: uv pip install --no-build-isolation --no-deps --editable .
+
+      # Mint only after the locked toolchain and repository are installed.
+      - name: Mint app token
+        id: app-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        with:
+          app-id: ${{ vars.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+          permission-contents: write
+          permission-pull-requests: write # forwardport-changelog opens one
+          permission-administration: read # see the build job
+
+      # Re-runs extract-release, which prep_git and populate-release both
+      # tolerate, then forwardport-changelog and publish-release.
       - name: Finalize Release
         id: finalize-release
-        env:
-          PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
-          PYPI_TOKEN_MAP: ${{ secrets.PYPI_TOKEN_MAP }}
-          TWINE_USERNAME: __token__
-          # TWINE_REPOSITORY_URL: https://test.pypi.org/legacy/ # uncomment for testing
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        uses: jupyter-server/jupyter_releaser/.github/actions/finalize-release@v2
+        uses: jupyter-server/jupyter_releaser/.github/actions/finalize-release@70e58c50c736ad496cca11fe4f2446033b68b027 # v2
         with:
-          token: ${{ secrets.ADMIN_GITHUB_TOKEN }}
-          target: ${{ github.event.inputs.target }}
-          release_url: ${{ steps.populate-release.outputs.release_url }}
+          token: ${{ steps.app-token.outputs.token }}
+          target: ninerealmlabs/jupyterlab-theme-material-night-eighties
+          branch: main
+          release_url: ${{ needs.build.outputs.release_url }}
+          steps_to_skip: publish-assets
 
       - name: '** Next Step **'
         if: ${{ success() }}
+        env:
+          RELEASE_URL: ${{ steps.finalize-release.outputs.release_url }}
         run: |
-          echo "Verify the final release"
-          echo ${{ steps.finalize-release.outputs.release_url }}
+          {
+            echo "## Next Step"
+            echo "Verify the final release: ${RELEASE_URL}"
+          } >>"${GITHUB_STEP_SUMMARY}"
 
       - name: '** Failure Message **'
         if: ${{ failure() }}
+        env:
+          RELEASE_URL: ${{ needs.build.outputs.release_url }}
         run: |
-          echo "Failed to Publish the Draft Release Url:"
-          echo ${{ steps.populate-release.outputs.release_url }}
+          {
+            echo "## Failure"
+            echo "Packages may already be published. Draft release: ${RELEASE_URL}"
+          } >>"${GITHUB_STEP_SUMMARY}"

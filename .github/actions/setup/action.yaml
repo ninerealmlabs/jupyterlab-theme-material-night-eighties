@@ -1,14 +1,13 @@
 ---
 name: Setup
 description: |
-  Python, Node, uv and optionally hatch, using only actions owned by this
-  repository or created by GitHub.
+  Python, Node, uv and optionally the locked Python build toolchain.
 
   This replaces jupyterlab/maintainer-tools base-setup. That action is itself
   allowlisted, but since v0.34 it calls pnpm/action-setup, and the org's
   allowed-actions policy rejects nested actions it does not list -- the check
   happens when the composite action is loaded, so the `if` guard on the pnpm
-  step does not prevent it. Same reason astral-sh/setup-uv is not used here.
+  step does not prevent it.
 
 inputs:
   python-version:
@@ -16,39 +15,49 @@ inputs:
     required: false
     default: '3.11'
   node-version:
-    description: Node version to install
+    description: |
+      Node version to install. Must stay >= 24: npm Trusted Publishing needs
+      npm >= 11.5.1, which first ships with Node 24.
     required: false
-    default: '20'
-  hatch:
-    description: Install hatch (needed by jupyter-releaser's version_cmd)
+    default: '24'
+  release-toolchain:
+    description: |
+      Sync the locked Python toolchain, including hatch and the build plugins
+      needed by jupyter-releaser.
     required: false
     default: 'false'
+  dependency-cache:
+    description: |
+      Restore the uv cache. Set 'false' for release workflows: the cache is
+      writable from PR runs, so a PR could influence what gets built and signed.
+    required: false
+    default: 'true'
 
 runs:
   using: composite
   steps:
     - name: Install Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
       with:
         python-version: ${{ inputs.python-version }}
-        cache: 'pip'
 
     - name: Install Node
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
       with:
         node-version: ${{ inputs.node-version }}
 
     - name: Install uv
-      shell: bash
-      run: |
-        set -eux
-        python -m pip install --upgrade pip
-        python -m pip install --upgrade uv
+      uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+      with:
+        version: '0.11.32'
+        enable-cache: ${{ inputs.dependency-cache }}
+        activate-environment: ${{ inputs.release-toolchain }}
 
-    - name: Install hatch
-      if: inputs.hatch == 'true'
+    - name: Install locked Python toolchain
+      if: inputs.release-toolchain == 'true'
       shell: bash
       run: |
         set -eux
-        python -m pip install --upgrade pipx
-        pipx install "hatch>=1.16.5" --python "$(which python)"
+        uv sync --locked --no-install-project --only-group release
+        hatch --version
+        jupyter-releaser --help >/dev/null

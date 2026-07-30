@@ -39,10 +39,19 @@ dynamic = ["version", "description", "authors", "urls", "keywords"]
 #   uvx hatch version       # read/bump version (jupyter-releaser uses this)
 [dependency-groups]
 dev = [
-    "hatch>=1.14",
-    "jupyterlab>=4.5,<5",
-    "jupyter-builder>=1.0.0,<2",
     "build>=1.2",
+    "hatch>=1.14",
+    "jupyter-builder>=1.0.0,<2",
+    "jupyterlab>=4.5,<5",
+]
+release = [
+    { include-group = "dev" },
+    "editables>=0.3",
+    "hatch-jupyter-builder>=0.5",
+    "hatch-nodejs-version>=0.3.2",
+    "hatchling>=1.27.0",
+    # Keep this commit aligned with the jupyter_releaser action pins.
+    "jupyter-releaser @ git+https://github.com/jupyter-server/jupyter_releaser@70e58c50c736ad496cca11fe4f2446033b68b027",
 ]
 
 [tool.uv]
