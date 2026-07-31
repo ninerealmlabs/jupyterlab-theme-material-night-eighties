@@ -1,6 +1,15 @@
 ---
+# Run these hooks with `prek`: https://github.com/j178/prek
+# prek reads this file; see https://pre-commit.com/hooks.html for more hooks
 ci:
   autoupdate_schedule: monthly
+
+default_install_hook_types:
+  - pre-commit
+  - commit-msg
+
+default_stages:
+  - pre-commit
 
 repos:
   - repo: local
@@ -10,92 +19,174 @@ repos:
         entry: YAML file extensions must be .yaml
         language: fail
         files: \.yml$
+        # Yarn looks for this exact name and has no .yaml fallback; renaming it
+        # silently drops nodeLinker and reverts installs to Plug'n'Play.
+        exclude: ^\.yarnrc\.yml$
+      - id: forbid-co-authored-by-trailer
+        name: Require AI-assistant attribution trailer
+        language: system
+        stages: [commit-msg]
+        entry: >-
+          bash -c '
+            if rg -qi "^Co-authored-by:" "$1"; then
+              printf "%s\n" \
+                "Commit messages must not include a Co-authored-by trailer." \
+                "Use the AI-assistant: trailer instead." >&2
+              exit 1
+            fi
+          ' --
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: 'v4.4.0' # v3.2.0
+    rev: 'v6.0.0'
     hooks:
-      - id: end-of-file-fixer
-      - id: check-case-conflict
-      - id: check-executables-have-shebangs
-      - id: requirements-txt-fixer
       - id: check-added-large-files
         args: [--maxkb=500000]
+      - id: check-ast
+      - id: check-builtin-literals
       - id: check-case-conflict
+      - id: check-executables-have-shebangs
+      - id: check-json
       - id: check-merge-conflict
       - id: check-toml
       - id: check-yaml
+        args: [--allow-multiple-documents]
       - id: debug-statements
-      - id: forbid-new-submodules
-      - id: check-builtin-literals
+      - id: detect-private-key
       - id: end-of-file-fixer
+      - id: forbid-new-submodules
       - id: mixed-line-ending
       - id: trailing-whitespace
         args: [--markdown-linebreak-ext=md]
   - repo: https://github.com/Lucas-C/pre-commit-hooks
-    rev: 'v1.4.2' # v1.1.10
+    rev: 'v1.5.6'
     hooks:
       - id: remove-crlf
-      - id: remove-tabs
   - repo: https://github.com/sirosen/texthooks
-    rev: 0.5.0 # 0.2.0
+    rev: 0.7.1
     hooks:
       - id: fix-smartquotes
       - id: fix-ligatures
-  # Autoformat: YAML, JSON, Markdown, etc.
-  - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: 'v3.0.0-alpha.6' # Use the sha or tag you want to point at
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: 'v8.30.1'
     hooks:
-      - id: prettier
-        args:
-          - --ignore-unknown
-          # - "--ignore-path '**/*.md'"
-          # - "--ignore-path '**/*.y*ml'"
-        # exclude: |
-        #   (?x)^(
-        #     package-lock.json
-        #   )$
-  # Lint: Markdown
-  - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.33.0 # v0.30.0
+      - id: gitleaks
+  - repo: https://github.com/stefmolin/exif-stripper
+    rev: 1.2.0
     hooks:
-      - id: markdownlint
-        args:
-          - --config=.markdownlint.yaml
-          - --fix
+      - id: strip-exif
+        name: Strip exif metadata from images
+  - repo: https://github.com/commitizen-tools/commitizen
+    rev: v4.16.5
+    hooks:
+      - id: commitizen
+        language: python
+        stages: [commit-msg]
+  - repo: https://github.com/editorconfig-checker/editorconfig-checker.python
+    rev: '3.6.1'
+    hooks:
+      - id: editorconfig-checker
+        name: Check editorconfig compliance
         exclude: |
           (?x)^(
-            CHANGELOG.md
+            ^(LICENSE)$ |
+            ^.*(\.md)$ |
+            ^.*(\.rst)$ |
+            ^.*(yarn\.lock)$ |
+            ^(uv\.lock)$
           )$
-
-  # - repo: https://github.com/executablebooks/mdformat
-  #   rev: 0.7.16
-  #   hooks:
-  #     - id: mdformat
+  # Format: Markdown
+  - repo: https://github.com/hukkin/mdformat
+    rev: 1.0.0
+    hooks:
+      - id: mdformat
+        additional_dependencies:
+          - mdformat-gfm
+          - mdformat-front-matters
+          - mdformat-footnote
+          - mdformat-gfm-alerts
+          - mdformat-toc
+          - mdformat-config
+          - mdformat-ruff
+          - mdformat-simple-breaks
+        # jupyter-releaser rewrites CHANGELOG.md around a marker comment and
+        # parses it back; reformatting it risks breaking a release.
+        exclude: ^CHANGELOG\.md$
+  # Lint & Format: Markdown
+  - repo: https://github.com/rvben/rumdl-pre-commit
+    rev: v0.2.43
+    hooks:
+      - id: rumdl-fmt
+  # Lint & Format: Python
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: 'v0.16.0'
+    hooks:
+      - id: ruff-check
+        name: Lint with Ruff
+        args: [--fix]
+      - id: ruff-format
+        name: Format with Ruff
+  # Format: shell
+  - repo: https://github.com/shellcheck-py/shellcheck-py
+    rev: "v0.11.0.1"
+    hooks:
+      - id: shellcheck
+        name: Lint shell scripts
+        exclude: "^.*zsh$" # ignore '*.zsh" scripts'
+        stages: [pre-commit]
+  - repo: https://github.com/scop/pre-commit-shfmt
+    rev: 'v3.13.1-1'
+    hooks:
+      - id: shfmt
+        name: Format shell scripts
+        language_version: python3.13
+        # `args` replaces the hook's default `[--write]` rather than appending
+        # to it, so `--write` must be repeated here; without it shfmt prints to
+        # stdout, changes nothing, and always exits 0.
+        args:
+          - '--write'
+          - '--binary-next-line'
+          - '--case-indent'
+          - '--space-redirects'
+          - '--indent'
+          - '2'
+  # Lint & Format: JS/TS, JSON, CSS
+  - repo: https://github.com/biomejs/pre-commit
+    rev: v2.5.5
+    hooks:
+      - id: biome-check
   # Lint: YAML
-  - repo: https://github.com/adrienverge/yamllint.git
-    rev: v1.29.0
+  - repo: https://github.com/adrienverge/yamllint
+    rev: 'v1.38.0'
     hooks:
       - id: yamllint
-        args:
-          - --config-file=.yamllint.yaml
-          - --format=parsable
-          - --strict
-  # Lint & Format: Python
-  - repo: https://github.com/charliermarsh/ruff-pre-commit
-    # Ruff version.
-    rev: 'v0.0.254'
+        name: Lint yaml files
+        args: [-c=.yamllint.yaml]
+  # NOTE: ".typos.toml" may need to have *already been committed* for the typos
+  # hook to read it. If it has not been, comment this block out for one commit.
+  - repo: https://github.com/crate-ci/typos
+    rev: 'v1.48.0'
     hooks:
-      - id: ruff
-        args: [--fix]
-
-  - repo: https://github.com/psf/black
-    rev: '23.1.0' # 21.11b1
-    hooks:
-      - id: black
-
+      - id: typos
+        name: Spellcheck with Typos
+        # `args` replaces the hook's default `[--write-changes, --force-exclude]`
+        # rather than appending to it. `--force-exclude` is repeated so
+        # `.typos.toml`'s exclusions still apply to explicitly-passed files.
+        args: ['--force-exclude', '--config', '.typos.toml']
+        exclude: |
+          (?x)^(
+            ^.*(typos\.toml)$ |
+            ^.*(\.git.*)$ |
+            ^.*(yarn\.lock)$ |
+            ^(uv\.lock)$
+          )$
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 0.21.0
+    rev: 0.37.4
     hooks:
       - id: check-github-workflows
-        # files: ^\.github/workflows/[^/]+$
-        # types: [yaml]
-        # args: ['--schemafile', 'https://json.schemastore.org/github-workflow']
+      # check-github-workflows does not cover composite actions
+      - id: check-github-actions
+  # Lint: GitHub Actions security posture. check-jsonschema above only validates
+  # shape. Fails the build on unpinned actions and unscoped permissions.
+  - repo: https://github.com/zizmorcore/zizmor-pre-commit
+    rev: v1.28.0
+    hooks:
+      - id: zizmor

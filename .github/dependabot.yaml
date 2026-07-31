@@ -6,15 +6,47 @@
 
 version: 2
 updates:
+  # Actions are pinned to commit SHAs, so Dependabot is the only thing that
+  # moves them. The cooldown gives a compromised release time to be found and
+  # yanked before it lands in a PR here.
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: weekly
+    cooldown:
+      default-days: 3
+
   - package-ecosystem: npm
     directory: /
     schedule:
       interval: weekly
-  - package-ecosystem: pip
+    cooldown:
+      default-days: 3
+    ignore:
+      # Held back deliberately -- see CONTRIBUTING.md "Pinned dependencies".
+      # @jupyterlab/testing pins jest ^29.2.0 and ts-jest ^29.1.0, and it is
+      # what backs @jupyterlab/testutils/lib/jest-config.
+      - dependency-name: 'jest'
+        versions: ['>=30']
+      - dependency-name: 'ts-jest'
+        versions: ['>=30']
+      - dependency-name: '@types/jest'
+        versions: ['>=30']
+      # typescript-eslint v8 declares `typescript: >=4.8.4 <6.1.0`.
+      - dependency-name: 'typescript'
+        versions: ['>=6']
+
+  # ui-tests has its own package.json and is not covered by the entry above.
+  - package-ecosystem: npm
+    directory: /ui-tests
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 3
+
+  - package-ecosystem: uv
     directory: /
     schedule:
       interval: weekly
+    cooldown:
+      default-days: 3

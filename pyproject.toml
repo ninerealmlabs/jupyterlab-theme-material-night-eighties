@@ -1,49 +1,75 @@
 [build-system]
-requires = ["hatchling>=1.4.0", "jupyterlab>=3.4.7,<4.0.0", "hatch-nodejs-version"]
+requires = ["hatchling>=1.27.0", "hatch-nodejs-version>=0.3.2", "jupyter-builder>=1.0.0,<2"]
 build-backend = "hatchling.build"
 
 [project]
 name = "jupyterlab_material_night_eighties"
 readme = "README.md"
-license = { file = "LICENSE" }
-requires-python = ">=3.7"
+license = "BSD-3-Clause"
+license-files = ["LICENSE"]
+requires-python = ">=3.10"
 classifiers = [
     "Framework :: Jupyter",
     "Framework :: Jupyter :: JupyterLab",
-    "Framework :: Jupyter :: JupyterLab :: 3",
+    "Framework :: Jupyter :: JupyterLab :: 4",
     "Framework :: Jupyter :: JupyterLab :: Extensions",
     "Framework :: Jupyter :: JupyterLab :: Extensions :: Prebuilt",
-    "License :: OSI Approved :: BSD License",
+    "Framework :: Jupyter :: JupyterLab :: Extensions :: Themes",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.7",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
 ]
-dependencies = [
-]
+dependencies = []
 dynamic = ["version", "description", "authors", "urls", "keywords"]
 
-[project.optional-dependencies]
-test = [
-    "coverage",
-    "pytest",
-    "pytest-asyncio",
-    "pytest-cov",
-    "pytest-tornasync"
+# --- uv ---------------------------------------------------------------------
+# `uv` manages environments and locking; `hatchling` remains the PEP 517 build
+# backend because `hatch-jupyter-builder` is a hatchling build hook -- it is what
+# runs `jlpm build:prod` and stages the labextension into `share/jupyter`.
+# uv has no equivalent hook mechanism, so the two are complementary, not
+# alternatives.
+#
+#   uv sync                 # create .venv with dev tooling
+#   uv run jupyter lab      # run against the dev install
+#   uv build                # build sdist + wheel (invokes the jupyter-builder hook)
+#   uvx hatch version       # read/bump version (jupyter-releaser uses this)
+[dependency-groups]
+dev = [
+    "build>=1.2",
+    "hatch>=1.14",
+    "jupyter-builder>=1.0.0,<2",
+    "jupyterlab>=4.5,<5",
+]
+release = [
+    { include-group = "dev" },
+    "editables>=0.3",
+    "hatch-jupyter-builder>=0.5",
+    "hatch-nodejs-version>=0.3.2",
+    "hatchling>=1.27.0",
+    # Keep this commit aligned with the jupyter_releaser action pins.
+    "jupyter-releaser @ git+https://github.com/jupyter-server/jupyter_releaser@70e58c50c736ad496cca11fe4f2446033b68b027",
 ]
 
+[tool.uv]
+# The labextension build hook shells out to `jlpm`, which needs the JupyterLab
+# package present first. Building the project into its own dev env would be
+# circular, so keep it a non-installed dev dependency set.
+package = false
+
+# --- hatch ------------------------------------------------------------------
 [tool.hatch.version]
 source = "nodejs"
 
 [tool.hatch.metadata.hooks.nodejs]
-fields = ["description", "authors", "urls"]
+fields = ["description", "authors", "urls", "keywords"]
 
 [tool.hatch.build.targets.sdist]
 artifacts = ["jupyterlab_material_night_eighties/labextension"]
-exclude = [".github", "binder"]
+exclude = [".github", "binder", "screenshots", "scss", "ui-tests"]
 
 [tool.hatch.build.targets.wheel.shared-data]
 "jupyterlab_material_night_eighties/labextension" = "share/jupyter/labextensions/@ninerealmlabs/jupyterlab_material_night_eighties"
@@ -56,6 +82,7 @@ path = "jupyterlab_material_night_eighties/_version.py"
 dependencies = ["hatch-jupyter-builder>=0.5"]
 build-function = "hatch_jupyter_builder.npm_builder"
 ensured-targets = [
+    "jupyterlab_material_night_eighties/labextension/static/style.js",
     "jupyterlab_material_night_eighties/labextension/package.json",
 ]
 skip-if-exists = ["jupyterlab_material_night_eighties/labextension/static/style.js"]
@@ -70,173 +97,53 @@ npm = ["jlpm"]
 source_dir = "src"
 build_dir = "jupyterlab_material_night_eighties/labextension"
 
+# --- jupyter-releaser -------------------------------------------------------
 [tool.jupyter-releaser.options]
 version_cmd = "hatch version"
 
 [tool.jupyter-releaser.hooks]
-before-build-npm = ["python -m pip install jupyterlab~=3.1", "jlpm", "jlpm build:prod"]
+before-build-npm = [
+    "python -m pip install 'jupyter-builder>=1.0.0,<2'",
+    "jlpm",
+    "jlpm build:prod",
+]
 before-build-python = ["jlpm clean:all"]
 
-# --- black ------------------------------------------------------------------
-# ref: https://black.readthedocs.io/en/stable/usage_and_configuration/the_basics.html#configuration-via-a-file
-[tool.black]
-line-length = 100
-# target-version = ['py39']
-include = '\.pyi?$|\.ipynb$'
-extend-exclude = '''
-# # A regex preceded with ^/ will apply only to files and directories
-# # in the root of the project.
-# ^/foo.py  # exclude a file named foo.py in the root of the project (in addition to the defaults)
-\.ipynb_checkpoints$|^/\.env|^/\.git|^/\.nox|^/\.pytest_cache|^/\.tox
-'''
+[tool.check-wheel-contents]
+ignore = ["W002"]
 
 # --- ruff -------------------------------------------------------------------
+# ref: https://docs.astral.sh/ruff/settings/
 [tool.ruff]
-select = [
-  'A', # flake8 builtins
-  'B', # flake8 bugbear
-  'C4', # flake8 comprehensions
-  'C90', # mccabe
-  'E', # pycodestyle
-  'F', # pyflakes
-  'I', # isort
-  'N', # pep8-naming
-  'W', # pycodestyle
-  # 'T20', # flake8 print
-]
+line-length = 119
+target-version = "py310"
+src = ["jupyterlab_material_night_eighties"]
 
-# Avoid trying to fix extension types:
+[tool.ruff.lint]
+select = [
+  'A',   # flake8-builtins
+  'B',   # flake8-bugbear
+  'C4',  # flake8-comprehensions
+  'C90', # mccabe
+  'E',   # pycodestyle
+  'F',   # pyflakes
+  'I',   # isort
+  'N',   # pep8-naming
+  'W',   # pycodestyle
+]
+ignore = [
+  "E501", # line too long -- the formatter handles this
+]
 unfixable = ["B"]
 
-ignore = [
-  # "E203", # not in ruff
-  # "E265", # not in ruff
-  # "E266", # not in ruff
-  "E501", # line too long
-  "F401", # unused import
-  "F403", # import *
-  "F405", # defined from import *
-  "F541", # f-string missing placeholders
-  # "W503", # not in ruff
-]
-
-# [per-file-ignores]
-# # Ignore `E402` (import violations) in all `__init__.py` files,
-# # and in `path/to/file.py`.
-# "__init__.py" = ["E402"]
-# "path/to/file.py" = ["E402"]
-
-exclude = [
-  "*.egg-info",
-  ".direnv",
-  ".eggs",
-  ".env",
-  ".envrc",
-  ".git",
-  ".ipynb_checkpoints",
-  ".nox",
-  ".pytest_cache",
-  ".ruff_cache",
-  ".tox",
-  ".venv",
-  "__pypackages__",
-  "_build",
-  "ci/templates",
-  "build",
-  "dist",
-  "docs/conf.py",
-  "venv",
-]
-
-# Default autofix behavior
-fix = true
-
-# Max line length
-line-length = 119
-
-# Directories with source code
-src = ["src", "tests"]
-
-# Assumed Python version
-target-version = "py39"
-
-# --- ruff plugins --------------------
-[tool.ruff.isort]
+[tool.ruff.lint.isort]
 combine-as-imports = true
 force-sort-within-sections = true
 force-wrap-aliases = true
-# extra-standard-library = ["path"]
-known-first-party = ["src",]
+known-first-party = ["jupyterlab_material_night_eighties"]
 
-[tool.ruff.mccabe]
+[tool.ruff.lint.mccabe]
 max-complexity = 18
 
-[tool.ruff.pep8-naming]
-ignore-names = []
-
-
-# --- pytest -----------------------------------------------------------------
-# ref: https://docs.pytest.org/en/6.2.x/customize.html
-[tool.pytest.ini_options]
-addopts = '''
-    -ra
-    --strict-markers
-    --ignore=docs/conf.py
-    --ignore=setup.py
-    --ignore=ci
-    --ignore=.eggs
-    --tb=short
-'''
-    # --doctest-modules
-    # --doctest-glob=\*.rst
-norecursedirs = [
-    ".env",
-    ".git",
-    ".nox",
-    ".pytest_cache",
-    ".tox",
-    "__pycache__",
-    "dist",
-    "docs",
-    "build",
-    "migrations",
-    "notebooks",
-    "writeup",
-]
-python_files = [
-    "test_*.py",
-    "*_test.py",
-    "tests.py",
-]
-testpaths = [
-    "tests",
-]
-# log_cli = true
-
-
-# --- coverage ---------------------------------------------------------------
-[tool.coverage.paths]
-source = ["src", "*/site-packages"]
-
-[tool.coverage.run]
-branch = true
-source = ["src"]
-
-[tool.coverage.report]
-show_missing = true
-
-# --- check-manifest ---------------------------------------------------------
-# ref: https://github.com/mgedmin/check-manifest
-[tool.check-manifest]
-ignore = [
-    ".ci/",
-    "data/",
-    "docker/",
-    "functions/",
-    "notebooks/",
-    "queries/",
-    "writeup/",
-    "noxfile.py",
-    "*.md",
-    ".*",
-]
+[tool.ruff.format]
+docstring-code-format = true

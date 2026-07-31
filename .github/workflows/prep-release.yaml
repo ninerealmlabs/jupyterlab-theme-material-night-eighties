@@ -1,52 +1,86 @@
 ---
 # bumps version, generates changelog, drafts GH release
-# ref: https://jupyter-releaser.readthedocs.io/en/latest/how_to_guides/convert_repo_from_repo.html
+#
+# Setup this workflow depends on -- app, environments -- is in RELEASE.md.
 name: 'Step 1: Prep Release'
+
 on: # yamllint disable-line rule:truthy
   workflow_dispatch:
     inputs:
-      target:
-        description: "The owner/repo GitHub target"
-        required: true
       version_spec:
         description: 'New Version Specifier'
         default: 'next'
-        required: false
-      branch:
-        description: 'The branch to target'
-        required: false
-      post_version_spec:
-        description: 'Post Version Specifier'
-        required: false
-      since:
-        description: 'Use PRs with activity since this date or git reference'
         required: false
       since_last_stable:
         description: 'Use PRs with activity since the last stable git tag'
         required: false
         type: boolean
+
+permissions: {}
+
+# Shared with publish-release: both workflows mutate the same draft release.
+concurrency:
+  group: release
+  cancel-in-progress: false
+
 jobs:
   prep_release:
     runs-on: ubuntu-latest
+    environment: release-automation # app credentials; see publish-release.yaml
+    permissions:
+      contents: read # the releaser writes via the app token, not GITHUB_TOKEN
     steps:
-      - uses: actions/checkout@v3
-      - uses: jupyterlab/maintainer-tools/.github/actions/base-setup@v1
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Validate release context and inputs
+        id: release-inputs
+        # The upstream composite emits inputs into shell source, so reject
+        # anything outside this workflow's narrow contract before minting.
+        env:
+          VERSION_SPEC: ${{ inputs.version_spec }}
+        run: python3 .github/scripts/validate_release_inputs.py prep
+
+      - name: Base Setup
+        uses: ./.github/actions/setup
+        with:
+          release-toolchain: 'true'
+          dependency-cache: 'false'
+
       - name: Install Dependencies
         shell: bash
-        run: |
-          pip install -e .
+        run: uv pip install --no-build-isolation --no-deps --editable .
+
+      # Mint only after the locked toolchain and repository are installed.
+      - name: Mint app token
+        id: app-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        with:
+          app-id: ${{ vars.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+          # Omitting these would inherit every permission the installation holds.
+          permission-contents: write
+          permission-pull-requests: write # the changelog PR
+          permission-administration: read # see publish-release.yaml
+
       - name: Prep Release
         id: prep-release
-        uses: jupyter-server/jupyter_releaser/.github/actions/prep-release@v2
+        uses: jupyter-server/jupyter_releaser/.github/actions/prep-release@70e58c50c736ad496cca11fe4f2446033b68b027 # v2
         with:
-          token: ${{ secrets.ADMIN_GITHUB_TOKEN }}
-          version_spec: ${{ github.event.inputs.version_spec }}
-          post_version_spec: ${{ github.event.inputs.post_version_spec }}
-          target: ${{ github.event.inputs.target }}
-          branch: ${{ github.event.inputs.branch }}
-          since: ${{ github.event.inputs.since }}
-          since_last_stable: ${{ github.event.inputs.since_last_stable }}
+          token: ${{ steps.app-token.outputs.token }}
+          version_spec: ${{ steps.release-inputs.outputs.version_spec }}
+          target: ninerealmlabs/jupyterlab-theme-material-night-eighties
+          branch: main
+          since_last_stable: ${{ inputs.since_last_stable }}
 
       - name: '** Next Step **'
+        env:
+          RELEASE_URL: ${{ steps.prep-release.outputs.release_url }}
         run: |
-          echo "Optional): Review Draft Release: ${{ steps.prep-release.outputs.release_url }}"
+          {
+            echo "## Next Step"
+            echo "Review the draft release: ${RELEASE_URL}"
+            echo "Then run 'Step 2: Publish Release'."
+          } >>"${GITHUB_STEP_SUMMARY}"

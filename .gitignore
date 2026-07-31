@@ -1,126 +1,177 @@
-.env
+# -------------------------------------------------------
+# Dot-directories: ignore all, allowlist what we track
+# -------------------------------------------------------
+.*/
+!.claude/
+!.github/
+!.specs/
+!.renovate/
+
+# -------------------------------------------------------
+# OS
+# -------------------------------------------------------
+.DS_Store
+Thumbs.db
+
+# -------------------------------------------------------
+# Secrets & environment
+# -------------------------------------------------------
+*.env
+.env.*
 .envrc
-*.bundle.*
-lib/
-node_modules/
-.eslintcache
-.stylelintcache
-*.egg-info/
-.ipynb_checkpoints
-*.tsbuildinfo
-jupyterlab_material_night_eighties/labextension
-# Version file is handled by hatchling
-jupyterlab_material_night_eighties/_version.py
+*.*key
+*.pem
+*.pgp
+*.pub
+.config.env
+.decrypted~*
+.pypirc
 
-# Integration tests
-ui-tests/test-results/
-ui-tests/playwright-report/
-ui-tests/*lock*
+# -------------------------------------------------------
+# AI tooling (local/personal files only)
+# -------------------------------------------------------
+CLAUDE.md
+CLAUDE.local.md
+.claude/settings.local.json
+docs/superpowers/
+settings.local.json
 
-# Created by https://www.gitignore.io/api/python
-# Edit at https://www.gitignore.io/?templates=python
-
-### Python ###
-# Byte-compiled / optimized / DLL files
+# -------------------------------------------------------
+# Python
+# -------------------------------------------------------
 __pycache__/
 *.py[cod]
 *$py.class
-.pypirc
+*.egg-info/
+.coverage
+.coverage.*
+.python-version
 
-# C extensions
-*.so
+# -------------------------------------------------------
+# Node / TypeScript / Yarn
+# -------------------------------------------------------
+node_modules/
+.pnp.*
+*.tsbuildinfo
+*.bundle.*
+.eslintcache
+.stylelintcache
+# jest (jest-junit reporter from @jupyterlab/testing)
+junit.xml
 
-# Distribution / packaging
-.Python
+# -------------------------------------------------------
+# Dependencies & build output
+# -------------------------------------------------------
 build/
-develop-eggs/
 dist/
+site/
+**/cache/
+.local/
+.web/
+bin/
+venv/
+
+# -------------------------------------------------------
+# Distribution / packaging
+# -------------------------------------------------------
+.Python
+develop-eggs/
 downloads/
 eggs/
-.eggs/
 lib/
 lib64/
 parts/
 sdist/
 var/
 wheels/
-pip-wheel-metadata/
 share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
-
-# PyInstaller
-#  Usually these files are written by a python script from a template
-#  before PyInstaller builds the exe, so as to inject date/other infos into it.
-*.manifest
-*.spec
-
-# Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
 
+# -------------------------------------------------------
 # Unit test / coverage reports
+# -------------------------------------------------------
 coverage/
 htmlcov/
-.tox/
-.nox/
-.coverage
-.coverage.*
-.cache
 nosetests.xml
 coverage.xml
 *.cover
-.hypothesis/
-.pytest_cache/
+*.py,cover
+cover/
 
-# Translations
-*.mo
-*.pot
+# -------------------------------------------------------
+# JupyterLab extension (project-specific)
+# -------------------------------------------------------
+jupyterlab_material_night_eighties/labextension
+# Version file is handled by hatchling
+jupyterlab_material_night_eighties/_version.py
 
-# Scrapy stuff:
-.scrapy
+# -------------------------------------------------------
+# Integration tests (ui-tests)
+# -------------------------------------------------------
+ui-tests/test-results/
+ui-tests/playwright-report/
+# Screenshots from `jlpm preview`; local review artefacts, never committed
+ui-tests/preview-output/
+# NOTE: ui-tests/yarn.lock is intentionally NOT ignored. Its presence is what
+# makes Yarn (jlpm) treat ui-tests as its own project root; without it,
+# `jlpm install` there fails with "doesn't seem to be part of the project
+# declared in <repo root>". CI also keys its browser cache on its hash.
 
-# Sphinx documentation
-docs/_build/
+# -------------------------------------------------------
+# Jupyter
+# -------------------------------------------------------
+# Scratch notebooks created while testing the theme
+Untitled*.ipynb
 
-# PyBuilder
-target/
+# -------------------------------------------------------
+# Data files & folders
+# -------------------------------------------------------
+*.db
+*.sqlite3
+*.csv
+*.html
+*.pdf
 
-# pyenv
-.python-version
+# -------------------------------------------------------
+# Debug output
+# -------------------------------------------------------
+data/_debug_keep/
 
-# celery beat schedule file
-celerybeat-schedule
+# -------------------------------------------------------
+# Editors & profiling
+# -------------------------------------------------------
+.profile
+*.profraw
+profile_default/
+ipython_config.py
 
-# SageMath parsed files
-*.sage.py
+# -------------------------------------------------------
+# Git worktrees
+# -------------------------------------------------------
+.worktrees/
 
-# Spyder project settings
-.spyderproject
-.spyproject
+# -------------------------------------------------------
+# Temp, logs, & working files
+# -------------------------------------------------------
+*.bak
+*.log
+*.zip
+.logs/
+.scrapy/
+.task/
+.temp*
+TODO.md
+chromium-profile
+chrome-profile
 
-# Rope project settings
-.ropeproject
-
-# Mr Developer
-.mr.developer.cfg
-.project
-.pydevproject
-
-# mkdocs documentation
-/site
-
-# mypy
-.mypy_cache/
-.dmypy.json
-dmypy.json
-
-# Pyre type checker
-.pyre/
-
-# End of https://www.gitignore.io/api/python
-
-# OSX files
-.DS_Store
-default.profraw
+# -------------------------------------------------------
+# Retain (must be last — negations override above)
+# -------------------------------------------------------
+!.gitkeep
+!.gitignore
+!.env.example
+!.env.sample

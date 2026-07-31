@@ -5,6 +5,10 @@ const baseConfig = require('@jupyterlab/galata/lib/playwright-config')
 
 module.exports = {
   ...baseConfig,
+  // Only the automated checks. The theme preview lives in ./preview and is run
+  // separately via `jlpm preview`, since it is for a human to look at rather
+  // than something to pass or fail.
+  testDir: './tests',
   webServer: {
     command: 'jlpm start',
     url: 'http://localhost:8888/lab',
