@@ -42,25 +42,27 @@ jobs:
     name: Renovate
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      packages: read # GHCR lookups for container datasources
 
     steps:
       - name: Generate Token
         uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
         id: app-token
         with:
-          client-id: ${{ vars.APP_CLIENT_ID }}
-          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+          client-id: "${{ vars.APP_CLIENT_ID }}"
+          private-key: "${{ secrets.APP_PRIVATE_KEY }}"
           # Renovate's platform requirements, minus the org-level scopes it only
           # needs for autodiscovery beyond this repo
           # (ref: https://docs.renovatebot.com/modules/platform/github/):
-          #   contents  - commit branches
-          #   issues    - dependency dashboard
-          #   workflows - update files under .github/workflows
+          #   contents             - commit branches
+          #   issues               - dependency dashboard
+          #   workflows            - update files under .github/workflows
+          #   vulnerability-alerts - read Dependabot alerts to raise security PRs
           permission-contents: write
           permission-issues: write
           permission-pull-requests: write
           permission-workflows: write
+          permission-vulnerability-alerts: read
 
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
