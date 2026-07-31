@@ -175,7 +175,7 @@ uv run jupyter lab
 ## Pinned dependencies
 
 Some dependencies are deliberately held below their latest release.
-Dependabot is configured to skip them in [`.github/dependabot.yaml`](.github/dependabot.yaml).
+Renovate is configured to skip them via `allowedVersions` in [`.github/renovate/packageRules.json5`](.github/renovate/packageRules.json5).
 **Do not bump these without re-checking the constraint** — the failure modes are confusing.
 
 | Dependency                       | Held at | Constraint                                                                                                          |
