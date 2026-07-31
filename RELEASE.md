@@ -101,7 +101,7 @@ Create it under the **ninerealmlabs** org (Settings → Developer settings → G
 
 - Generate a private key and keep the `.pem` — you paste it in the next step.
 
-- Note the numeric **App ID**.
+- Note the **Client ID** (the `Iv23…` string on the app settings page).
 
 The workflows request each permission explicitly, so the token they receive is narrower than the installation.
 If granting `Administration` is not acceptable, drop it and add `admin_check: 'false'` to the releaser steps in [prep-release.yaml](.github/workflows/prep-release.yaml) and [publish-release.yaml](.github/workflows/publish-release.yaml) — the environment approval gate in step 3 already restricts who can publish.
@@ -112,16 +112,16 @@ Two environments, with different jobs.
 Both should set **Deployment branches → Protected branches only**, so a workflow on a feature branch cannot reach either.
 This requires `main` to be a protected branch.
 
-| Environment          | Reviewers                     | Holds                                           | Used by                       |
-| -------------------- | ----------------------------- | ----------------------------------------------- | ----------------------------- |
-| `release-automation` | none                          | `APP_ID` (variable), `APP_PRIVATE_KEY` (secret) | prep, build, finalize jobs    |
-| `release`            | release approver(s), required | nothing                                         | the PyPI and npm publish jobs |
+| Environment          | Reviewers                     | Holds                                                  | Used by                       |
+| -------------------- | ----------------------------- | ------------------------------------------------------ | ----------------------------- |
+| `release-automation` | none                          | `APP_CLIENT_ID` (variable), `APP_PRIVATE_KEY` (secret) | prep, build, finalize jobs    |
+| `release`            | release approver(s), required | nothing                                                | the PyPI and npm publish jobs |
 
 Splitting them puts the approval prompt immediately before the irreversible step rather than before
 the build, and confines the app private key to an environment that ordinary workflows cannot read.
 
-- On `release-automation`: add variable `APP_ID` (the numeric App ID) and secret `APP_PRIVATE_KEY`
-  (the full `.pem` contents, `BEGIN`/`END` lines included).
+- On `release-automation`: add variable `APP_CLIENT_ID` (the app's Client ID) and secret
+  `APP_PRIVATE_KEY` (the full `.pem` contents, `BEGIN`/`END` lines included).
 - On `release`: add the designated maintainer or team under **Required reviewers**.
   If the workflow initiator must approve their own run, leave **Prevent self-review** disabled.
   Add no secrets.
