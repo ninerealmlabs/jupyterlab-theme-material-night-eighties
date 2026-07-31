@@ -11,10 +11,13 @@ VERSION_PATTERN = re.compile(
     r"(?:next|(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)"
     r"(?:(?:a|b|rc)(?:0|[1-9]\d*))?)"
 )
+# Drafts are served at releases/tag/untagged-<hash> until published, so the
+# URL's tag segment never matches tag_name and cannot be cross-checked.
 RELEASE_URL_PATTERN = re.compile(
     r"https://github\.com/ninerealmlabs/jupyterlab-theme-material-night-eighties/"
-    r"releases/tag/(?P<tag>[A-Za-z0-9][A-Za-z0-9._-]*)"
+    r"releases/tag/[A-Za-z0-9][A-Za-z0-9._-]*"
 )
+TAG_PATTERN = re.compile(r"[A-Za-z0-9][A-Za-z0-9._-]*")
 
 
 def reject(message: str) -> None:
@@ -78,13 +81,8 @@ def discover_release() -> None:
     release_tag = release.get("tag_name")
     if not isinstance(release_url, str) or not isinstance(release_tag, str):
         reject("GitHub returned invalid releases metadata")
-    release_match = require_full_match(
-        RELEASE_URL_PATTERN,
-        release_url,
-        "selected release URL",
-    )
-    if release_tag != release_match.group("tag"):
-        reject("selected release tag does not match its URL")
+    require_full_match(RELEASE_URL_PATTERN, release_url, "selected release URL")
+    require_full_match(TAG_PATTERN, release_tag, "selected release tag")
     write_outputs({"release_url": release_url, "release_tag": release_tag})
 
 

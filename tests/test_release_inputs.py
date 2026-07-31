@@ -10,7 +10,11 @@ import unittest
 
 REPOSITORY_ROOT = Path(__file__).parents[1]
 VALIDATOR = REPOSITORY_ROOT / ".github" / "scripts" / "validate_release_inputs.py"
-RELEASE_URL = "https://github.com/ninerealmlabs/jupyterlab-theme-material-night-eighties/releases/tag/v0.4.0"
+# Drafts are served at releases/tag/untagged-<hash>; the tag only appears in
+# the URL after publishing.
+RELEASE_URL = (
+    "https://github.com/ninerealmlabs/jupyterlab-theme-material-night-eighties/releases/tag/untagged-3d24f8a9c77b"
+)
 
 
 class ReleaseInputValidationTests(unittest.TestCase):
@@ -168,6 +172,29 @@ class ReleaseInputValidationTests(unittest.TestCase):
 
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("selected release URL is not", result.stderr)
+        self.assertEqual(result.workflow_outputs, "")
+
+    def test_draft_discovery_rejects_an_unsafe_tag_name(self) -> None:
+        releases = [
+            [
+                {
+                    "id": 123,
+                    "html_url": RELEASE_URL,
+                    "tag_name": "v0.4.0$(id)",
+                    "target_commitish": "main",
+                    "draft": True,
+                    "assets": [{"name": "metadata.json", "state": "uploaded"}],
+                }
+            ]
+        ]
+
+        result = self.run_validator(
+            "discover-release",
+            input_text=json.dumps(releases),
+        )
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("selected release tag is not", result.stderr)
         self.assertEqual(result.workflow_outputs, "")
 
 
