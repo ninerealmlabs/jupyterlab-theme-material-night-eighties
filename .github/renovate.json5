@@ -1,0 +1,41 @@
+{
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  extends: [
+    "config:best-practices",
+    // Supersedes the `helpers:pinGitHubActionDigests` that best-practices already pulls in,
+    // adding the semver `extractVersion` so pinned digests still show a readable version.
+    "helpers:pinGitHubActionDigestsToSemver",
+    ":automergePr", // ":automergeBranch",
+    ":disableRateLimiting",
+    // The pre-commit manager is one of the few disabled by default.
+    ":enablePreCommit",
+    // ":rebaseStalePrs",
+    ":semanticCommits",
+    ":separateMultipleMajorReleases",
+    ":separateMultipleMinorReleases",
+    ":separatePatchReleases",
+    ":timezone(America/New_York)",
+    // Vendored from ninerealmlabs/precommit-template and adapted to this repo.
+    // NOTE: presets resolve from the default branch, so edits under
+    // .github/renovate/ do not take effect until merged to main.
+    "local>ninerealmlabs/jupyterlab-theme-material-night-eighties//.github/renovate/autoMerge.json5",
+    "local>ninerealmlabs/jupyterlab-theme-material-night-eighties//.github/renovate/customManagers.json5",
+    "local>ninerealmlabs/jupyterlab-theme-material-night-eighties//.github/renovate/labels.json5",
+    "local>ninerealmlabs/jupyterlab-theme-material-night-eighties//.github/renovate/packageRules.json5",
+    "local>ninerealmlabs/jupyterlab-theme-material-night-eighties//.github/renovate/semanticCommits.json5",
+  ],
+  // Already on via config:recommended; stated here because the title below depends on it.
+  dependencyDashboard: true,
+  dependencyDashboardTitle: "Renovate Dashboard 🤖",
+  schedule: ["before 5am"],
+  // Carried over from the Dependabot cooldown: give a compromised release time
+  // to be found and yanked before it lands in a PR here. .github/zizmor.yaml
+  // used to assert the same window for Dependabot.
+  minimumReleaseAge: "3 days",
+  // .github/workflows/enforce-labels.yaml fails any PR without a triage label,
+  // and its bot allowlist covers dependabot/pre-commit-ci only -- not this bot.
+  addLabels: ["dependencies"],
+  suppressNotifications: ["prEditedNotification", "prIgnoreNotification"],
+  // No containers in this repo, so ":docker" / "docker:enableMajor" and the
+  // trusted-digest auto-merge rules from the reference repos are omitted.
+}

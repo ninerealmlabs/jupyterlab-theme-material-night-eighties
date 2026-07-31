@@ -1,0 +1,23 @@
+{
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  customManagers: [
+    {
+      customType: "regex",
+      // Tool versions pinned as a plain `version:` input to an action (e.g. the
+      // uv release passed to astral-sh/setup-uv) are invisible to the
+      // github-actions manager, which only tracks the `uses:` ref. Annotate the
+      // pin with a `# renovate:` comment to bring it under management.
+      description: "Update tool versions annotated with a renovate comment in workflows and composite actions",
+      managerFilePatterns: [
+        "/^\\.github/workflows/[^/]+\\.ya?ml$/",
+        "/^\\.github/actions/.+/action\\.ya?ml$/",
+      ],
+      matchStrings: [
+        // # renovate: datasource=github-releases depName=astral-sh/uv
+        // version: '0.11.32'
+        "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)(?: versioning=(?<versioning>\\S+))?\\s*\\n\\s*version:\\s*[\"']?(?<currentValue>[^\"'\\s]+)[\"']?",
+      ],
+      versioningTemplate: "{{#if versioning}}{{{versioning}}}{{else}}semver-coerced{{/if}}",
+    },
+  ],
+}
