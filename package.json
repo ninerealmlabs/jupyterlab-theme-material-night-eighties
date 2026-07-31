@@ -1,6 +1,6 @@
 {
     "name": "@ninerealmlabs/jupyterlab_material_night_eighties",
-    "version": "0.4.0-a2",
+    "version": "0.4.0",
     "description": "A jupyterlab theme inspired by material darker and VSCode's material night eighties",
     "keywords": [
         "jupyter",

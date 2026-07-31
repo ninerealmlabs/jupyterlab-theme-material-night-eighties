@@ -2,7 +2,7 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
-## 0.4.0a2
+## 0.4.0
 
 ([Full Changelog](https://github.com/ninerealmlabs/jupyterlab-theme-material-night-eighties/compare/v0.3.3...52fa51e5cb91511bb3f09e09164f36047c9895da))
 
@@ -20,6 +20,23 @@ See [our definition of contributors](https://github-activity.readthedocs.io/en/l
 @ahgraber ([activity](https://github.com/search?q=repo%3Aninerealmlabs%2Fjupyterlab-theme-material-night-eighties+involves%3Aahgraber+updated%3A2023-03-08..2026-07-31&type=Issues))
 
 <!-- <END NEW CHANGELOG ENTRY> -->
+
+## 0.4.0a2
+
+([Full Changelog](https://github.com/ninerealmlabs/jupyterlab-theme-material-night-eighties/compare/v0.3.3...52fa51e5cb91511bb3f09e09164f36047c9895da))
+
+### Enhancements made
+
+- Migrate to JupyterLab 4 and update dependencies [#50](https://github.com/ninerealmlabs/jupyterlab-theme-material-night-eighties/pull/50) ([@ahgraber](https://github.com/ahgraber))
+
+### Contributors to this release
+
+The following people contributed discussions, new ideas, code and documentation contributions, and review.
+See [our definition of contributors](https://github-activity.readthedocs.io/en/latest/use/#how-does-this-tool-define-contributions-in-the-reports).
+
+([GitHub contributors page for this release](https://github.com/ninerealmlabs/jupyterlab-theme-material-night-eighties/graphs/contributors?from=2023-03-08&to=2026-07-31&type=c))
+
+@ahgraber ([activity](https://github.com/search?q=repo%3Aninerealmlabs%2Fjupyterlab-theme-material-night-eighties+involves%3Aahgraber+updated%3A2023-03-08..2026-07-31&type=Issues))
 
 ## 0.3.3
 
