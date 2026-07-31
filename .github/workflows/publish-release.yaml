@@ -144,6 +144,9 @@ jobs:
         with:
           packages-dir: pypi-dist
           attestations: true # already the default; pinned because it is the point
+          # A failure in the npm or finalize job forces a full re-run; tolerate
+          # files this version already uploaded instead of dying on duplicates.
+          skip-existing: true
 
   npm:
     name: Publish to npm
@@ -175,8 +178,13 @@ jobs:
         run: |
           set -eux
           npm --version
+          # setup-node leaves an _authToken=${NODE_AUTH_TOKEN} placeholder that
+          # can make npm skip the OIDC exchange (actions/setup-node#1551).
+          sed -i '/_authToken/d' "${NPM_CONFIG_USERCONFIG}"
           shopt -s nullglob
-          tarballs=(dist/*.tgz)
+          # The ./ prefix keeps npm from parsing the path as a GitHub
+          # owner/repo shorthand.
+          tarballs=(./dist/*.tgz)
           if [ "${#tarballs[@]}" -eq 0 ]; then
             echo "::error::no npm tarball found in the release assets" >&2
             exit 1
