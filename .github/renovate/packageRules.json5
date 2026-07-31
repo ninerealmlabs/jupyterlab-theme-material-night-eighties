@@ -1,0 +1,48 @@
+{
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  packageRules: [
+    // --- versioning quirks -------------------------------------------------
+    {
+      // Both wrappers tag as `<upstream version><separator><wrapper build number>`
+      // (scop/pre-commit-shfmt: v3.13.1-1; shellcheck-py: v0.11.0.1). Neither is semver, and
+      // semver-coerced drops the build number, masking wrapper-only bumps.
+      // The `versioning=loose` annotations in .pre-commit-config.yaml are inert — the built-in
+      // pre-commit manager parses repo/rev structurally and ignores comments — so set it here.
+      description: "Support loose versioning for non-semver build-tagged wrapper releases",
+      matchDepNames: [
+        "scop/pre-commit-shfmt",
+        "shellcheck-py/shellcheck-py",
+      ],
+      versioning: "loose",
+    },
+
+    // --- pinned dependencies -----------------------------------------------
+    // Held below their latest release on purpose. Keep in sync with the
+    // "Pinned dependencies" table in CONTRIBUTING.md, and re-check the
+    // constraint before widening either rule.
+    {
+      description: "@jupyterlab/testing pins jest ^29.2.0 / ts-jest ^29.1.0, and it backs @jupyterlab/testutils/lib/jest-config",
+      matchManagers: ["npm"],
+      matchPackageNames: ["jest", "ts-jest", "@types/jest"],
+      allowedVersions: "<30",
+    },
+    {
+      description: "typescript-eslint v8 declares `typescript: >=4.8.4 <6.1.0`",
+      matchManagers: ["npm"],
+      matchPackageNames: ["typescript"],
+      allowedVersions: "<6",
+    },
+
+    // --- range handling ----------------------------------------------------
+    {
+      // config:best-practices pulls in ":pinDevDependencies", which would
+      // rewrite every devDependency range in package.json to an exact version.
+      // yarn.lock already fixes what actually gets installed, so keep the
+      // ranges the repo is written with.
+      description: "Keep semver ranges in package.json rather than pinning devDependencies",
+      matchManagers: ["npm"],
+      matchDepTypes: ["devDependencies"],
+      rangeStrategy: "auto",
+    },
+  ],
+}
