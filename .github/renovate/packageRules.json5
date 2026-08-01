@@ -32,6 +32,17 @@
       matchPackageNames: ["typescript"],
       allowedVersions: "<6",
     },
+    {
+      // The `packageManager` field in both package.json files exists solely so
+      // Renovate regenerates yarn.lock with Yarn 3 rather than falling back to
+      // Yarn Classic -- a v1 lockfile makes `jlpm` (Yarn 3.5.0, bundled with
+      // jupyter-builder) fail every install. Bumping it would desync the two;
+      // it moves only when JupyterLab ships a different Yarn.
+      description: "Pin packageManager to the Yarn version jlpm bundles",
+      matchDepTypes: ["packageManager"],
+      matchPackageNames: ["yarn"],
+      enabled: false,
+    },
 
     // --- range handling ----------------------------------------------------
     {

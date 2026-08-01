@@ -175,19 +175,21 @@ uv run jupyter lab
 ## Pinned dependencies
 
 Some dependencies are deliberately held below their latest release.
-Renovate is configured to skip them via `allowedVersions` in [`.github/renovate/packageRules.json5`](.github/renovate/packageRules.json5).
+Renovate is configured to skip them in [`.github/renovate/packageRules.json5`](.github/renovate/packageRules.json5).
 **Do not bump these without re-checking the constraint** — the failure modes are confusing.
 
-| Dependency                       | Held at | Constraint                                                                                                          |
-| -------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------- |
-| `jest`, `ts-jest`, `@types/jest` | `^29`   | `@jupyterlab/testing` pins `jest ^29.2.0` / `ts-jest ^29.1.0`, and it backs `@jupyterlab/testutils/lib/jest-config` |
-| `typescript`                     | `~5.9`  | `typescript-eslint` v8 declares `typescript: >=4.8.4 <6.1.0`                                                        |
+| Dependency                       | Held at      | Constraint                                                                                                          |
+| -------------------------------- | ------------ | ------------------------------------------------------------------------------------------------------------------- |
+| `jest`, `ts-jest`, `@types/jest` | `^29`        | `@jupyterlab/testing` pins `jest ^29.2.0` / `ts-jest ^29.1.0`, and it backs `@jupyterlab/testutils/lib/jest-config` |
+| `typescript`                     | `~5.9`       | `typescript-eslint` v8 declares `typescript: >=4.8.4 <6.1.0`                                                        |
+| `packageManager`                 | `yarn@3.5.0` | Must equal the Yarn that `jlpm` bundles; see [Why `packageManager` is pinned](#why-packagemanager-is-pinned)        |
 
 To re-check a constraint:
 
 ```sh
 npm view @jupyterlab/testing@latest dependencies
 npm view typescript-eslint@latest peerDependencies
+uv run jlpm --version
 ```
 
 Other intentional divergences from the upstream template:
@@ -197,6 +199,20 @@ Other intentional divergences from the upstream template:
 - Python tooling is `uv` + `ruff`, not `pip` + `black`.
 - `resolutions.lib0` is carried over from the template as a precaution and is not independently
   verified here.
+
+### Why `packageManager` is pinned
+
+Both `package.json` files carry `"packageManager": "yarn@3.5.0"`.
+Nothing in the build reads it — `jlpm` is a wrapper around the Yarn that `jupyter-builder` vendors, and it ignores the field.
+It is there for Renovate.
+
+Without it, Renovate cannot tell which Yarn the project uses and falls back to Yarn Classic, rewriting the whole committed lockfile in `# yarn lockfile v1` format.
+Every job that runs `jlpm` then fails: `jlpm` is Yarn 3, its installs are immutable in CI, and a v1 lockfile means the lockfile would have to be rewritten.
+That takes out the `build` job at "Lint the extension", and `check_release` at "Install Dependencies" — the editable install runs the `hatch-jupyter-builder` hook, which shells out to `jlpm`.
+`ui-tests` sets `YARN_ENABLE_IMMUTABLE_INSTALLS: 0`, so it installs anyway and the Playwright tests fail later against re-resolved dependencies instead.
+
+Keep the pin equal to `uv run jlpm --version`.
+It moves only when a JupyterLab upgrade changes the vendored Yarn — and when it does, regenerate both lockfiles with the new `jlpm`.
 
 ## Updating from the JupyterLab template
 

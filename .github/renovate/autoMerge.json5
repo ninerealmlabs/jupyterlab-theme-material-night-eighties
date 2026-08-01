@@ -36,7 +36,7 @@
       matchManagers: ["github-actions"],
       automerge: true,
       // automergeType: "branch",
-      matchUpdateTypes: ["minor", "patch", "digest"],
+      matchUpdateTypes: ["patch", "digest"],
       minimumReleaseAge: "3 days",
     },
     {
@@ -48,7 +48,7 @@
       ],
       automerge: true,
       // automergeType: "branch",
-      matchUpdateTypes: ["minor", "patch", "digest"],
+      matchUpdateTypes: ["patch", "digest"],
       minimumReleaseAge: "1 minute",
     },
   ],
