@@ -28,7 +28,7 @@ jobs:
         with:
           # The shfmt hook pins language_version python3.13 in
           # .pre-commit-config.yaml; the interpreter must exist here.
-          python-version: '3.13'
+          python-version: '3.14'
 
       - name: Install pre-commit 📦
         run: |
