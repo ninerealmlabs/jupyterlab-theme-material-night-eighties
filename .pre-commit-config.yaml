@@ -112,7 +112,7 @@ repos:
         exclude: ^CHANGELOG\.md$
   # Lint & Format: Markdown
   - repo: https://github.com/rvben/rumdl-pre-commit
-    rev: v0.2.43
+    rev: v0.2.45
     hooks:
       - id: rumdl-fmt
   # Lint & Format: Python
