@@ -1,7 +1,7 @@
 {
   "name": "jupyterlab-material-night-eighties-theme-ui-tests",
   "version": "1.0.0",
-  "packageManager": "yarn@3.5.0",
+  "packageManager": "yarn@3.7.0",
   "description": "JupyterLab jupyterlab-material-night-eighties Integration Tests",
   "private": true,
   "scripts": {
