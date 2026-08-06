@@ -75,7 +75,7 @@ repos:
       - id: strip-exif
         name: Strip exif metadata from images
   - repo: https://github.com/commitizen-tools/commitizen
-    rev: v4.16.5
+    rev: v4.17.0
     hooks:
       - id: commitizen
         language: python
