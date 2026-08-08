@@ -86,7 +86,7 @@
         "yjs": "^13.5.0"
     },
     "resolutions": {
-        "lib0": "0.2.111"
+        "lib0": "0.2.117"
     },
     "sideEffects": [
         "style/*.css"
