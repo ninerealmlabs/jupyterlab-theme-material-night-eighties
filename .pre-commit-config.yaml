@@ -150,7 +150,7 @@ repos:
           - '2'
   # Lint & Format: JS/TS, JSON, CSS
   - repo: https://github.com/biomejs/pre-commit
-    rev: v2.5.7
+    rev: v2.5.8
     hooks:
       - id: biome-check
   # Lint: YAML
