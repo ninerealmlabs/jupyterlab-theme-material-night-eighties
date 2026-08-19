@@ -163,7 +163,7 @@ repos:
   # NOTE: ".typos.toml" may need to have *already been committed* for the typos
   # hook to read it. If it has not been, comment this block out for one commit.
   - repo: https://github.com/crate-ci/typos
-    rev: 'v1.48.0'
+    rev: 'v1.49.0'
     hooks:
       - id: typos
         name: Spellcheck with Typos
