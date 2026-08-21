@@ -5827,8 +5827,8 @@ __metadata:
   linkType: hard
 
 "eslint@npm:^10.8.0":
-  version: 10.8.0
-  resolution: "eslint@npm:10.8.0"
+  version: 10.9.0
+  resolution: "eslint@npm:10.9.0"
   dependencies:
     "@eslint-community/eslint-utils": ^4.8.0
     "@eslint-community/regexpp": ^4.12.2
@@ -5867,7 +5867,7 @@ __metadata:
       optional: true
   bin:
     eslint: bin/eslint.js
-  checksum: 3c746957d5e95fc888c44c2cd3e61696d7c152273b4c521ee36a4b6ed8f58a34d0ccd3d85a2924404d8c0731cff687d2a64047842cda4e76d34ffe0c453e0b25
+  checksum: 05eec36548bb9627b2b6ca052e83fd77c35e1cdccc5ef3ff6de46122d80958b06fa1ba0da30dd18bf0bbfe76b405bc93acee5df0ab6ff36603a0b99e83c9b371
   languageName: node
   linkType: hard
 
