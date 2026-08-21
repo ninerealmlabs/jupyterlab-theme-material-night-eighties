@@ -1310,17 +1310,17 @@ __metadata:
   linkType: hard
 
 "@biomejs/biome@npm:^2.5.5":
-  version: 2.5.6
-  resolution: "@biomejs/biome@npm:2.5.6"
+  version: 2.5.10
+  resolution: "@biomejs/biome@npm:2.5.10"
   dependencies:
-    "@biomejs/cli-darwin-arm64": 2.5.6
-    "@biomejs/cli-darwin-x64": 2.5.6
-    "@biomejs/cli-linux-arm64": 2.5.6
-    "@biomejs/cli-linux-arm64-musl": 2.5.6
-    "@biomejs/cli-linux-x64": 2.5.6
-    "@biomejs/cli-linux-x64-musl": 2.5.6
-    "@biomejs/cli-win32-arm64": 2.5.6
-    "@biomejs/cli-win32-x64": 2.5.6
+    "@biomejs/cli-darwin-arm64": 2.5.10
+    "@biomejs/cli-darwin-x64": 2.5.10
+    "@biomejs/cli-linux-arm64": 2.5.10
+    "@biomejs/cli-linux-arm64-musl": 2.5.10
+    "@biomejs/cli-linux-x64": 2.5.10
+    "@biomejs/cli-linux-x64-musl": 2.5.10
+    "@biomejs/cli-win32-arm64": 2.5.10
+    "@biomejs/cli-win32-x64": 2.5.10
   dependenciesMeta:
     "@biomejs/cli-darwin-arm64":
       optional: true
@@ -1340,62 +1340,62 @@ __metadata:
       optional: true
   bin:
     biome: bin/biome
-  checksum: 59eee9acc11ac9f4dab1f919e3776fb4f508f88e078a689a3b74e374a7454df80d4e281d032469b742d3ee75861386c736c0679b51cd002f3c061a9409a7068f
+  checksum: 433fbc6b77c1d0ff52e414db90c03d5ae6747b465d5c5c3ae90f610a4c307fb18711c8d2b44d45284651da1ac4cbed27d426f729ab03f25afc43c6f7bb364643
   languageName: node
   linkType: hard
 
-"@biomejs/cli-darwin-arm64@npm:2.5.6":
-  version: 2.5.6
-  resolution: "@biomejs/cli-darwin-arm64@npm:2.5.6"
+"@biomejs/cli-darwin-arm64@npm:2.5.10":
+  version: 2.5.10
+  resolution: "@biomejs/cli-darwin-arm64@npm:2.5.10"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@biomejs/cli-darwin-x64@npm:2.5.6":
-  version: 2.5.6
-  resolution: "@biomejs/cli-darwin-x64@npm:2.5.6"
+"@biomejs/cli-darwin-x64@npm:2.5.10":
+  version: 2.5.10
+  resolution: "@biomejs/cli-darwin-x64@npm:2.5.10"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@biomejs/cli-linux-arm64-musl@npm:2.5.6":
-  version: 2.5.6
-  resolution: "@biomejs/cli-linux-arm64-musl@npm:2.5.6"
+"@biomejs/cli-linux-arm64-musl@npm:2.5.10":
+  version: 2.5.10
+  resolution: "@biomejs/cli-linux-arm64-musl@npm:2.5.10"
   conditions: os=linux & cpu=arm64 & libc=musl
   languageName: node
   linkType: hard
 
-"@biomejs/cli-linux-arm64@npm:2.5.6":
-  version: 2.5.6
-  resolution: "@biomejs/cli-linux-arm64@npm:2.5.6"
+"@biomejs/cli-linux-arm64@npm:2.5.10":
+  version: 2.5.10
+  resolution: "@biomejs/cli-linux-arm64@npm:2.5.10"
   conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@biomejs/cli-linux-x64-musl@npm:2.5.6":
-  version: 2.5.6
-  resolution: "@biomejs/cli-linux-x64-musl@npm:2.5.6"
+"@biomejs/cli-linux-x64-musl@npm:2.5.10":
+  version: 2.5.10
+  resolution: "@biomejs/cli-linux-x64-musl@npm:2.5.10"
   conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
 
-"@biomejs/cli-linux-x64@npm:2.5.6":
-  version: 2.5.6
-  resolution: "@biomejs/cli-linux-x64@npm:2.5.6"
+"@biomejs/cli-linux-x64@npm:2.5.10":
+  version: 2.5.10
+  resolution: "@biomejs/cli-linux-x64@npm:2.5.10"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@biomejs/cli-win32-arm64@npm:2.5.6":
-  version: 2.5.6
-  resolution: "@biomejs/cli-win32-arm64@npm:2.5.6"
+"@biomejs/cli-win32-arm64@npm:2.5.10":
+  version: 2.5.10
+  resolution: "@biomejs/cli-win32-arm64@npm:2.5.10"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"@biomejs/cli-win32-x64@npm:2.5.6":
-  version: 2.5.6
-  resolution: "@biomejs/cli-win32-x64@npm:2.5.6"
+"@biomejs/cli-win32-x64@npm:2.5.10":
+  version: 2.5.10
+  resolution: "@biomejs/cli-win32-x64@npm:2.5.10"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
