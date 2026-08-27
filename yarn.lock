@@ -9905,11 +9905,11 @@ __metadata:
   linkType: hard
 
 "yjs@npm:^13.5.0, yjs@npm:^13.5.40":
-  version: 13.6.31
-  resolution: "yjs@npm:13.6.31"
+  version: 13.6.32
+  resolution: "yjs@npm:13.6.32"
   dependencies:
     lib0: ^0.2.99
-  checksum: 87c665c53344d48a3b85d21fa409d2a51bbdc995292a0c1bdfb1493620d4ba6c7cd1a308155642942fc45fa59e8d4557caab03d559f9408451ee6984ef180425
+  checksum: 5b146dcb471ec6ac9aab2b617786f660bc2233c896bfbcc1e65c67efb06f3bfd52acf2519d3519d72b108235da1895b8350b44f2b3a2ecfa80d0f45874805071
   languageName: node
   linkType: hard
 
