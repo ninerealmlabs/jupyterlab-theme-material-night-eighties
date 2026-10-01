@@ -7593,16 +7593,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lib0@npm:0.2.111":
-  version: 0.2.111
-  resolution: "lib0@npm:0.2.111"
+"lib0@npm:0.2.119":
+  version: 0.2.119
+  resolution: "lib0@npm:0.2.119"
   dependencies:
     isomorphic.js: ^0.2.4
   bin:
     0ecdsa-generate-keypair: bin/0ecdsa-generate-keypair.js
     0gentesthtml: bin/gentesthtml.js
     0serve: bin/0serve.js
-  checksum: 84ad7f159380dcc4689529f65bf933cc81b95a84b88eeb81bb69710be48850f54461f6afb31f706a10c030aee357e9b100d34e15631cb32d52365deea58be334
+  checksum: b627654451c3cb827ecbf012d6caef09a590d9a34e807eeb6e31b85d1d4209abae920b6b0bc57ea4771a52153deb9d7ca49d9f487013d2342d0d3c47e3f6bef0
   languageName: node
   linkType: hard
 
