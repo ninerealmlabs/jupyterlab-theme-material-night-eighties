@@ -4405,10 +4405,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ansi-styles@npm:^6.2.1":
-  version: 6.2.3
-  resolution: "ansi-styles@npm:6.2.3"
-  checksum: f1b0829cf048cce870a305819f65ce2adcebc097b6d6479e12e955fd6225df9b9eb8b497083b764df796d94383ff20016cc4dbbae5b40f36138fb65a9d33c2e2
+"ansi-styles@npm:^7.0.0":
+  version: 7.0.0
+  resolution: "ansi-styles@npm:7.0.0"
+  checksum: 94754b81c531cede91c0d49146f8adac80314c1d6503e3b1609bf4a61eeacd95b9ff732978bcef1ed23120968c5e75841f087536a112e0d38283b8b1dd8d18a8
   languageName: node
   linkType: hard
 
@@ -8056,23 +8056,23 @@ __metadata:
   linkType: hard
 
 "npm-run-all2@npm:^9.0.2":
-  version: 9.0.2
-  resolution: "npm-run-all2@npm:9.0.2"
+  version: 9.0.4
+  resolution: "npm-run-all2@npm:9.0.4"
   dependencies:
-    ansi-styles: ^6.2.1
+    ansi-styles: ^7.0.0
     cross-spawn: ^7.0.6
     memorystream: ^0.3.1
     picomatch: ^4.0.2
     pidtree: ^1.0.0
     read-package-json-fast: ^6.0.0
-    shell-quote: ^1.8.4
+    shell-quote: ^1.12.0
     which: ^7.0.0
   bin:
     npm-run-all: bin/npm-run-all/index.js
     npm-run-all2: bin/npm-run-all/index.js
     run-p: bin/run-p/index.js
     run-s: bin/run-s/index.js
-  checksum: 9a4ec9de3479f4b11989ad671ad820ccd895ba9f017cf4923c27e8de368f971269f27da335d0268535aaad937b7dd265f895fc42bd892b7e67b2880f516570f2
+  checksum: 09ae9b4c91dd148776b0f7c941072d72e1fb22d07b0c93ab8aff84091c79e485b9278e026422673c9e4b7b1891d25fa04d7fd87a624d72d3596eb70395078525
   languageName: node
   linkType: hard
 
@@ -8837,10 +8837,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"shell-quote@npm:^1.8.4":
-  version: 1.10.0
-  resolution: "shell-quote@npm:1.10.0"
-  checksum: d4bc0757ae0e493d0f6e3327c93be7d5af1d39e9969eb4332ed4e40bb2c3f9112ec31e979d713d302605f7e3431d9f5f061719e0e177077ffd9c03c0b9cc5f73
+"shell-quote@npm:^1.12.0":
+  version: 1.12.0
+  resolution: "shell-quote@npm:1.12.0"
+  checksum: bbb3b6b244069da4114c5c0d2192786ff146123e1c29c298348871a3b8219cf45bdc9540c2f948e8874e2f7309186480a7ac0097159d0958aaafec25c5074731
   languageName: node
   linkType: hard
 
