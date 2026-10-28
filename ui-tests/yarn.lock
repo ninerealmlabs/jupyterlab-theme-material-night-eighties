@@ -2187,6 +2187,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/node@npm:^26.0.0":
+  version: 26.6.5
+  resolution: "@types/node@npm:26.6.5"
+  dependencies:
+    undici-types: ~8.9.0
+  checksum: 3f7c73324d52cd7aaa0ae45a9a136228b59a2a3002fbea1377e2b949a0ea013ee792d46665dd9eff466f8bbe454560ac95c95ad950469b137c242bdeb88ae7e3
+  languageName: node
+  linkType: hard
+
 "@types/prop-types@npm:*":
   version: 15.7.15
   resolution: "@types/prop-types@npm:15.7.15"
@@ -3211,6 +3220,8 @@ __metadata:
   dependencies:
     "@jupyterlab/galata": ^5.5.10
     "@playwright/test": ^1.57.0
+    "@types/node": ^26.0.0
+    typescript: ~5.9.3
   languageName: unknown
   linkType: soft
 
@@ -3900,6 +3911,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"typescript@npm:~5.9.3":
+  version: 5.9.3
+  resolution: "typescript@npm:5.9.3"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 0d0ffb84f2cd072c3e164c79a2e5a1a1f4f168e84cb2882ff8967b92afe1def6c2a91f6838fb58b168428f9458c57a2ba06a6737711fdd87a256bbe83e9a217f
+  languageName: node
+  linkType: hard
+
+"typescript@patch:typescript@~5.9.3#~builtin<compat/typescript>":
+  version: 5.9.3
+  resolution: "typescript@patch:typescript@npm%3A5.9.3#~builtin<compat/typescript>::version=5.9.3&hash=85af82"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 8bb8d86819ac86a498eada254cad7fb69c5f74778506c700c2a712daeaff21d3a6f51fd0d534fe16903cb010d1b74f89437a3d02d4d0ff5ca2ba9a4660de8497
+  languageName: node
+  linkType: hard
+
 "typestyle@npm:^2.0.4":
   version: 2.4.0
   resolution: "typestyle@npm:2.4.0"
@@ -3907,6 +3938,13 @@ __metadata:
     csstype: 3.0.10
     free-style: 3.1.0
   checksum: 8b4f02c24f67b594f98507b15a753dabd4db5eb0af007e1d310527c64030e11e9464b25b5a6bc65fb5eec9a4459a8336050121ecc29063ac87b8b47a6d698893
+  languageName: node
+  linkType: hard
+
+"undici-types@npm:~8.9.0":
+  version: 8.9.0
+  resolution: "undici-types@npm:8.9.0"
+  checksum: 78c081bf592406e4bb8bbcbd6baa5c395b5998b9a6a22786e6df4bb5bc90a86aaaaa43a447b455d90589c8b5f36a5827942c20d5c7248efb66675feec1a7bb02
   languageName: node
   linkType: hard
 
