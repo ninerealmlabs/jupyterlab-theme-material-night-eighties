@@ -2244,14 +2244,15 @@ __metadata:
   linkType: hard
 
 "@jupyter/eslint-plugin@npm:^1.0.1":
-  version: 1.0.1
-  resolution: "@jupyter/eslint-plugin@npm:1.0.1"
+  version: 1.4.0
+  resolution: "@jupyter/eslint-plugin@npm:1.4.0"
   dependencies:
     "@typescript-eslint/utils": ^8.54.0
+    "@typescript-eslint/visitor-keys": ^8.54.0
     jsonc-eslint-parser: ^2.4.0
   peerDependencies:
     eslint: ">=9.0.0"
-  checksum: 74d79d31ce8bf5d9ad597984953d9baef300314570162ed34a40a2105041fadeda4842be96dd949c57338f47e3ee403f0e6380a99d5bfb558e467634a143dcb2
+  checksum: 9ac37ec79eff96e356c75d61ddb1aa64d5002f3075a50f7bc5821a8f6658aeefcf3248df6c2115620e0cdae36b06373847cbc099adc7f6a1539e58b4617e3cdf
   languageName: node
   linkType: hard
 
@@ -4214,6 +4215,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@typescript-eslint/types@npm:8.72.2":
+  version: 8.72.2
+  resolution: "@typescript-eslint/types@npm:8.72.2"
+  checksum: 49d0b8c0ce33c6962e506ba96e9fbf01414354aa3fd435ef90273716f7cccdd6d7f34e78614b2b0ca9d5d12e77f739ad99259f6338d592f8a2d1e22d20d8fe30
+  languageName: node
+  linkType: hard
+
 "@typescript-eslint/typescript-estree@npm:8.65.0":
   version: 8.65.0
   resolution: "@typescript-eslint/typescript-estree@npm:8.65.0"
@@ -4255,6 +4263,16 @@ __metadata:
     "@typescript-eslint/types": 8.65.0
     eslint-visitor-keys: ^5.0.0
   checksum: 34052098a3448cb337a33308763d57f5bcbbeb750d14241a91394d5242cd0bb90777626c16fe62b18ef990b57bee9a14a9a63f28bf466ee70533d6d86e1ee1f1
+  languageName: node
+  linkType: hard
+
+"@typescript-eslint/visitor-keys@npm:^8.54.0":
+  version: 8.72.2
+  resolution: "@typescript-eslint/visitor-keys@npm:8.72.2"
+  dependencies:
+    "@typescript-eslint/types": 8.72.2
+    eslint-visitor-keys: ^5.0.0
+  checksum: a7efcb9be677f9ce3d37e12bf9fe65b1f6854fb720595efed87fae3c82aaeb5ce95ad655e991d0c37844b976b0ca46d52ddedab8a94f8678c3d66fdfdabda48b
   languageName: node
   linkType: hard
 
